@@ -22,7 +22,23 @@ import (
 	"paper-hand/storage"
 )
 
-var httpClient = &http.Client{Timeout: 120 * time.Second}
+// CustomTransport fügt jeder Anfrage einen User-Agent-Header hinzu.
+type CustomTransport struct {
+	Transport http.RoundTripper
+}
+
+func (t *CustomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
+	return t.Transport.RoundTrip(req)
+}
+
+// httpClient wird für alle externen HTTP-Anfragen in diesem Service verwendet.
+var httpClient = &http.Client{
+	Timeout: 60 * time.Second,
+	Transport: &CustomTransport{
+		Transport: http.DefaultTransport,
+	},
+}
 
 // FetchService kümmert sich um die Orchestrierung des gesamten Fetch-Prozesses.
 type FetchService struct {
