@@ -1,20 +1,28 @@
-# Stage 1: Builder
-FROM golang:1.24 AS builder
+# Build-Stage
+FROM golang:1.24-alpine AS builder
+
 WORKDIR /app
 
-# Abhängigkeiten herunterladen
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Quellcode kopieren und bauen
-COPY . ./
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags='-s -w' -o /paper-hand
+COPY . .
 
-# Stage 2: Final
-FROM scratch
+RUN CGO_ENABLED=0 GOOS=linux go build -v -o paper-hand .
 
-# Binärdatei aus dem Builder-Stage kopieren
-COPY --from=builder /paper-hand /paper-hand
+# Final-Stage
+FROM alpine:latest
 
-# Kommando zum Starten
-ENTRYPOINT ["/paper-hand"]
+# Füge Root-Zertifikate für HTTPS-Anfragen hinzu
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /app
+
+COPY --from=builder /app/paper-hand .
+
+# Die Konfiguration wird über Umgebungsvariablen in docker-compose.prod.yml bereitgestellt
+# COPY .env .
+
+EXPOSE 4242
+
+CMD ["./paper-hand"]
