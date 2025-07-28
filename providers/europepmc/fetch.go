@@ -10,22 +10,35 @@ import (
 	"strings"
 	"time"
 
+	"context"
+
 	"go.uber.org/zap"
+	"golang.org/x/time/rate"
 )
 
 const baseURL = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
 
 var httpClient = &http.Client{Timeout: 60 * time.Second}
 
-// Fetcher implementiert das Provider-Interface für Europe PMC.
+// Fetcher steuert die Abrufe von Europe PMC.
 type Fetcher struct {
-	Config *config.Config
-	Logger *zap.Logger
+	Config     *config.Config
+	Logger     *zap.Logger
+	HttpClient *http.Client
+	Limiter    *rate.Limiter
 }
 
-// NewFetcher erstellt einen neuen Europe PMC Fetcher.
+// NewFetcher erstellt einen neuen Europe PMC-Fetcher.
 func NewFetcher(cfg *config.Config, logger *zap.Logger) *Fetcher {
-	return &Fetcher{Config: cfg, Logger: logger}
+	return &Fetcher{
+		Config: cfg,
+		Logger: logger,
+		HttpClient: &http.Client{
+			Timeout: 30 * time.Second,
+		},
+		// Limitiert auf 10 Anfragen pro Sekunde, wie von EuropePMC erlaubt.
+		Limiter: rate.NewLimiter(rate.Every(time.Second/10), 1),
+	}
 }
 
 // Name gibt den Namen des Providers zurück.
@@ -37,6 +50,10 @@ func (f *Fetcher) Name() string {
 func (f *Fetcher) Search(term string) ([]*models.Paper, error) {
 	log := f.Logger.With(zap.String("term", term))
 	log.Info("Starte Suche auf Europe PMC.")
+
+	if err := f.Limiter.Wait(context.Background()); err != nil {
+		return nil, err
+	}
 
 	// Wir fügen den Open Access Filter direkt zur Query hinzu, falls gewünscht.
 	query := term

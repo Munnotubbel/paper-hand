@@ -1,0 +1,40 @@
+services:
+  paper-backend:
+    image: ghcr.io/munnotubbel/paper-hand:main
+    restart: always
+    environment:
+      # App-Konfiguration
+      - HTTP_PORT=${HTTP_PORT}
+      - ENABLED_PROVIDERS=${ENABLED_PROVIDERS}
+      - PUBMED_BASE_URL=${PUBMED_BASE_URL}
+      - PUBMED_API_KEY=${PUBMED_API_KEY}
+      - PUBMED_EMAIL=${PUBMED_EMAIL}
+      - PUBMED_TOOL=${PUBMED_TOOL}
+      - PUBMED_FREE_FULL_TEXT_ONLY=${PUBMED_FREE_FULL_TEXT_ONLY}
+      - PUBMED_MAX_PAGES=${PUBMED_MAX_PAGES}
+      - PUBMED_SEARCH_TERM=${PUBMED_SEARCH_TERM}
+      - CRON_SCHEDULE=${CRON_SCHEDULE}
+      - UNPAYWALL_EMAIL=${UNPAYWALL_EMAIL}
+
+      # DB-Verbindung (wird von Docker Compose bereitgestellt)
+      - DB_HOST=postgres_meta
+      - DB_USER=${POSTGRES_META_USER}
+      - DB_PASSWORD=${POSTGRES_META_PASSWORD}
+      - DB_NAME=${POSTGRES_META_DB}
+    ports:
+      - "${HTTP_PORT}:${HTTP_PORT}"
+    depends_on:
+      - postgres_meta
+
+  postgres_meta:
+    image: postgres:14-alpine
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_META_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_META_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_META_DB}
+
+volumes:
+  db_data:

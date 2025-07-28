@@ -15,7 +15,10 @@ import (
 
 	"sync"
 
+	"context"
+
 	"go.uber.org/zap"
+	"golang.org/x/time/rate"
 )
 
 var (
@@ -24,15 +27,25 @@ var (
 	tarRegex   = regexp.MustCompile(`href="([^"]+\.tar\.gz)"`)
 )
 
-// Fetcher ist eine Struktur, die die Logik zur Interaktion mit PubMed kapselt.
+// Fetcher steuert die Abrufe von PubMed.
 type Fetcher struct {
-	Config *config.Config
-	Logger *zap.Logger
+	Config     *config.Config
+	Logger     *zap.Logger
+	HttpClient *http.Client
+	Limiter    *rate.Limiter
 }
 
-// NewFetcher erstellt eine neue Instanz des PubMed-Fetchers.
+// NewFetcher erstellt einen neuen PubMed-Fetcher.
 func NewFetcher(cfg *config.Config, logger *zap.Logger) *Fetcher {
-	return &Fetcher{Config: cfg, Logger: logger}
+	return &Fetcher{
+		Config: cfg,
+		Logger: logger,
+		HttpClient: &http.Client{
+			Timeout: 30 * time.Second,
+		},
+		// Limitiert auf 3 Anfragen pro Sekunde, wie von PubMed empfohlen.
+		Limiter: rate.NewLimiter(rate.Every(time.Second/3), 1),
+	}
 }
 
 // Name gibt den Namen des Providers zurück.
@@ -40,8 +53,13 @@ func (f *Fetcher) Name() string {
 	return "pubmed"
 }
 
-// Search führt eine vollständige Suche auf PubMed durch: holt IDs und dann die Details für jede ID.
+// Search führt eine vollständige Suche auf PubMed durch.
 func (f *Fetcher) Search(term string) ([]*models.Paper, error) {
+	// Vor der API-Anfrage auf den Limiter warten.
+	if err := f.Limiter.Wait(context.Background()); err != nil {
+		return nil, err
+	}
+
 	ids, err := f.searchIDs(term)
 	if err != nil {
 		return nil, fmt.Errorf("fehler bei der PubMed ID-Suche: %w", err)
@@ -166,6 +184,10 @@ func (f *Fetcher) fetchPaperDetails(pmid string) (*models.Paper, error) {
 
 // fetchMetadata holt Metadaten für eine einzelne PMID via EFetch.
 func (f *Fetcher) fetchMetadata(pmid string) (*models.Paper, error) {
+	if err := f.Limiter.Wait(context.Background()); err != nil {
+		return nil, err
+	}
+
 	efetchURL := fmt.Sprintf("%s/efetch.fcgi?db=pubmed&id=%s&retmode=xml&api_key=%s",
 		f.Config.PubMedBaseURL, pmid, f.Config.PubMedAPIKey)
 	f.Logger.Debug("Rufe EFetch-URL für Metadaten auf", zap.String("url", efetchURL))
