@@ -38,6 +38,24 @@ func init() {
 	prometheus.MustRegister(newPapersCounter)
 }
 
+func apiKeyAuthMiddleware(cfg *config.Config) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Wenn kein API-Key in der Konfiguration gesetzt ist (z.B. in lokaler Entwicklung),
+		// wird die Middleware übersprungen.
+		if cfg.APISecretKey == "" {
+			c.Next()
+			return
+		}
+
+		apiKey := c.GetHeader("X-API-KEY")
+		if apiKey != cfg.APISecretKey {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: Invalid API Key"})
+			return
+		}
+		c.Next()
+	}
+}
+
 func main() {
 	cfg, err := config.Load()
 	if err != nil {
@@ -117,6 +135,9 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Recovery(), gin.Logger())
 	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
+
+	// Registriere die API-Key-Middleware global
+	router.Use(apiKeyAuthMiddleware(cfg))
 
 	setupSubstanceRoutes(router, db)
 	setupSearchFilterRoutes(router, db)

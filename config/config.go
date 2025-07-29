@@ -39,6 +39,9 @@ type Config struct {
 
 	// Provider-Konfiguration
 	EnabledProviders string `envconfig:"ENABLED_PROVIDERS" default:"pubmed,europepmc"`
+
+	// API Security
+	APISecretKey string `envconfig:"API_SECRET_KEY"`
 }
 
 // DSN gibt den Data Source Name für die PostgreSQL-Verbindung zurück.
