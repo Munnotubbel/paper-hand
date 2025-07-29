@@ -14,7 +14,6 @@ import (
 	"paper-hand/providers/unpaywall"
 	"paper-hand/services"
 	"paper-hand/storage"
-	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -131,11 +130,11 @@ func main() {
 	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	// Setup Routes
-	setupPaperRoutes(router, rawDB)
-	setupSubstanceRoutes(router, rawDB)
-	setupSearchFilterRoutes(router, rawDB)
+	setupPaperRoutes(router, rawDB, logging)
+	setupSubstanceRoutes(router, rawDB, logging)
+	setupSearchFilterRoutes(router, rawDB, logging)
 	setupSearchRoutes(router, fetchService)
-	setupRatedPaperRoutes(router, ratedDB)
+	setupRatedPaperRoutes(router, ratedDB, logging)
 
 	// Setup Cron
 	cronScheduler := cron.New()
@@ -157,40 +156,49 @@ func main() {
 	}
 }
 
-func setupPaperRoutes(router *gin.Engine, db *gorm.DB) {
+func setupPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 	rg := router.Group("/papers")
 
+	// Einfacher GET-Endpunkt, um alle Paper abzurufen (ohne Filter)
 	rg.GET("/", func(c *gin.Context) {
 		var papers []models.Paper
+		if err := db.Find(&papers).Error; err != nil {
+			log.Error("Database query for all papers failed", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
+			return
+		}
+		c.JSON(http.StatusOK, papers)
+	})
+
+	// Neuer, body-gesteuerter Endpunkt für komplexe Abfragen
+	rg.POST("/query", func(c *gin.Context) {
+		type PaperQuery struct {
+			Substance   string `json:"substance"`
+			TransferN8N *bool  `json:"transfer_n8n"`
+			Limit       int    `json:"limit"`
+		}
+
+		var req PaperQuery
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			return
+		}
+
 		query := db.Model(&models.Paper{})
 
-		// Filter für transfer_n8n
-		if transferN8N, ok := c.GetQuery("transfer_n8n"); ok {
-			b, err := strconv.ParseBool(transferN8N)
-			if err == nil {
-				query = query.Where("transfer_n8n = ?", b)
-			}
+		if req.Substance != "" {
+			query = query.Where("substance = ?", req.Substance)
+		}
+		if req.TransferN8N != nil {
+			query = query.Where("transfer_n8n = ?", *req.TransferN8N)
+		}
+		if req.Limit > 0 {
+			query = query.Limit(req.Limit)
 		}
 
-		// Filter für substance
-		if substance, ok := c.GetQuery("substance"); ok && substance != "" {
-			query = query.Where("substance = ?", substance)
-		}
-
-		// Filter für study_design
-		if studyDesign, ok := c.GetQuery("study_design"); ok && studyDesign != "" {
-			query = query.Where("study_design = ?", studyDesign)
-		}
-
-		// Limit für die Anzahl der Ergebnisse
-		if limit, ok := c.GetQuery("limit"); ok {
-			l, err := strconv.Atoi(limit)
-			if err == nil && l > 0 {
-				query = query.Limit(l)
-			}
-		}
-
+		var papers []models.Paper
 		if err := query.Order("created_at desc").Find(&papers).Error; err != nil {
+			log.Error("Database query for papers failed", zap.Error(err))
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
 			return
 		}
@@ -198,28 +206,41 @@ func setupPaperRoutes(router *gin.Engine, db *gorm.DB) {
 		c.JSON(http.StatusOK, papers)
 	})
 
+	// PUT-Endpunkt zum Aktualisieren bleibt gleich
 	rg.PUT("/:id", func(c *gin.Context) {
 		id := c.Param("id")
+
+		// Zuerst prüfen, ob das Paper existiert
 		var paper models.Paper
 		if err := db.First(&paper, id).Error; err != nil {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
 				c.JSON(http.StatusNotFound, gin.H{"error": "paper not found"})
 				return
 			}
+			log.Error("DB error checking for paper on PUT", zap.String("id", id), zap.Error(err))
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
 			return
 		}
-		// Nur die Felder aktualisieren, die im Request Body gesendet werden
-		if err := c.ShouldBindJSON(&paper); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+
+		// Nur die gesendeten Felder binden, um Überschreiben zu verhindern
+		var updateData map[string]interface{}
+		if err := c.ShouldBindJSON(&updateData); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request body"})
 			return
 		}
-		db.Model(&models.Paper{}).Where("id = ?", id).Updates(paper)
+
+		// Update ausführen
+		if err := db.Model(&paper).Updates(updateData).Error; err != nil {
+			log.Error("DB error updating paper", zap.String("id", id), zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to update paper"})
+			return
+		}
+
 		c.JSON(http.StatusOK, paper)
 	})
 }
 
-func setupSubstanceRoutes(router *gin.Engine, db *gorm.DB) {
+func setupSubstanceRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 	rg := router.Group("/substances")
 	rg.POST("/", func(c *gin.Context) {
 		var sub models.Substance
@@ -243,7 +264,7 @@ func setupSubstanceRoutes(router *gin.Engine, db *gorm.DB) {
 	})
 }
 
-func setupSearchFilterRoutes(router *gin.Engine, db *gorm.DB) {
+func setupSearchFilterRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 	rg := router.Group("/search-filters")
 	rg.POST("/", func(c *gin.Context) {
 		var filter models.SearchFilter
@@ -304,7 +325,7 @@ func setupSearchRoutes(router *gin.Engine, fetchService *services.FetchService) 
 	})
 }
 
-func setupRatedPaperRoutes(router *gin.Engine, db *gorm.DB) {
+func setupRatedPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 	rg := router.Group("/rated-papers")
 	rg.POST("/", func(c *gin.Context) {
 		var ratedPaper models.RatedPaper

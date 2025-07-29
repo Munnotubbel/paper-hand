@@ -1,13 +1,63 @@
 services:
-  paper-backend:
-    image: ghcr.io/munnotubbel/paper-hand:latest
+  n8n:
+    image: mein-n8n-custom:latest
+    restart: always
+    ports:
+      - "${EXTERNAL_PORT}:${N8N_PORT}"
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+      - N8N_HOST=${N8N_HOST}
+      - N8N_PORT=${N8N_PORT}
+      - N8N_PROTOCOL=${N8N_PROTOCOL}
+      - NODE_ENV=production
+      - NODE_FUNCTION_ALLOW_EXTERNAL=xml2js
+      - WEBHOOK_URL=${N8N_PROTOCOL}://${N8N_HOST}/
+      - N8N_PUSH_BACKEND=websocket
+      - N8N_PROXY_HOPS=1
+      - N8N_EXPRESS_TRUST_PROXY=true
+      - N8N_RUNNERS_ENABLED=${N8N_RUNNERS_ENABLED}
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=${N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS}
+      - N8N_BASIC_AUTH_ACTIVE=${N8N_BASIC_AUTH_ACTIVE}
+      - N8N_WEBHOOK_CORS_ALLOWED_ORIGINS=*
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      - postgres
+      - postgres_meta
+      - qdrant
+      - mongodb
+
+  postgres:
+    image: postgres:17-alpine
     restart: always
     environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_NON_ROOT_USER=${POSTGRES_NON_ROOT_USER}
+      - POSTGRES_NON_ROOT_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  paper-backend:
+    image: ghcr.io/munnotubbel/paper-hand:main
+    restart: always
+    env_file:
+      - .env
+    environment:
       # App-Konfiguration
-      - GIN_MODE=release
-      - HTTP_PORT=4242
       - API_SECRET_KEY=${API_SECRET_KEY}
-      - ENABLED_PROVIDERS="pubmed,europepmc"
+      - GIN_MODE=${GIN_MODE}
+      - HTTP_PORT=${HTTP_PORT}
+      - ENABLED_PROVIDERS=${ENABLED_PROVIDERS}
       - PUBMED_BASE_URL=${PUBMED_BASE_URL}
       - PUBMED_API_KEY=${PUBMED_API_KEY}
       - PUBMED_EMAIL=${PUBMED_EMAIL}
@@ -18,25 +68,37 @@ services:
       - CRON_SCHEDULE=${CRON_SCHEDULE}
       - UNPAYWALL_EMAIL=${UNPAYWALL_EMAIL}
 
-      # DB-Verbindung (wird von Docker Compose bereitgestellt)
-      - DB_HOST=postgres_meta
-      - DB_USER=${POSTGRES_META_USER}
-      - DB_PASSWORD=${POSTGRES_META_PASSWORD}
-      - DB_NAME=${POSTGRES_META_DB}
+      # Raw Papers DB Connection
+      - POSTGRES_RAW_HOST=postgres_meta
+      - POSTGRES_RAW_USER=${POSTGRES_META_USER}
+      - POSTGRES_RAW_PASSWORD=${POSTGRES_META_PASSWORD}
+      - POSTGRES_RAW_DB=${POSTGRES_META_DB}
+
+      # Rated Papers DB Connection
+      - POSTGRES_RATED_HOST=postgres_rated_papers
+      - POSTGRES_RATED_PORT=5432 # <-- Wichtig: Interner Docker-Port ist immer 5432
+      - POSTGRES_RATED_USER=${POSTGRES_RATED_USER}
+      - POSTGRES_RATED_PASSWORD=${POSTGRES_RATED_PASSWORD}
+      - POSTGRES_RATED_DB=${POSTGRES_RATED_DB}
+
     ports:
       - "${HTTP_PORT}:${HTTP_PORT}"
     depends_on:
       - postgres_meta
+      - postgres_rated_papers
 
   postgres_meta:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     restart: always
-    volumes:
-      - db_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=${POSTGRES_META_USER}
       - POSTGRES_PASSWORD=${POSTGRES_META_PASSWORD}
       - POSTGRES_DB=${POSTGRES_META_DB}
+    ports:
+      - "${POSTGRES_META_PORT}:5432"
+    volumes:
+      - postgres_meta_data:/var/lib/postgresql/data
+
 
   postgres_rated_papers:
     image: postgres:16-alpine
@@ -48,26 +110,42 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_RATED_PASSWORD}
       - POSTGRES_DB=${POSTGRES_RATED_DB}
     ports:
-      - "5433:5432"
+      - "5411:5432"
 
   db-backup:
     image: ghcr.io/munnotubbel/paper-hand-backup:main
     restart: always
     environment:
-      - CRON_SCHEDULE="0 3 * * 0" # Sonntag 3 Uhr
+      # Cron-Zeitplan (Sonntag um 03:00 Uhr)
+      - CRON_SCHEDULE="0 3 * * 0"
+
+      # DB-Verbindungsvariablen
       - POSTGRES_HOST=postgres_meta
       - POSTGRES_USER=${POSTGRES_META_USER}
       - POSTGRES_PASSWORD=${POSTGRES_META_PASSWORD}
       - POSTGRES_DB=${POSTGRES_META_DB}
+
+      # S3-Backup-Bucket-Variablen
       - BACKUP_S3_BUCKET=${BACKUP_S3_BUCKET}
       - BACKUP_S3_ENDPOINT=${BACKUP_S3_ENDPOINT}
       - BACKUP_S3_ACCESS_KEY=${BACKUP_S3_ACCESS_KEY}
       - BACKUP_S3_SECRET_KEY=${BACKUP_S3_SECRET_KEY}
       - BACKUP_S3_REGION=${BACKUP_S3_REGION}
       - KEEP_BACKUPS=4
-      - BACKUP_FILE_PREFIX=meta-db
+    entrypoint: >
+      sh -c "echo \"$CRON_SCHEDULE /backup-tool >> /var/log/cron.log 2>&1\" > /etc/crontabs/root && crond -f -L /var/log/cron.log"
     depends_on:
       - postgres_meta
+  qdrant:
+    image: qdrant/qdrant:latest
+    restart: always
+    ports:
+      - "${QDRANT_HTTP_PORT:-6333}:6333"
+      - "${QDRANT_GRPC_PORT:-6334}:6334"
+    environment:
+      - QDRANT__SERVICE__API_KEY=${QDRANT_API_KEY}
+    volumes:
+      - qdrant_data:/qdrant/storage
 
   rated-papers-db-backup:
     image: ghcr.io/munnotubbel/paper-hand-backup:main
@@ -88,6 +166,22 @@ services:
     depends_on:
       - postgres_rated_papers
 
+  mongodb:
+    image: mongo:latest
+    restart: always
+    ports:
+      - "${MONGO_PORT}:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+
 volumes:
-  db_data:
+  n8n_data:
+  postgres_data:
+  postgres_meta_data: {}
+  qdrant_data: {}
+  mongodb_data: {}
   db_rated_data:
