@@ -3,29 +3,33 @@
     "nodes": [
       {
         "parameters": {},
-        "id": "1d90e3d5-0b96-486b-8cb9-10fe45a3fa1b",
+        "id": "11b2a888-de0d-4993-aed5-e82d68830d00",
         "name": "Start",
         "type": "n8n-nodes-base.start",
         "typeVersion": 1,
         "position": [
-          0,
-          0
+          -2128,
+          -96
         ]
       },
       {
         "parameters": {
-          "url": "http://paper-backend:4242/papers?transfer_n8n=false&limit=1",
+          "method": "POST",
+          "url": "http://paper-backend:4242/papers/query",
           "authentication": "genericCredentialType",
           "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n    \"substance\": \"curcumin\",\n    \"transfer_n8n\": false,\n    \"limit\": 1\n}",
           "options": {}
         },
-        "id": "f60226b3-6cf7-4789-9e37-ba6d9daaae72",
+        "id": "4cc4b37b-be64-4b9c-a95f-9962f06d4bf9",
         "name": "1. Get Raw Paper",
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.1,
         "position": [
-          224,
-          0
+          -1904,
+          -96
         ],
         "credentials": {
           "httpBearerAuth": {
@@ -40,37 +44,17 @@
       },
       {
         "parameters": {
-          "conditions": {
-            "boolean": [
-              {
-                "value1": "={{ $json.body.length > 0 }}",
-                "value2": true
-              }
-            ]
-          }
-        },
-        "id": "12879abf-542f-448f-8149-e0ba1e420068",
-        "name": "2. Paper Found?",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          464,
-          0
-        ]
-      },
-      {
-        "parameters": {
           "url": "http://localhost:4242/rated-papers",
           "authentication": "headerAuth",
           "options": {}
         },
-        "id": "f2d3c289-9b25-4039-a231-c3a25663d099",
+        "id": "e21dcc20-d9c7-463c-989b-b0a38fc768b9",
         "name": "7. Save to Rated DB",
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.1,
         "position": [
-          1280,
-          -16
+          -848,
+          -112
         ]
       },
       {
@@ -79,13 +63,13 @@
           "authentication": "headerAuth",
           "options": {}
         },
-        "id": "1dffca06-883f-4dae-bec9-7c411b3c5b3e",
+        "id": "de4daf0d-d660-438e-8975-bff258b8108a",
         "name": "8. Mark Raw Paper as Processed",
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.1,
         "position": [
-          1808,
-          0
+          -272,
+          -112
         ]
       },
       {
@@ -101,10 +85,10 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
         "typeVersion": 1.2,
         "position": [
-          592,
-          192
+          -1120,
+          96
         ],
-        "id": "85088f34-6a9b-4a69-bed8-d9211d8113c0",
+        "id": "c104f8da-9774-4ab5-9e64-768c04b5e10c",
         "name": "OpenAI Chat Model",
         "credentials": {
           "openAiApi": {
@@ -120,10 +104,10 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
         "typeVersion": 1,
         "position": [
-          720,
-          192
+          -992,
+          96
         ],
-        "id": "fbdd7755-4cc2-4d07-a8a8-91e3634f00cc",
+        "id": "ffd7f487-587a-4b95-a91f-be9481b567b6",
         "name": "DeepSeek Chat Model",
         "credentials": {
           "deepSeekApi": {
@@ -134,46 +118,22 @@
       },
       {
         "parameters": {
-          "contextWindowLength": 500000
-        },
-        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-        "typeVersion": 1.3,
-        "position": [
-          848,
-          192
-        ],
-        "id": "71635a58-3c19-44d5-a545-8fcc41403a7d",
-        "name": "Simple Memory"
-      },
-      {
-        "parameters": {},
-        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-        "typeVersion": 1.3,
-        "position": [
-          992,
-          144
-        ],
-        "id": "c9db7291-bb97-4f8e-930d-1358331ef070",
-        "name": "Structured Output Parser"
-      },
-      {
-        "parameters": {
           "text": "=Du bist ein extrem erfahrener und kritischer Chefredakteur eines renommierten Wissenschaftsmagazins. Deine Aufgabe ist es, die Arbeit eines Junior-Analysten (einer KI) zu überprüfen und eine finale Freigabeentscheidung zu treffen.\n\nDir liegen zwei Dokumente vor:\n1.  Der Originaltext eines wissenschaftlichen Papers.\n2.  Die JSON-Analyse, die der Junior-Analyst zu diesem Paper erstellt hat.\n\n**Deine Aufgabe:**\nBewerte die Qualität der JSON-Analyse basierend auf dem Originaltext. Ist die Analyse akkurat, kritisch und objektiv?\n\nBeantworte die folgenden Fragen in deiner Bewertung:\n\n1.  **Korrektheit der Zusammenfassung (`ai_summary`):** Spiegelt die Zusammenfassung die Kernaussage und die Ergebnisse des Papers korrekt wider, oder ist sie beschönigend oder irreführend?\n2.  **Validität der Kernaussagen (`key_findings`):** Sind die extrahierten Kernaussagen wirklich die wichtigsten Ergebnisse der Studie? Sind sie durch die Daten im Paper gedeckt?\n3.  **Kritisches Urteilsvermögen (`study_strengths` & `study_limitations`):** Hat der Analyst die wichtigsten Stärken und Schwächen der Studie erkannt? Hat er offensichtliche Interessenkonflikte (z.B. Finanzierung durch Hersteller) oder methodische Mängel übersehen?\n4.  **Angemessenheit des Ratings (`rating` & `confidence_score`):** Ist die numerische Bewertung (1-10) im Lichte der Limitationen der Studie gerechtfertigt? Oder ist sie zu hoch oder zu niedrig angesetzt?\n\n**Dein Output:**\nGib eine kurze, prägnante Bewertung in Prosa ab und schließe mit einer klaren Empfehlung.\n\n---\n**Originaltext des Papers:**\n\"\"\"\n{{ HIER DEN URSPRÜNGLICHEN PDF-TEXT EINFÜGEN }}\n\"\"\"\n\n---\n**JSON-Analyse des Junior-Analysten:**\n\"\"\"\n{{ HIER DAS JSON-OBJEKT DES VORHERIGEN SCHRITTS EINFÜGEN }}\n\"\"\"\n\n---\n**Deine finale Bewertung und Empfehlung:**",
           "options": {}
         },
         "type": "@n8n/n8n-nodes-langchain.agentTool",
         "typeVersion": 2.2,
         "position": [
-          832,
-          352
+          -880,
+          256
         ],
-        "id": "9cb78c31-72a2-4010-9b02-cb96af49cb3c",
+        "id": "648b3210-0bab-4787-add6-1c6692a5d312",
         "name": "AI evaluation Agent"
       },
       {
         "parameters": {
           "promptType": "define",
-          "text": "=### ROLLE UND ZIELSETZUNG ###\nDu bist der Chief Science Officer & Head of Content für ein angesehenes, evidenzbasiertes Portal für Nahrungsergänzungsmittel. Deine L  Du bist ein hochqualifizierter, kritischer Wissenschaftler und zugleich ein talentierter Wissenschaftsjournalist. Deine Aufgabe ist es, den folgenden wissenschaftlichen Text zu analysieren und ein strukturiertes JSON-Objekt zurückzugeben. Antworte NUR mit dem JSON-Objekt und keinem weiteren Text.\n  \n  Deine Analyse soll zwei Ziele verfolgen:\n  1.  Die wissenschaftliche Belastbarkeit der Studie kritisch zu bewerten.\n  2.  Das Potenzial der Studie für die Erstellung von laienverständlichem Content zu identifizieren und vor allem von Blog Beiträgen für ein Food Supplement Portal.\n  \n  Hier sind deine Bewertungsanweisungen:\n  \n  1.  **rating (Zahl von 1-10):** Bewerte die Gesamtqualität der Studie.\n      - 10/10: Große, randomisierte, doppelblinde Humanstudie (RCT) mit signifikanten Ergebnissen, publiziert in einem Top-Journal, ohne Interessenkonflikte.\n      - 5/10: Beobachtungsstudie, kleine Stichprobe oder Tierstudie mit interessanten, aber nicht endgültigen Ergebnissen.\n      - 1/10: Methodisch sehr schwach, starke Interessenkonflikte, kaum Aussagekraft.\n  \n  2.  **confidence_score (Zahl von 0-1):** Gib an, wie sicher du dir bei deiner Bewertung bist. Ein hoher Score bedeutet, dass die Datenlage im Paper eindeutig ist. Ein niedriger Score bedeutet, dass die Studie widersprüchlich oder unklar ist.\n  \n  3.  **category (Text):** Wähle EINE der folgenden Kategorien: \"Hoch-Relevant (Content-Gold)\", \"Solide Evidenz\", \"Interessanter Ansatz\", \"Methodisch schwach\", \"Zu Nische\".\n  \n  4.  **ai_summary (Text):** Erstelle eine kurze, für Laien verständliche Zusammenfassung der Studie in 2-3 Sätzen. Was wurde getan und was kam dabei heraus?\n  \n  5.  **key_findings (Text als JSON-Array-String):** Extrahiere die 3 wichtigsten Kernaussagen als String, der ein JSON-Array darstellt. Beispiel: \"[\\\"Ergebnis A wurde beobachtet\\\", \\\"Substanz B war wirksam\\\", \\\"Keine Nebenwirkungen gefunden\\\"]\".\n  \n  6.  **study_strengths (Text):** Liste die 2-3 größten Stärken der Studie auf (z.B. \"Doppelblind-Design\", \"Große Teilnehmerzahl\").\n  \n  7.  **study_limitations (Text):** Liste die 2-3 größten Schwächen der Studie auf (z.B. \"Kurze Dauer\", \"Interessenkonflikt\", \"Kleine Stichprobe\").\n  \n  8.  **content_idea (Text):** Gib EINE konkrete, reißerische Titel-Idee für einen Blog-Post oder ein Video basierend auf der Studie an.\n  \n  Hier ist der zu analysierende Text:\n  \"\"\"\n  Gib deine Antwort NUR als valides JSON-Objekt aus.eser verlassen sich auf dich für präzise, verständliche und vertrauenswürdige Informationen.\n\n**Deine Kern-Mission:** Deine Mission ist es, die Spreu vom Weizen zu trennen. Du identifizierst wissenschaftlich fundierte Studien, die für unsere Leser einen echten Mehrwert bieten, und übersetzt sie in verständliche, aber niemals übertriebene Kernaussagen.\n**Deine Anti-Mission (Entscheidende Richtlinien):** Deine oberste Priorität ist die Glaubwürdigkeit des Portals. Du bist extrem allergisch gegen Hype, der auf schwacher Evidenz basiert. Du deckst Interessenkonflikte, methodische Mängel, die Verwendung von Surrogat-Endpunkten anstelle von harten klinischen Endpunkten und übertriebene Schlussfolgerungen gnadenlos auf. Eine negative, aber ehrliche Bewertung einer Studie ist wertvoller als eine unkritische, positive.\n\n### INTERNER DENKPROZESS (Schritt-für-Schritt-Analyse) ###\nBevor du das finale JSON-Objekt erstellst, folge intern diesem rigorosen Denkprozess:\n1.  **Kontext-Prüfung:** Identifiziere die untersuchte Substanz, die Dosis und die Zielgruppe der Studie. Ist dies für ein Nahrungsergänzungsmittel-Portal relevant?\n2.  **Studiendesign-Analyse:** Klassifiziere das Design (z.B. Meta-Analyse, RCT, Beobachtungsstudie, Tierstudie, In-vitro). Wie hoch ist es in der Evidenzpyramide anzusiedeln?\n3.  **Rigorositäts-Analyse:** Bewerte die methodische Qualität. Achte auf Stichprobengröße (n), Studiendauer, Kontrollgruppen, Verblindung, statistische Signifikanz (p-Werte) und die Relevanz der gemessenen Endpunkte.\n4.  **Bias-Detektion:** Überprüfe die Studie auf potenzielle Verzerrungen. Wer hat die Studie finanziert (Industrie vs. unabhängig)? Gibt es Interessenkonflikte bei den Autoren?\n5.  **Synthese & Urteilsbildung:** Fasse alle Punkte zusammen, um zu einer ausgewogenen Gesamtbewertung zu gelangen, die sowohl die wissenschaftliche Qualität als auch die Relevanz für den Endverbraucher berücksichtigt.\n\n### FINALES OUTPUT-FORMAT ###\nBasierend auf deinem internen Denkprozess, erstelle das folgende JSON-Objekt. Antworte NUR mit diesem JSON-Objekt und keinem weiteren Text.\n\n{\n  \"rating\": \"Bewerte die Gesamtqualität und Relevanz der Studie für dein Portal auf einer Skala von 1-10. Nutze die folgende Rubrik:\n    - 9-10: Wegweisende Humanstudie (großer RCT/Meta-Analyse) mit klaren, klinisch relevanten Ergebnissen und ohne Bias. Muss für Content verwendet werden.\n    - 7-8: Gut durchgeführte Humanstudie (RCT) mit statistisch signifikanten Ergebnissen, eventuell mit kleinen Limitationen. Starke Content-Basis.\n    - 5-6: Kleinere Humanstudie (Pilot), gut gemachte Beobachtungsstudie oder eine sehr relevante Tierstudie. Interessant, aber mit großer Vorsicht zu kommunizieren.\n    - 3-4: Tier- oder In-vitro-Studie mit begrenzter Relevanz für den Menschen, oder eine methodisch schwache Humanstudie. Nicht für direkten Content geeignet.\n    - 1-2: Methodisch unbrauchbar, starker Bias, oder für das Thema irrelevant.\",\n  \"confidence_score\": \"Bewerte deine eigene Sicherheit bei dieser Analyse von 0.0 bis 1.0. Ein hoher Score bedeutet, dass die Datenlage im Paper eindeutig ist. Ein niedriger Score bedeutet, die Studie ist widersprüchlich oder schlecht dokumentiert.\",\n  \"category\": \"Wähle EINE der folgenden action-orientierten Kategorien: 'Priorität 1: Content-Gold', 'Priorität 2: Solide Grundlage', 'Hypothesen-Generierung (Vorsichtig nutzen)', 'Nicht verwenden (Ungeeignet/Riskant)'\",\n  \"ai_summary\": \"Erstelle eine FÜR LAIEN VERSTÄNDLICHE Zusammenfassung (max. 3 Sätze). Beginne mit der wichtigsten Information. Beispiel: 'Eine neue Studie zeigt, dass X mg Substanz Y bei älteren Erwachsenen",
+          "text": "=### ROLLE UND ZIELSETZUNG ###\nDu bist der Chief Science Officer & Head of Content für ein angesehenes, evidenzbasiertes Portal für Nahrungsergänzungsmittel. Deine L  Du bist ein hochqualifizierter, kritischer Wissenschaftler und zugleich ein talentierter Wissenschaftsjournalist. Deine Aufgabe ist es, den folgenden wissenschaftlichen Text zu analysieren und ein strukturiertes JSON-Objekt zurückzugeben. Antworte NUR mit dem JSON-Objekt und keinem weiteren Text.\n  \n  Deine Analyse soll zwei Ziele verfolgen:\n  1.  Die wissenschaftliche Belastbarkeit der Studie kritisch zu bewerten.\n  2.  Das Potenzial der Studie für die Erstellung von laienverständlichem Content zu identifizieren und vor allem von Blog Beiträgen für ein Food Supplement Portal.\n  \n  Hier sind deine Bewertungsanweisungen:\n  \n  1.  **rating (Zahl von 1-10):** Bewerte die Gesamtqualität der Studie.\n      - 10/10: Große, randomisierte, doppelblinde Humanstudie (RCT) mit signifikanten Ergebnissen, publiziert in einem Top-Journal, ohne Interessenkonflikte.\n      - 5/10: Beobachtungsstudie, kleine Stichprobe oder Tierstudie mit interessanten, aber nicht endgültigen Ergebnissen.\n      - 1/10: Methodisch sehr schwach, starke Interessenkonflikte, kaum Aussagekraft.\n  \n  2.  **confidence_score (Zahl von 0-1):** Gib an, wie sicher du dir bei deiner Bewertung bist. Ein hoher Score bedeutet, dass die Datenlage im Paper eindeutig ist. Ein niedriger Score bedeutet, dass die Studie widersprüchlich oder unklar ist.\n  \n  3.  **category (Text):** Wähle EINE der folgenden Kategorien: \"Hoch-Relevant (Content-Gold)\", \"Solide Evidenz\", \"Interessanter Ansatz\", \"Methodisch schwach\", \"Zu Nische\".\n  \n  4.  **ai_summary (Text):** Erstelle eine kurze, für Laien verständliche Zusammenfassung der Studie in 2-3 Sätzen. Was wurde getan und was kam dabei heraus?\n  \n  5.  **key_findings (Text als JSON-Array-String):** Extrahiere die 3 wichtigsten Kernaussagen als String, der ein JSON-Array darstellt. Beispiel: \"[\\\"Ergebnis A wurde beobachtet\\\", \\\"Substanz B war wirksam\\\", \\\"Keine Nebenwirkungen gefunden\\\"]\".\n  \n  6.  **study_strengths (Text):** Liste die 2-3 größten Stärken der Studie auf (z.B. \"Doppelblind-Design\", \"Große Teilnehmerzahl\").\n  \n  7.  **study_limitations (Text):** Liste die 2-3 größten Schwächen der Studie auf (z.B. \"Kurze Dauer\", \"Interessenkonflikt\", \"Kleine Stichprobe\").\n  \n  8.  **content_idea (Text):** Gib EINE konkrete, reißerische Titel-Idee für einen Blog-Post oder ein Video basierend auf der Studie an.\n  \n  Hier ist der zu analysierende Text:\n\"\"\"\n{{ $json.text }}\n\"\"\"\nDer Stoff für den ich Content haben will und suche ist {{ $('1. Get Raw Paper').item.json.substance }}!\n  \n  Gib deine Antwort NUR als valides JSON-Objekt aus.eser verlassen sich auf dich für präzise, verständliche und vertrauenswürdige Informationen.\n\n**Deine Kern-Mission:** Deine Mission ist es, die Spreu vom Weizen zu trennen. Du identifizierst wissenschaftlich fundierte Studien, die für unsere Leser einen echten Mehrwert bieten, und übersetzt sie in verständliche, aber niemals übertriebene Kernaussagen.\n**Deine Anti-Mission (Entscheidende Richtlinien):** Deine oberste Priorität ist die Glaubwürdigkeit des Portals. Du bist extrem allergisch gegen Hype, der auf schwacher Evidenz basiert. Du deckst Interessenkonflikte, methodische Mängel, die Verwendung von Surrogat-Endpunkten anstelle von harten klinischen Endpunkten und übertriebene Schlussfolgerungen gnadenlos auf. Eine negative, aber ehrliche Bewertung einer Studie ist wertvoller als eine unkritische, positive.\n\n### INTERNER DENKPROZESS (Schritt-für-Schritt-Analyse) ###\nBevor du das finale JSON-Objekt erstellst, folge intern diesem rigorosen Denkprozess:\n1.  **Kontext-Prüfung:** Identifiziere die untersuchte Substanz, die Dosis und die Zielgruppe der Studie. Ist dies für ein Nahrungsergänzungsmittel-Portal relevant?\n2.  **Studiendesign-Analyse:** Klassifiziere das Design (z.B. Meta-Analyse, RCT, Beobachtungsstudie, Tierstudie, In-vitro). Wie hoch ist es in der Evidenzpyramide anzusiedeln?\n3.  **Rigorositäts-Analyse:** Bewerte die methodische Qualität. Achte auf Stichprobengröße (n), Studiendauer, Kontrollgruppen, Verblindung, statistische Signifikanz (p-Werte) und die Relevanz der gemessenen Endpunkte.\n4.  **Bias-Detektion:** Überprüfe die Studie auf potenzielle Verzerrungen. Wer hat die Studie finanziert (Industrie vs. unabhängig)? Gibt es Interessenkonflikte bei den Autoren?\n5.  **Synthese & Urteilsbildung:** Fasse alle Punkte zusammen, um zu einer ausgewogenen Gesamtbewertung zu gelangen, die sowohl die wissenschaftliche Qualität als auch die Relevanz für den Endverbraucher berücksichtigt.\n\n### FINALES OUTPUT-FORMAT ###\nBasierend auf deinem internen Denkprozess, erstelle das folgende JSON-Objekt. Antworte NUR mit diesem JSON-Objekt und keinem weiteren Text.\n\n{\n  \"rating\": \"Bewerte die Gesamtqualität und Relevanz der Studie für dein Portal auf einer Skala von 1-10. Nutze die folgende Rubrik:\n    - 9-10: Wegweisende Humanstudie (großer RCT/Meta-Analyse) mit klaren, klinisch relevanten Ergebnissen und ohne Bias. Muss für Content verwendet werden.\n    - 7-8: Gut durchgeführte Humanstudie (RCT) mit statistisch signifikanten Ergebnissen, eventuell mit kleinen Limitationen. Starke Content-Basis.\n    - 5-6: Kleinere Humanstudie (Pilot), gut gemachte Beobachtungsstudie oder eine sehr relevante Tierstudie. Interessant, aber mit großer Vorsicht zu kommunizieren.\n    - 3-4: Tier- oder In-vitro-Studie mit begrenzter Relevanz für den Menschen, oder eine methodisch schwache Humanstudie. Nicht für direkten Content geeignet.\n    - 1-2: Methodisch unbrauchbar, starker Bias, oder für das Thema irrelevant.\",\n  \"confidence_score\": \"Bewerte deine eigene Sicherheit bei dieser Analyse von 0.0 bis 1.0. Ein hoher Score bedeutet, dass die Datenlage im Paper eindeutig ist. Ein niedriger Score bedeutet, die Studie ist widersprüchlich oder schlecht dokumentiert.\",\n  \"category\": \"Wähle EINE der folgenden action-orientierten Kategorien: 'Priorität 1: Content-Gold', 'Priorität 2: Solide Grundlage', 'Hypothesen-Generierung (Vorsichtig nutzen)', 'Nicht verwenden (Ungeeignet/Riskant)'\",\n  \"ai_summary\": \"Erstelle eine FÜR LAIEN VERSTÄNDLICHE Zusammenfassung (max. 3 Sätze). Beginne mit der wichtigsten Information. Beispiel: 'Eine neue Studie zeigt, dass X mg Substanz Y bei älteren Erwachsenen",
           "hasOutputParser": true,
           "needsFallback": true,
           "options": {}
@@ -181,10 +141,10 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 2.1,
         "position": [
-          736,
-          -16
+          -976,
+          -112
         ],
-        "id": "d4dad51e-377f-4470-9c42-9be9c67b4b0a",
+        "id": "7d240dca-809f-4155-b307-4401b2a78add",
         "name": "AI rating Agent"
       },
       {
@@ -195,10 +155,10 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          832,
-          496
+          -880,
+          400
         ],
-        "id": "789412ef-8df8-4465-8322-a34980388b1c",
+        "id": "6a434483-5912-4691-9791-f0927bb2332a",
         "name": "OpenRouter Chat Model",
         "credentials": {
           "openRouterApi": {
@@ -206,6 +166,94 @@
             "name": "OpenRouter account"
           }
         }
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $input.all().length }}",
+                      "rightValue": 0,
+                      "operator": {
+                        "type": "number",
+                        "operation": "gt"
+                      },
+                      "id": "9ca3c566-4222-4f04-8f7a-53905212265f"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Paper gefunden"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          -1712,
+          -96
+        ],
+        "id": "70959467-4583-4788-bec5-6c3287740abc",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "bucketName": "paper-store",
+          "fileKey": "={{ $json.pmid }}.pdf"
+        },
+        "type": "n8n-nodes-base.s3",
+        "typeVersion": 1,
+        "position": [
+          -1504,
+          -96
+        ],
+        "id": "43dc3be0-5692-4fc8-a0fb-d681a5a77c1f",
+        "name": "Download a file",
+        "credentials": {
+          "s3": {
+            "id": "lXbGUFRjp6Yya8kj",
+            "name": "Strato S3 Images"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "pdf",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1,
+        "position": [
+          -1296,
+          -96
+        ],
+        "id": "ae92220c-8aa9-4f09-989e-95c473ceb3d9",
+        "name": "Extract from File"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Die rohe Textantwort aus dem \"output\"-Feld des AI Agent holen\nconst rawResponse = $json.output || \"\";\n\n// Den Anfang und das Ende des JSON-Blocks finden\nconst jsonStart = rawResponse.indexOf('{');\nconst jsonEnd = rawResponse.lastIndexOf('}');\n\n// Prüfen, ob ein JSON-Objekt gefunden wurde\nif (jsonStart === -1 || jsonEnd === -1) {\n  // Fehler ausgeben, damit der Workflow hier stoppt und du es siehst\n  throw new Error(\"Kein valides JSON-Objekt im 'output'-Feld der AI-Antwort gefunden. Antwort war: \" + rawResponse);\n}\n\n// Den reinen JSON-Text extrahieren\nconst jsonString = rawResponse.substring(jsonStart, jsonEnd + 1);\n\ntry {\n  // Den Text in ein echtes JSON-Objekt umwandeln und zurückgeben\n  return JSON.parse(jsonString);\n} catch (e) {\n  // Fehler abfangen, falls das extrahierte JSON immer noch ungültig ist\n  throw new Error(\"Fehler beim Parsen des extrahierten JSON: \" + e.message + \". Extrahierter Text war: \" + jsonString);\n}"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -576,
+          -112
+        ],
+        "id": "8255b9f8-8d7a-4c58-bef9-474ebd44abd7",
+        "name": "Code"
       }
     ],
     "pinData": {},
@@ -225,7 +273,7 @@
         "main": [
           [
             {
-              "node": "2. Paper Found?",
+              "node": "Switch",
               "type": "main",
               "index": 0
             }
@@ -234,24 +282,7 @@
       },
       "7. Save to Rated DB": {
         "main": [
-          [
-            {
-              "node": "8. Mark Raw Paper as Processed",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "2. Paper Found?": {
-        "main": [
-          [
-            {
-              "node": "AI rating Agent",
-              "type": "main",
-              "index": 0
-            }
-          ]
+          []
         ]
       },
       "OpenAI Chat Model": {
@@ -272,28 +303,6 @@
               "node": "AI rating Agent",
               "type": "ai_languageModel",
               "index": 1
-            }
-          ]
-        ]
-      },
-      "Simple Memory": {
-        "ai_memory": [
-          [
-            {
-              "node": "AI rating Agent",
-              "type": "ai_memory",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Structured Output Parser": {
-        "ai_outputParser": [
-          [
-            {
-              "node": "AI rating Agent",
-              "type": "ai_outputParser",
-              "index": 0
             }
           ]
         ]
@@ -319,13 +328,57 @@
             }
           ]
         ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "Download a file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download a file": {
+        "main": [
+          [
+            {
+              "node": "Extract from File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract from File": {
+        "main": [
+          [
+            {
+              "node": "AI rating Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI rating Agent": {
+        "main": [
+          [
+            {
+              "node": "Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "active": false,
     "settings": {
       "executionOrder": "v1"
     },
-    "versionId": "f9c01deb-5991-433b-b4ef-ca9cfbaf9de0",
+    "versionId": "d397d768-4cac-4527-b092-7bc143555441",
     "meta": {
       "templateCredsSetupCompleted": true,
       "instanceId": "e29847cb0d85386a381a01c77c5a370e3c3dcd4f4ebcacf20107c8e6e234123a"

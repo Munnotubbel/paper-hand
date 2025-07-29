@@ -175,6 +175,8 @@ func setupPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 		type PaperQuery struct {
 			Substance   string `json:"substance"`
 			TransferN8N *bool  `json:"transfer_n8n"`
+			CloudStored *bool  `json:"cloud_stored"`
+			NoPDFFound  *bool  `json:"no_pdf_found"`
 			Limit       int    `json:"limit"`
 		}
 
@@ -191,6 +193,12 @@ func setupPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 		}
 		if req.TransferN8N != nil {
 			query = query.Where("transfer_n8n = ?", *req.TransferN8N)
+		}
+		if req.CloudStored != nil {
+			query = query.Where("cloud_stored = ?", *req.CloudStored)
+		}
+		if req.NoPDFFound != nil {
+			query = query.Where("no_pdf_found = ?", *req.NoPDFFound)
 		}
 		if req.Limit > 0 {
 			query = query.Limit(req.Limit)
