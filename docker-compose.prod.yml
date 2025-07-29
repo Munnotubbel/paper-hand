@@ -1,11 +1,13 @@
 services:
   paper-backend:
-    image: ghcr.io/munnotubbel/paper-hand:main
+    image: ghcr.io/munnotubbel/paper-hand:latest
     restart: always
     environment:
       # App-Konfiguration
-      - HTTP_PORT=${HTTP_PORT}
-      - ENABLED_PROVIDERS=${ENABLED_PROVIDERS}
+      - GIN_MODE=release
+      - HTTP_PORT=4242
+      - API_SECRET_KEY=${API_SECRET_KEY}
+      - ENABLED_PROVIDERS="pubmed,europepmc"
       - PUBMED_BASE_URL=${PUBMED_BASE_URL}
       - PUBMED_API_KEY=${PUBMED_API_KEY}
       - PUBMED_EMAIL=${PUBMED_EMAIL}
