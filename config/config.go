@@ -7,13 +7,19 @@ import (
 	"github.com/kelseyhightower/envconfig"
 )
 
-// Config enthält alle Konfigurationsparameter aus Umgebungsvariablen.
+// Config speichert die gesamte Anwendungskonfiguration.
 type Config struct {
-	DBHost     string `envconfig:"DB_HOST" required:"true"`
-	DBPort     int    `envconfig:"DB_PORT" default:"5432"`
-	DBUser     string `envconfig:"DB_USER" required:"true"`
-	DBPassword string `envconfig:"DB_PASSWORD" required:"true"`
-	DBName     string `envconfig:"DB_NAME" required:"true"`
+	// Datenbank-Konfigurationen
+	RawDBHost       string `envconfig:"POSTGRES_RAW_HOST" default:"localhost"`
+	RawDBPort       int    `envconfig:"POSTGRES_RAW_PORT" default:"5432"`
+	RawDBUser       string `envconfig:"POSTGRES_RAW_USER" required:"true"`
+	RawDBPassword   string `envconfig:"POSTGRES_RAW_PASSWORD" required:"true"`
+	RawDBName       string `envconfig:"POSTGRES_RAW_DB" required:"true"`
+	RatedDBHost     string `envconfig:"POSTGRES_RATED_HOST" default:"localhost"`
+	RatedDBPort     int    `envconfig:"POSTGRES_RATED_PORT" default:"5433"`
+	RatedDBUser     string `envconfig:"POSTGRES_RATED_USER" required:"true"`
+	RatedDBPassword string `envconfig:"POSTGRES_RATED_PASSWORD" required:"true"`
+	RatedDBName     string `envconfig:"POSTGRES_RATED_DB" required:"true"`
 
 	HTTPPort string `envconfig:"HTTP_PORT" default:"4242"`
 
@@ -44,13 +50,19 @@ type Config struct {
 	APISecretKey string `envconfig:"API_SECRET_KEY"`
 }
 
-// DSN gibt den Data Source Name für die PostgreSQL-Verbindung zurück.
-func (c *Config) DSN() string {
+// RawDSN gibt den DSN-String für die Rohdaten-Datenbank zurück.
+func (c *Config) RawDSN() string {
 	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
-		c.DBHost, c.DBUser, c.DBPassword, c.DBName, c.DBPort)
+		c.RawDBHost, c.RawDBUser, c.RawDBPassword, c.RawDBName, c.RawDBPort)
 }
 
-// Load lädt die Konfiguration aus den Umgebungsvariablen.
+// RatedDSN gibt den DSN-String für die Bewertungs-Datenbank zurück.
+func (c *Config) RatedDSN() string {
+	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
+		c.RatedDBHost, c.RatedDBUser, c.RatedDBPassword, c.RatedDBName, c.RatedDBPort)
+}
+
+// LoadConfig liest die Konfiguration aus den Umgebungsvariablen.
 func Load() (*Config, error) {
 	_ = godotenv.Load()
 	var c Config

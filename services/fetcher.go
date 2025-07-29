@@ -48,43 +48,55 @@ type FetchService struct {
 	Logger           *zap.Logger
 	Providers        []providers.Provider
 	UnpaywallFetcher *unpaywall.Fetcher
+	httpClient       *http.Client
 }
 
 // NewFetchService erstellt eine neue Instanz des FetchService.
-func NewFetchService(cfg *config.Config, db *gorm.DB, s3 *s3.Client, logger *zap.Logger, providers []providers.Provider) *FetchService {
+func NewFetchService(cfg *config.Config, db *gorm.DB, s3Client *s3.Client, logger *zap.Logger, providers []providers.Provider, unpaywallFetcher *unpaywall.Fetcher) *FetchService {
 	return &FetchService{
 		Config:           cfg,
 		DB:               db,
-		S3Client:         s3,
+		S3Client:         s3Client,
 		Logger:           logger,
 		Providers:        providers,
-		UnpaywallFetcher: unpaywall.NewFetcher(cfg, logger),
+		UnpaywallFetcher: unpaywallFetcher,
+		httpClient: &http.Client{
+			Timeout: 30 * time.Second,
+			Transport: &http.Transport{
+				MaxIdleConns: 10,
+			},
+		},
 	}
 }
 
-// RunAllSubstances führt den Fetch-Prozess für alle in der DB definierten Substanzen und Filter aus.
-func (f *FetchService) RunForAllSubstances(ctx context.Context) (int, error) {
+// RunAllSubstances startet den Fetch-Prozess für alle in der DB hinterlegten Substanzen.
+func (f *FetchService) RunAllSubstances(ctx context.Context) (int, error) {
 	var substances []models.Substance
 	if err := f.DB.Find(&substances).Error; err != nil {
-		f.Logger.Error("Fehler beim Abrufen der Substanzen", zap.Error(err))
+		f.Logger.Error("Failed to get substances from DB", zap.Error(err))
 		return 0, err
 	}
 
-	var filters []models.SearchFilter
-	if err := f.DB.Find(&filters).Error; err != nil {
-		f.Logger.Error("Fehler beim Abrufen der Suchfilter", zap.Error(err))
+	f.Logger.Info("Starting fetch for all substances", zap.Int("count", len(substances)))
+
+	var allFilters []models.SearchFilter
+	if err := f.DB.Find(&allFilters).Error; err != nil {
+		f.Logger.Error("Failed to get search filters from DB", zap.Error(err))
 		return 0, err
 	}
 
 	totalNewPapers := 0
 	for _, sub := range substances {
-		count, err := f.RunForSubstance(ctx, sub, filters)
+		count, err := f.RunForSubstance(ctx, sub, allFilters)
 		if err != nil {
-			f.Logger.Error("Fehler beim Verarbeiten der Substanz", zap.String("substance", sub.Name), zap.Error(err))
+			f.Logger.Error("Failed to run fetch for substance", zap.String("substance", sub.Name), zap.Error(err))
+			// Wir brechen hier nicht ab, sondern machen mit der nächsten Substanz weiter
 			continue
 		}
 		totalNewPapers += count
 	}
+
+	f.Logger.Info("Completed fetch for all substances.", zap.Int("total_new_papers", totalNewPapers))
 	return totalNewPapers, nil
 }
 
