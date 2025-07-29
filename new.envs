@@ -1,7 +1,0 @@
-# ===============================================
-# Neue Umgebungsvariablen für Datenbank-Backups
-# ===============================================
-# Diese müssen zusätzlich in der .env auf dem VPS gesetzt werden.
-
-# Name des S3-Buckets, in dem die DB-Backups gespeichert werden
-

@@ -24,6 +24,7 @@ type BackupConfig struct {
 	PostgresUser     string `envconfig:"POSTGRES_USER" required:"true"`
 	PostgresPassword string `envconfig:"POSTGRES_PASSWORD" required:"true"`
 	PostgresDB       string `envconfig:"POSTGRES_DB" required:"true"`
+	BackupFilePrefix string `envconfig:"BACKUP_FILE_PREFIX" default:"backup"`
 	BackupBucket     string `envconfig:"BACKUP_S3_BUCKET" required:"true"`
 	BackupEndpoint   string `envconfig:"BACKUP_S3_ENDPOINT" required:"true"`
 	BackupAccessKey  string `envconfig:"BACKUP_S3_ACCESS_KEY" required:"true"`
@@ -54,7 +55,8 @@ func main() {
 	}
 
 	// 3. Backup nach S3 hochladen
-	fileName := fmt.Sprintf("backup-%s.sql.gz", time.Now().UTC().Format("2006-01-02T15-04-05Z"))
+	timestamp := time.Now().UTC().Format("2006-01-02T15-04-05Z")
+	fileName := fmt.Sprintf("%s-%s.sql.gz", cfg.BackupFilePrefix, timestamp)
 	err = uploadToS3(s3Client, cfg, fileName, dumpData)
 	if err != nil {
 		log.Fatalf("Fehler beim Hochladen nach S3: %v", err)
