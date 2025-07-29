@@ -36,5 +36,30 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_META_PASSWORD}
       - POSTGRES_DB=${POSTGRES_META_DB}
 
+  db-backup:
+    image: ghcr.io/munnotubbel/paper-hand-backup:main
+    restart: always
+    environment:
+      # Cron-Zeitplan (Sonntag um 03:00 Uhr)
+      - CRON_SCHEDULE="0 3 * * 0"
+
+      # DB-Verbindungsvariablen
+      - POSTGRES_HOST=postgres_meta
+      - POSTGRES_USER=${POSTGRES_META_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_META_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_META_DB}
+
+      # S3-Backup-Bucket-Variablen
+      - BACKUP_S3_BUCKET=${BACKUP_S3_BUCKET}
+      - BACKUP_S3_ENDPOINT=${BACKUP_S3_ENDPOINT}
+      - BACKUP_S3_ACCESS_KEY=${BACKUP_S3_ACCESS_KEY}
+      - BACKUP_S3_SECRET_KEY=${BACKUP_S3_SECRET_KEY}
+      - BACKUP_S3_REGION=${BACKUP_S3_REGION}
+      - KEEP_BACKUPS=4
+    entrypoint: >
+      sh -c "echo \"$CRON_SCHEDULE /backup-tool >> /var/log/cron.log 2>&1\" > /etc/crontabs/root && crond -f -L /var/log/cron.log"
+    depends_on:
+      - postgres_meta
+
 volumes:
   db_data:
