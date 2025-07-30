@@ -134,7 +134,7 @@ func main() {
 	setupSubstanceRoutes(router, rawDB, logging)
 	setupSearchFilterRoutes(router, rawDB, logging)
 	setupSearchRoutes(router, fetchService)
-	setupRatedPaperRoutes(router, ratedDB, logging)
+	setupRatedPaperRoutes(router, ratedDB, rawDB, logging)
 	setupContentArticleRoutes(router, ratedDB, logging)
 
 	// Setup Cron
@@ -334,7 +334,7 @@ func setupSearchRoutes(router *gin.Engine, fetchService *services.FetchService) 
 	})
 }
 
-func setupRatedPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
+func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB, log *zap.Logger) {
 	rg := router.Group("/rated-papers")
 	rg.POST("/", func(c *gin.Context) {
 		var ratedPaper models.RatedPaper
@@ -350,7 +350,7 @@ func setupRatedPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 			"content_idea", "content_status", "content_url", "processed",
 		}
 
-		err := db.Clauses(clause.OnConflict{
+		err := ratedDB.Clauses(clause.OnConflict{
 			Columns:   []clause.Column{{Name: "doi"}},
 			DoUpdates: clause.AssignmentColumns(updateColumns),
 		}).Create(&ratedPaper).Error
@@ -364,7 +364,7 @@ func setupRatedPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 	rg.GET("/:doi", func(c *gin.Context) {
 		doi := c.Param("doi")
 		var ratedPaper models.RatedPaper
-		if err := db.Where("doi = ?", doi).First(&ratedPaper).Error; err != nil {
+		if err := ratedDB.Where("doi = ?", doi).First(&ratedPaper).Error; err != nil {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
 				c.JSON(http.StatusNotFound, gin.H{"error": "Rated paper not found"})
 				return
@@ -372,7 +372,31 @@ func setupRatedPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
 			return
 		}
-		c.JSON(http.StatusOK, ratedPaper)
+
+		// PMID aus rawDB holen
+		type RatedPaperWithPMID struct {
+			models.RatedPaper
+			PMID string `json:"pmid"`
+		}
+
+		enrichedPaper := RatedPaperWithPMID{
+			RatedPaper: ratedPaper,
+			PMID:       "", // Default fallback
+		}
+
+		// PMID aus papers Tabelle holen (über DOI)
+		if ratedPaper.DOI != "" {
+			var paper models.Paper
+			if err := rawDB.Where("doi = ?", ratedPaper.DOI).First(&paper).Error; err == nil {
+				enrichedPaper.PMID = paper.PMID
+			} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+				log.Warn("Failed to fetch PMID for rated paper",
+					zap.String("doi", ratedPaper.DOI),
+					zap.Error(err))
+			}
+		}
+
+		c.JSON(http.StatusOK, enrichedPaper)
 	})
 
 	// POST - Query rated papers with filters
@@ -392,7 +416,7 @@ func setupRatedPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 			return
 		}
 
-		query := db.Model(&models.RatedPaper{})
+		query := ratedDB.Model(&models.RatedPaper{})
 
 		if req.DOI != "" {
 			query = query.Where("doi = ?", req.DOI)
@@ -427,7 +451,37 @@ func setupRatedPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 			return
 		}
 
-		c.JSON(http.StatusOK, ratedPapers)
+		// Erweiterte Response-Struktur mit PMID
+		type RatedPaperWithPMID struct {
+			models.RatedPaper
+			PMID string `json:"pmid"`
+		}
+
+		// PMID für jedes rated paper aus rawDB holen
+		var enrichedPapers []RatedPaperWithPMID
+		for _, ratedPaper := range ratedPapers {
+			enrichedPaper := RatedPaperWithPMID{
+				RatedPaper: ratedPaper,
+				PMID:       "", // Default fallback
+			}
+
+			// PMID aus papers Tabelle holen (über DOI)
+			if ratedPaper.DOI != "" {
+				var paper models.Paper
+				if err := rawDB.Where("doi = ?", ratedPaper.DOI).First(&paper).Error; err == nil {
+					enrichedPaper.PMID = paper.PMID
+				} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+					// Nur loggen bei echten DB-Fehlern, nicht bei "not found"
+					log.Warn("Failed to fetch PMID for rated paper",
+						zap.String("doi", ratedPaper.DOI),
+						zap.Error(err))
+				}
+			}
+
+			enrichedPapers = append(enrichedPapers, enrichedPaper)
+		}
+
+		c.JSON(http.StatusOK, enrichedPapers)
 	})
 }
 
