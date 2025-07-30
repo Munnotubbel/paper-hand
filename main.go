@@ -87,11 +87,11 @@ func main() {
 	if gin.Mode() == gin.DebugMode {
 		logging.Info("Debug mode detected. Dropping tables for fresh start.")
 		rawDB.Migrator().DropTable(&models.Paper{}, &models.Substance{}, &models.SearchFilter{})
-		ratedDB.Migrator().DropTable(&models.RatedPaper{})
+		ratedDB.Migrator().DropTable(&models.RatedPaper{}, &models.ContentArticle{})
 	}
 	logging.Info("Running database auto-migration...")
 	rawDB.AutoMigrate(&models.Paper{}, &models.Substance{}, &models.SearchFilter{})
-	ratedDB.AutoMigrate(&models.RatedPaper{})
+	ratedDB.AutoMigrate(&models.RatedPaper{}, &models.ContentArticle{})
 
 	// Seeding
 	seedDefaultSubstances(rawDB, logging)
@@ -135,6 +135,7 @@ func main() {
 	setupSearchFilterRoutes(router, rawDB, logging)
 	setupSearchRoutes(router, fetchService)
 	setupRatedPaperRoutes(router, ratedDB, logging)
+	setupContentArticleRoutes(router, ratedDB, logging)
 
 	// Setup Cron
 	cronScheduler := cron.New()
@@ -372,6 +373,196 @@ func setupRatedPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
 			return
 		}
 		c.JSON(http.StatusOK, ratedPaper)
+	})
+
+	// POST - Query rated papers with filters
+	rg.POST("/query", func(c *gin.Context) {
+		type RatedPaperQuery struct {
+			DOI              string   `json:"doi"`
+			MinRating        *float64 `json:"min_rating"`        // Rating >= MinRating
+			CategoryKeywords []string `json:"category_keywords"` // OR-Suche in Category-Feld
+			ContentStatus    string   `json:"content_status"`
+			Processed        *bool    `json:"processed"`
+			Limit            int      `json:"limit"`
+		}
+
+		var req RatedPaperQuery
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			return
+		}
+
+		query := db.Model(&models.RatedPaper{})
+
+		if req.DOI != "" {
+			query = query.Where("doi = ?", req.DOI)
+		}
+		if req.MinRating != nil {
+			query = query.Where("rating >= ?", *req.MinRating)
+		}
+		if len(req.CategoryKeywords) > 0 {
+			// OR-Suche für Category-Keywords mit ILIKE (case-insensitive)
+			var conditions []string
+			var args []interface{}
+			for _, keyword := range req.CategoryKeywords {
+				conditions = append(conditions, "category ILIKE ?")
+				args = append(args, "%"+keyword+"%")
+			}
+			query = query.Where(strings.Join(conditions, " OR "), args...)
+		}
+		if req.ContentStatus != "" {
+			query = query.Where("content_status = ?", req.ContentStatus)
+		}
+		if req.Processed != nil {
+			query = query.Where("processed = ?", *req.Processed)
+		}
+		if req.Limit > 0 {
+			query = query.Limit(req.Limit)
+		}
+
+		var ratedPapers []models.RatedPaper
+		if err := query.Order("rating desc, created_at desc").Find(&ratedPapers).Error; err != nil {
+			log.Error("Database query for rated papers failed", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
+			return
+		}
+
+		c.JSON(http.StatusOK, ratedPapers)
+	})
+}
+
+func setupContentArticleRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
+	rg := router.Group("/content-articles")
+
+	// POST - Create new content article
+	rg.POST("/", func(c *gin.Context) {
+		var article models.ContentArticle
+		if err := c.ShouldBindJSON(&article); err != nil {
+			log.Error("Invalid request body for content article creation", zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			return
+		}
+
+		if err := db.Create(&article).Error; err != nil {
+			log.Error("Failed to create content article", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save content article"})
+			return
+		}
+
+		log.Info("Content article created successfully", zap.Uint("id", article.ID), zap.String("title", article.Title))
+		c.JSON(http.StatusCreated, article)
+	})
+
+	// PUT - Update content article by ID
+	rg.PUT("/:id", func(c *gin.Context) {
+		id := c.Param("id")
+		var article models.ContentArticle
+
+		// Check if article exists
+		if err := db.First(&article, id).Error; err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				c.JSON(http.StatusNotFound, gin.H{"error": "Content article not found"})
+				return
+			}
+			log.Error("Database error while fetching content article", zap.String("id", id), zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
+			return
+		}
+
+		// Bind new data
+		if err := c.ShouldBindJSON(&article); err != nil {
+			log.Error("Invalid request body for content article update", zap.String("id", id), zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			return
+		}
+
+		// Save updates
+		if err := db.Save(&article).Error; err != nil {
+			log.Error("Failed to update content article", zap.String("id", id), zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update content article"})
+			return
+		}
+
+		log.Info("Content article updated successfully", zap.String("id", id), zap.String("title", article.Title))
+		c.JSON(http.StatusOK, article)
+	})
+
+	// GET - Get content article by ID
+	rg.GET("/:id", func(c *gin.Context) {
+		id := c.Param("id")
+		var article models.ContentArticle
+
+		if err := db.First(&article, id).Error; err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				c.JSON(http.StatusNotFound, gin.H{"error": "Content article not found"})
+				return
+			}
+			log.Error("Database error while fetching content article", zap.String("id", id), zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
+			return
+		}
+
+		c.JSON(http.StatusOK, article)
+	})
+
+	// POST - Query content articles with filters
+	rg.POST("/query", func(c *gin.Context) {
+		type ContentQuery struct {
+			Substance     string `json:"substance"`
+			PMID          string `json:"pmid"`
+			DOI           string `json:"doi"`
+			ContentStatus string `json:"content_status"`
+			Category      string `json:"category"`
+			AuthorName    string `json:"author_name"`
+			StudyType     string `json:"study_type"`
+			BlogPosted    *bool  `json:"blog_posted"`
+			Limit         int    `json:"limit"`
+		}
+
+		var req ContentQuery
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			return
+		}
+
+		query := db.Model(&models.ContentArticle{})
+
+		if req.Substance != "" {
+			query = query.Where("substance = ?", req.Substance)
+		}
+		if req.PMID != "" {
+			query = query.Where("pmid = ?", req.PMID)
+		}
+		if req.DOI != "" {
+			query = query.Where("doi = ?", req.DOI)
+		}
+		if req.ContentStatus != "" {
+			query = query.Where("content_status = ?", req.ContentStatus)
+		}
+		if req.Category != "" {
+			query = query.Where("category = ?", req.Category)
+		}
+		if req.AuthorName != "" {
+			query = query.Where("author_name = ?", req.AuthorName)
+		}
+		if req.StudyType != "" {
+			query = query.Where("study_type = ?", req.StudyType)
+		}
+		if req.BlogPosted != nil {
+			query = query.Where("blog_posted = ?", *req.BlogPosted)
+		}
+		if req.Limit > 0 {
+			query = query.Limit(req.Limit)
+		}
+
+		var articles []models.ContentArticle
+		if err := query.Order("created_at desc").Find(&articles).Error; err != nil {
+			log.Error("Database query for content articles failed", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
+			return
+		}
+
+		c.JSON(http.StatusOK, articles)
 	})
 }
 
