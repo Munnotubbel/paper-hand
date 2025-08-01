@@ -296,7 +296,23 @@ Erstellt oder aktualisiert ein bewertetes Paper (Upsert basierend auf DOI).
 ```
 
 ### GET `/rated-papers/:doi`
-Ruft ein bewertetes Paper anhand der DOI ab.
+Ruft ein bewertetes Paper anhand der DOI ab (automatisch erweitert um PMID und Substance aus rawDB).
+
+**Response:**
+```json
+{
+  "id": 123,
+  "doi": "10.14336/AD.2018.1026",
+  "rating": 8,
+  "confidence_score": 0.75,
+  "category": "Priorität 2: Solide Grundlage",
+  "ai_summary": "Eine 18-Monate lange, randomisierte...",
+  "key_findings": "[\"Kernaussage 1\",\"Kernaussage 2\"]",
+  "content_idea": "Curcumin-Studie: So stark boostert...",
+  "pmid": "30574426",
+  "substance": "curcumin"
+}
+```
 
 ### POST `/rated-papers/query`
 Erweiterte Suche in bewerteten Papers.
@@ -324,7 +340,34 @@ Erweiterte Suche in bewerteten Papers.
 - `processed` (boolean): Verarbeitungs-Status
 - `limit` (int): Begrenzt Anzahl der Ergebnisse
 
-**Response:** Array von RatedPaper-Objekten, sortiert nach Rating (absteigend) und Erstellungsdatum.
+**Response:** Array von RatedPaper-Objekten, sortiert nach Rating (absteigend) und Erstellungsdatum. Jeder Eintrag wird automatisch um PMID und Substance aus rawDB erweitert.
+
+```json
+[
+  {
+    "id": 123,
+    "doi": "10.14336/AD.2018.1026",
+    "rating": 8,
+    "confidence_score": 0.75,
+    "category": "Priorität 2: Solide Grundlage",
+    "ai_summary": "Eine 18-Monate lange, randomisierte...",
+    "key_findings": "[\"Kernaussage 1\",\"Kernaussage 2\"]",
+    "content_idea": "Curcumin-Studie: So stark boostert...",
+    "content_status": "idee",
+    "processed": false,
+    "pmid": "30574426",
+    "substance": "curcumin"
+  },
+  {
+    "id": 124,
+    "doi": "10.1234/example.2024",
+    "rating": 7,
+    "category": "Content-Gold",
+    "pmid": "12345678",
+    "substance": "resveratrol"
+  }
+]
+```
 
 ---
 

@@ -373,24 +373,27 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			return
 		}
 
-		// PMID aus rawDB holen
+		// PMID und Substance aus rawDB holen
 		type RatedPaperWithPMID struct {
 			models.RatedPaper
-			PMID string `json:"pmid"`
+			PMID      string `json:"pmid"`
+			Substance string `json:"substance"`
 		}
 
 		enrichedPaper := RatedPaperWithPMID{
 			RatedPaper: ratedPaper,
 			PMID:       "", // Default fallback
+			Substance:  "", // Default fallback
 		}
 
-		// PMID aus papers Tabelle holen (über DOI)
+		// PMID und Substance aus papers Tabelle holen (über DOI)
 		if ratedPaper.DOI != "" {
 			var paper models.Paper
 			if err := rawDB.Where("doi = ?", ratedPaper.DOI).First(&paper).Error; err == nil {
 				enrichedPaper.PMID = paper.PMID
+				enrichedPaper.Substance = paper.Substance
 			} else if !errors.Is(err, gorm.ErrRecordNotFound) {
-				log.Warn("Failed to fetch PMID for rated paper",
+				log.Warn("Failed to fetch PMID and substance for rated paper",
 					zap.String("doi", ratedPaper.DOI),
 					zap.Error(err))
 			}
@@ -451,28 +454,31 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			return
 		}
 
-		// Erweiterte Response-Struktur mit PMID
+		// Erweiterte Response-Struktur mit PMID und Substance
 		type RatedPaperWithPMID struct {
 			models.RatedPaper
-			PMID string `json:"pmid"`
+			PMID      string `json:"pmid"`
+			Substance string `json:"substance"`
 		}
 
-		// PMID für jedes rated paper aus rawDB holen
+		// PMID und Substance für jedes rated paper aus rawDB holen
 		var enrichedPapers []RatedPaperWithPMID
 		for _, ratedPaper := range ratedPapers {
 			enrichedPaper := RatedPaperWithPMID{
 				RatedPaper: ratedPaper,
 				PMID:       "", // Default fallback
+				Substance:  "", // Default fallback
 			}
 
-			// PMID aus papers Tabelle holen (über DOI)
+			// PMID und Substance aus papers Tabelle holen (über DOI)
 			if ratedPaper.DOI != "" {
 				var paper models.Paper
 				if err := rawDB.Where("doi = ?", ratedPaper.DOI).First(&paper).Error; err == nil {
 					enrichedPaper.PMID = paper.PMID
+					enrichedPaper.Substance = paper.Substance
 				} else if !errors.Is(err, gorm.ErrRecordNotFound) {
 					// Nur loggen bei echten DB-Fehlern, nicht bei "not found"
-					log.Warn("Failed to fetch PMID for rated paper",
+					log.Warn("Failed to fetch PMID and substance for rated paper",
 						zap.String("doi", ratedPaper.DOI),
 						zap.Error(err))
 				}
