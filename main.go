@@ -831,17 +831,111 @@ func setupCitationRoutes(router *gin.Engine, log *zap.Logger) {
 		})
 	})
 
+	// POST - Remove references section (keep in-text citations)
+	rg.POST("/remove-references", func(c *gin.Context) {
+		var request struct {
+			Text string `json:"text" binding:"required"`
+		}
+
+		if err := c.ShouldBindJSON(&request); err != nil {
+			log.Error("Invalid request body for references removal", zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'text' field is required."})
+			return
+		}
+
+		if len(request.Text) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Text cannot be empty"})
+			return
+		}
+
+		log.Info("Starting references section removal",
+			zap.Int("text_length", len(request.Text)))
+
+		cleanedText, err := citationExtractor.RemoveReferencesSection(c.Request.Context(), request.Text)
+		if err != nil {
+			log.Error("Failed to remove references section", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to remove references section"})
+			return
+		}
+
+		sizeBefore := len(request.Text)
+		sizeAfter := len(cleanedText)
+		reductionPercent := int(float64(sizeBefore-sizeAfter) / float64(sizeBefore) * 100)
+
+		log.Info("References section removal completed successfully",
+			zap.Int("size_before", sizeBefore),
+			zap.Int("size_after", sizeAfter),
+			zap.Int("reduction_percent", reductionPercent))
+
+		c.JSON(http.StatusOK, gin.H{
+			"cleaned_text": cleanedText,
+			"statistics": gin.H{
+				"original_size":     sizeBefore,
+				"cleaned_size":      sizeAfter,
+				"size_reduction":    sizeBefore - sizeAfter,
+				"reduction_percent": reductionPercent,
+			},
+		})
+	})
+
+	// POST - Remove references for n8n workflow (simplified response)
+	rg.POST("/remove-references-for-n8n", func(c *gin.Context) {
+		var request struct {
+			Text string `json:"text" binding:"required"`
+		}
+
+		if err := c.ShouldBindJSON(&request); err != nil {
+			log.Error("Invalid request body for n8n references removal", zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			return
+		}
+
+		if len(request.Text) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Text cannot be empty"})
+			return
+		}
+
+		log.Info("Starting n8n references section removal",
+			zap.Int("text_length", len(request.Text)))
+
+		cleanedText, err := citationExtractor.RemoveReferencesSection(c.Request.Context(), request.Text)
+		if err != nil {
+			log.Error("Failed to remove references section for n8n", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to remove references section"})
+			return
+		}
+
+		sizeBefore := len(request.Text)
+		sizeAfter := len(cleanedText)
+		reductionPercent := int(float64(sizeBefore-sizeAfter) / float64(sizeBefore) * 100)
+
+		log.Info("N8N references section removal completed successfully",
+			zap.Int("size_before", sizeBefore),
+			zap.Int("size_after", sizeAfter),
+			zap.Int("reduction_percent", reductionPercent))
+
+		// n8n-friendly response format
+		c.JSON(http.StatusOK, gin.H{
+			"output":  cleanedText,
+			"success": true,
+			"statistics": gin.H{
+				"size_reduction_percent": reductionPercent,
+				"characters_saved":       sizeBefore - sizeAfter,
+			},
+		})
+	})
+
 	// GET - Health check for citation service
 	rg.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"status":   "healthy",
 			"service":  "citation-extractor",
-			"version":  "2.0.0", // Updated version with mapping support
-			"features": []string{"extract", "inject", "mappings", "n8n-integration"},
+			"version":  "2.1.0", // Updated version with references removal
+			"features": []string{"extract", "inject", "mappings", "remove-references", "n8n-integration"},
 		})
 	})
 
 	log.Info("Citation routes configured successfully",
 		zap.String("base_path", "/citations"),
-		zap.Strings("endpoints", []string{"/extract", "/extract-for-n8n", "/inject", "/inject-for-n8n", "/health"}))
+		zap.Strings("endpoints", []string{"/extract", "/extract-for-n8n", "/inject", "/inject-for-n8n", "/remove-references", "/remove-references-for-n8n", "/health"}))
 }

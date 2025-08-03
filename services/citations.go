@@ -688,6 +688,76 @@ func max(a, b int) int {
 	return b
 }
 
+// RemoveReferencesSection entfernt nur das Literaturverzeichnis, behält In-Text-Zitierungen
+func (ce *CitationExtractor) RemoveReferencesSection(ctx context.Context, text string) (string, error) {
+	ce.Logger.Info("Removing references section from text",
+		zap.Int("original_length", len(text)))
+
+	// Finde Literaturverzeichnis-Abschnitt (gleiche Logik wie in extractFullReferences)
+	refSections := []string{
+		"References",
+		"Bibliography",
+		"Literature",
+		"Citations",
+		"Works Cited",
+		"Literaturverzeichnis",
+		"Literatur",
+		"Quellen",
+		"Sources",
+	}
+
+	lines := strings.Split(text, "\n")
+	refSectionStart := -1
+
+	// Suche nach References-Sektion
+	for _, section := range refSections {
+		patterns := []*regexp.Regexp{
+			regexp.MustCompile(`(?i)^\s*` + section + `\s*$`),
+			regexp.MustCompile(`(?i)^##?\s*` + section + `\s*$`),
+			regexp.MustCompile(`(?i)^[0-9]+\.?\s*` + section + `\s*$`),
+		}
+
+		for _, pattern := range patterns {
+			for i, line := range lines {
+				if pattern.MatchString(strings.TrimSpace(line)) {
+					refSectionStart = i
+					ce.Logger.Debug("Found references section to remove",
+						zap.String("section", section),
+						zap.Int("start_line", i))
+					break
+				}
+			}
+			if refSectionStart != -1 {
+				break
+			}
+		}
+		if refSectionStart != -1 {
+			break
+		}
+	}
+
+	// Wenn keine References-Sektion gefunden, gib Original zurück
+	if refSectionStart == -1 {
+		ce.Logger.Info("No references section found, returning original text")
+		return text, nil
+	}
+
+	// Schneide ab der References-Sektion ab
+	cleanedLines := lines[:refSectionStart]
+	cleanedText := strings.Join(cleanedLines, "\n")
+
+	// Entferne trailing whitespace
+	cleanedText = strings.TrimSpace(cleanedText)
+
+	ce.Logger.Info("References section removed successfully",
+		zap.Int("original_lines", len(lines)),
+		zap.Int("cleaned_lines", len(cleanedLines)),
+		zap.Int("removed_lines", len(lines)-len(cleanedLines)),
+		zap.Int("size_reduction_percent", int(float64(len(text)-len(cleanedText))/float64(len(text))*100)))
+
+	return cleanedText, nil
+}
+
 // ToJSON konvertiert das Ergebnis zu JSON für API-Response
 func (result *CitationResult) ToJSON() ([]byte, error) {
 	return json.MarshalIndent(result, "", "  ")

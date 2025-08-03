@@ -60,10 +60,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -128,
-        -272
+        -320,
+        176
       ],
-      "id": "46354f47-fbbd-4691-a189-9ee62a622093",
+      "id": "f376c51b-f071-4b45-87c8-d16c18b4057a",
       "name": "Switch"
     },
     {
@@ -74,10 +74,10 @@
       "type": "n8n-nodes-base.s3",
       "typeVersion": 1,
       "position": [
-        128,
-        -272
+        -64,
+        176
       ],
-      "id": "e761e396-a59d-444b-b960-e1b1966d0102",
+      "id": "b03be4e0-e150-4567-be7f-e2a0d8d8f304",
       "name": "Download a file",
       "credentials": {
         "s3": {
@@ -94,10 +94,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        288,
-        -272
+        96,
+        176
       ],
-      "id": "a84dff59-b1a8-4321-9a25-c89c17e2e985",
+      "id": "0617e329-f452-4675-9278-bea81fd5512e",
       "name": "Extract from File"
     },
     {
@@ -108,10 +108,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        96,
-        -64
+        -96,
+        384
       ],
-      "id": "76d32056-4749-4e5c-ac36-4c2c14ad2cda",
+      "id": "f7706a6e-8f40-406f-a263-d1537142721d",
       "name": "Wait",
       "webhookId": "a6bc83e6-f697-4b8c-8da2-3a3e0daacf16"
     },
@@ -129,10 +129,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -576,
-        -272
+        -768,
+        176
       ],
-      "id": "ece2a857-1377-4e78-99fe-450754755e12",
+      "id": "c418802d-b65e-48a5-ac9d-e978edb0f737",
       "name": "Schedule Trigger"
     },
     {
@@ -146,13 +146,13 @@
         "jsonBody": "{\n  \"min_rating\": 6.1,\n  \"content_status\": \"idee\",\n  \"category_keywords\": [\n    \"Solide Grundlage\", \n    \"Content-Gold\", \n    \"Interessanter Ansatz\"\n  ],\n  \"limit\": 1\n}",
         "options": {}
       },
-      "id": "583ef1bf-fccf-439b-8b5c-78900055cb55",
+      "id": "d5e8c10e-1118-4b71-836d-ddd56047e148",
       "name": "1. Get Rated Paper",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -320,
-        -272
+        -512,
+        176
       ],
       "credentials": {
         "httpBearerAuth": {
@@ -175,10 +175,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        608,
-        -288
+        416,
+        160
       ],
-      "id": "a072d80e-f7f1-4939-8732-d5938098c254",
+      "id": "a0c11a8d-c2cd-41b2-8eb0-22031d6782d0",
       "name": "Fachanalyse"
     },
     {
@@ -194,10 +194,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        656,
-        -32
+        464,
+        416
       ],
-      "id": "0b6b2ed7-f910-4da2-9d0f-8cebca0a303f",
+      "id": "2aeb6d1a-25bc-42ff-ad62-c405f1b31954",
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
@@ -215,41 +215,41 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        896,
-        -288
+        704,
+        160
       ],
-      "id": "64f90958-3bc0-4b1e-9f26-2a1fe6672725",
+      "id": "e6bbd693-179f-4c68-b937-7707b7e48a86",
       "name": "Stil und Ethik"
     },
     {
       "parameters": {
         "promptType": "define",
-        "text": "=📚 **INTELLIGENTER LITERATURVERZEICHNIS-ERSTELLER** 📚\n\n🎯 **MISSION: Perfektes Literaturverzeichnis aus Go-Backend-extrahierten Referenzen**\n\n**EINGABEN:**\n1. **BLOG-ARTIKEL:** {{ $('SEO').item.json.output }}\n2. **EXTRAHIERTE REFERENZEN (GO-BACKEND):** {{ $('Literatur-Extraktor').item.json.output }}\n\n**INTELLIGENTE AUFGABE:**\n1. **Nimm den Blog-Artikel 1:1** (komplett, ohne Änderungen)\n2. **Verwende die Go-Backend extrahierten Referenzen:** Die vollständigen Referenzen wurden bereits präzise extrahiert\n3. **Erstelle perfektes Literaturverzeichnis:** Matched mit den In-Text-Zitierungen im Blog\n\n**PROZESS:**\n- Sammle alle (Autor et al., Jahr) aus dem Blog-Artikel\n- Nutze die bereits extrahierten vollständigen Referenzen vom Go-Backend\n- Füge sie alphabetisch sortiert am Ende hinzu\n\n**OUTPUT-FORMAT:**\n[KOMPLETTER BLOG-ARTIKEL]\n\n## Quellen\n\n[Alphabetisch sortierte, vollständige Referenzen vom Go-Backend]\n\n**WICHTIG:**\n- Kein Text abschneiden!\n- Verwende die präzise Go-Backend Extraktion (viel schneller & zuverlässiger als AI)\n- Nur die Referenzen aufführen, die auch im Blog-Text zitiert werden",
+        "text": "=**BLOG-ARTIKEL + QUELLENVERZEICHNIS - DIREKTE AUSGABE**\n\n**AUFGABE:** Erstelle den finalen Blog-Artikel mit vollständigem Quellenverzeichnis - KEINE Erklärungen!\n\n**EINGABEN:**\n1. **BLOG-ARTIKEL:** {{ $('SEO').item.json.output }}  \n2. **EXTRAHIERTE REFERENZEN:** {{ $('Literatur-Extraktor').item.json.output }}\n\n**PROCESS:**\n1. Nimm den Blog-Artikel komplett (1:1)\n2. Füge am Ende \"## Quellen\" hinzu\n3. Liste alle Referenzen alphabetisch auf\n\n**WICHTIG:**\n❌ KEINE Meta-Texte (\"Mission verstanden\", \"Optimiert\", etc.)\n❌ KEINE Erklärungen zum Prozess  \n❌ KEINE SEO-Analysen\n❌ KEINE internen Kommentare\n❌ Text NICHT kürzen oder ändern\n\n**OUTPUT-FORMAT:**\n\n[KOMPLETTER BLOG-ARTIKEL]\n\n## Quellen\n\n[Alphabetisch sortierte Referenzen]\n\n**Das war's - mehr nicht!",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        1536,
-        -288
+        1344,
+        160
       ],
-      "id": "1bec88b2-26a6-49f4-9b63-9504ff2d33df",
+      "id": "12dd00d1-b96a-44ae-9e7a-579e8724da1c",
       "name": "Zitation und Formatierung"
     },
     {
       "parameters": {
         "promptType": "define",
-        "text": "=🎯 **ELITE SCIENTIFIC SEO: Mehr Menschen für Wissenschaft begeistern** 🎯\n\n**MISSION:** Verständliche Wissenschaft für MEHR Menschen zugänglich machen - ohne den authentischen, laienfreundlichen Charakter zu zerstören.\n\n**CORE-PRINZIP:** SEO als Brücke zwischen Wissenschaft und Neugierigen, nicht als Marketing-Tool.\n\n🧠 **SUCHINTENTION-OPTIMIERUNG (Intent-First SEO):**\n\n**Was Menschen WIRKLICH suchen:**\n- \"Was ist [Substanz] und hilft das bei [Problem]?\"\n- \"[Substanz] Studien - was sagt die Wissenschaft?\"\n- \"Wie funktioniert [Substanz] im Körper?\"\n- \"[Substanz] Dosierung - was ist sicher?\"\n- \"[Substanz] Nebenwirkungen und Risiken\"\n\n**SEO-OPTIMIERUNGEN MIT CHARAKTER-SCHUTZ:**\n\n📊 **1. STRUCTURE FOR DISCOVERABILITY:**\n- H2 als Fragen: \"Wie wirkt Curcumin im Gehirn?\" (Natural Language Processing optimiert)\n- H3 für Details: \"Die Wissenschaft hinter der Wirkung\"\n- FAQ-Bereiche für Voice Search: \"Ist Curcumin sicher?\"\n- Tabellen für Featured Snippets: Studien-Übersicht, Dosierungen\n\n🔍 **2. SEMANTIC KEYWORD INTEGRATION (natürlich!):**\n- Primary Keywords: [Hauptsubstanz + Anwendung]\n- Semantic Cluster: Verwandte Begriffe die Menschen nutzen\n- Long-Tail: Spezifische Fragen die gestellt werden\n- ABER: Nur dort einbauen wo es NATÜRLICH klingt - niemals erzwingen!\n\n🎓 **3. TRUST & AUTHORITY SIGNALS:**\n- \"Basierend auf [X] wissenschaftlichen Studien\"\n- \"Aktuelle Forschung zeigt...\"\n- \"Peer-Review Studien belegen...\"\n- Publikationsjahre erwähnen: \"(2024-2025 Studien)\"\n\n💬 **4. ENGAGEMENT FÜR BILDUNG:**\n- Hooks: \"Stellen Sie sich vor...\" (erste 15 Wörter entscheidend)\n- Scannable Format: Kurze Absätze, klare Gliederung\n- Interne Links: \"Mehr über [verwandtes Thema] erfahren\"\n- CTA für Bildung: \"Entdecken Sie weitere Studien\" nicht \"Jetzt kaufen\"\n\n**ABSOLUTE NO-GOs (Charakter-Schutz):**\n❌ Marketing-Sprache (\"revolutionär\", \"Wundermittel\")\n❌ Keyword-Stuffing (unnatürliche Wiederholungen)\n❌ Health Claims ohne \"Studien deuten darauf hin...\"\n❌ Dramatisierung oder Angstmache\n❌ Produktwerbung oder Affiliate-Links\n\n**TECHNICAL SEO (unsichtbar aber wirksam):**\n- Title: Max 55 Zeichen, Primary Keyword natürlich platziert\n- Meta Description: Neugierig machend, 150 Zeichen, Mehrwert-fokussiert\n- Headers: Logische H1→H2→H3 Struktur\n- Schema Markup Empfehlungen: Article, MedicalScholarlyArticle, FAQ\n\n**QUALITÄTS-KONTROLLE:**\n✅ Klingt der Text immer noch wie \"Wissenschaft für normale Menschen\"?\n✅ Sind alle SEO-Anpassungen natürlich und hilfreich?\n✅ Behält der Artikel seinen empathischen, verständlichen Ton?\n✅ Würde ein Wissenschafts-Laie den Text genauso gerne lesen?\n\n**INPUT-TEXT VOM STIL-ETHIK AGENT:**\n{{ $('Stil und Ethik').item.json.output }}\n\n**OUTPUT-FORMAT:**\n[Optimierter Artikel - behält 100% des Charakters, aber wird von mehr Menschen gefunden]\n\n---\n**SEO-ANALYTICS (für interne Nutzung):**\n- Optimierte Title Tag: [Vorschlag]\n- Meta Description: [Vorschlag] \n- Primary Keywords verwendet: [Liste]\n- Long-Tail Opportunities: [Liste]\n- Internal Link Suggestions: [Liste]\n- Schema Markup Empfehlungen: [Liste]\n\n🎯 **ERFOLGS-METRIK:** Mehr Menschen lesen über Wissenschaft, ohne dass der Artikel \"SEO-ig\" wirkt!\n",
+        "text": "=**CLEAN SEO OPTIMIZER - DIREKTE AUSGABE**\n\n**AUFGABE:** Optimiere den Blog-Artikel für SEO, aber gib NUR den fertigen Artikel aus - KEINE Erklärungen, KEINE Meta-Analysen!\n\n**SUBSTANZ:** {{ $('1. Get Rated Paper').item.json.substance }}\n\n**SEO-REGELN:**\n✅ Titel SEO-optimieren (max 60 Zeichen)\n✅ H2-Headlines als Fragen formulieren\n✅ Kernsubstanz natürlich in Headlines einbauen  \n✅ FAQ-Sektion für häufige Suchfragen\n✅ Logische H1→H2→H3 Struktur\n✅ Keywords natürlich einbauen (niemals stuffing!)\n\n**WICHTIG:**\n❌ KEINE Wiederholung von Grundlagen zu {{ $('1. Get Rated Paper').item.json.substance }}\n❌ KEINE \"Was ist [Substanz]\" Erklärungen  \n❌ KEINE Meta-Texte (\"Mission verstanden\", \"Optimierter Artikel\")\n❌ KEINE SEO-Analysen im Output\n❌ KEINE internen Kommentare\n\n**INPUT:** {{ $('Stil und Ethik').item.json.output }}\n\n**OUTPUT:** Nur der SEO-optimierte Blog-Artikel ohne jegliche Zusatztexte!\n",
         "needsFallback": true,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        1216,
-        -288
+        1024,
+        160
       ],
-      "id": "f335311e-8814-40a1-88e2-c79d69487ce7",
+      "id": "4d350a79-8be5-41a1-a71a-bd17a9b79fcf",
       "name": "SEO"
     },
     {
@@ -264,10 +264,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1264,
-        -64
+        1072,
+        384
       ],
-      "id": "34778cd8-6bc9-426d-860a-8babe98c57fb",
+      "id": "13157faf-6597-48cb-8cc3-91908650650e",
       "name": "OpenAI Chat Model2",
       "credentials": {
         "openAiApi": {
@@ -285,16 +285,16 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        1856,
-        -288
+        1664,
+        160
       ],
-      "id": "f6c775a7-bcc3-4ae0-94ae-d8893dbbe848",
+      "id": "bb6ce527-11f4-4755-b9bf-3b65fa80557d",
       "name": "Reviewer"
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "http://localhost:8080/citations/extract-for-n8n",
+        "url": "http://paper-backend:4242/citations/extract-for-n8n",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -320,25 +320,21 @@
           ]
         },
         "options": {
-          "timeout": 30000,
-          "retry": {
-            "enabled": true,
-            "maxRetries": 2
-          }
+          "timeout": 30000
         }
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        592,
-        -560
+        400,
+        -112
       ],
-      "id": "4167b2b6-066d-4c48-9670-18672efc08b7",
+      "id": "f9889a53-f597-4c5a-9495-7008d689d921",
       "name": "Literatur-Extraktor",
       "credentials": {
         "httpHeaderAuth": {
-          "id": "paper-hand-api-credentials",
-          "name": "Paper Hand API"
+          "id": "RTzRC0AggRABuRdo",
+          "name": "Auth Header Paper Backend API KEY"
         }
       }
     },
@@ -350,10 +346,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1536,
-        -144
+        1344,
+        304
       ],
-      "id": "a606f33f-747c-4661-8718-4045efbe5a26",
+      "id": "0fd3cf73-34d6-4600-9fae-dc8e9587dae3",
       "name": "Google Gemini Chat Model2",
       "credentials": {
         "googlePalmApi": {
@@ -369,10 +365,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
       "typeVersion": 1,
       "position": [
-        1856,
-        -128
+        1664,
+        320
       ],
-      "id": "96210609-775f-477d-b439-f4929c6b45bb",
+      "id": "cbbc9c8f-5f2d-4a1b-b0ad-51b65ca36875",
       "name": "DeepSeek Chat Model",
       "credentials": {
         "deepSeekApi": {
@@ -381,7 +377,6 @@
         }
       }
     },
-
     {
       "parameters": {
         "model": {
@@ -395,10 +390,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        608,
-        -144
+        416,
+        304
       ],
-      "id": "d5f0fac3-470e-4c2b-bdaf-353555109fe1",
+      "id": "ed5837e5-0c0e-4a7e-b89b-8d35bd8ec681",
       "name": "Opus 4 - Literatur",
       "credentials": {
         "anthropicApi": {
@@ -420,10 +415,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        896,
-        -144
+        704,
+        304
       ],
-      "id": "0811a9a0-194d-4715-92d2-739ca1e91f83",
+      "id": "1a375766-0653-4bb4-a6ab-795c4bdc02cb",
       "name": "Opus 4 - Ethik",
       "credentials": {
         "anthropicApi": {
@@ -440,10 +435,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1216,
-        -160
+        1024,
+        288
       ],
-      "id": "d3a1b25e-bdcc-4bdc-ad95-850e98310ac6",
+      "id": "e954bf31-ad13-4e80-9562-5e3fb5038152",
       "name": "Google Gemini Chat Model3",
       "credentials": {
         "googlePalmApi": {
@@ -632,7 +627,6 @@
         ]
       ]
     },
-
     "Opus 4 - Literatur": {
       "ai_languageModel": [
         [
@@ -671,7 +665,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "0853ac88-e79a-4a07-8ccb-e8f33876f83f",
+  "versionId": "c4e7c95c-cb74-4031-a1c9-bbeeb61ab0e2",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "e29847cb0d85386a381a01c77c5a370e3c3dcd4f4ebcacf20107c8e6e234123a"
