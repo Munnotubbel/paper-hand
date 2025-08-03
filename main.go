@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -136,6 +137,7 @@ func main() {
 	setupSearchRoutes(router, fetchService)
 	setupRatedPaperRoutes(router, ratedDB, rawDB, logging)
 	setupContentArticleRoutes(router, ratedDB, logging)
+	setupCitationRoutes(router, logging)
 
 	// Setup Cron
 	cronScheduler := cron.New()
@@ -660,4 +662,186 @@ func seedDefaultSearchFilters(db *gorm.DB, logger *zap.Logger) {
 	} else {
 		logger.Info("Default search filters seeded.")
 	}
+}
+
+// setupCitationRoutes konfiguriert alle Citation-bezogenen API-Routen
+func setupCitationRoutes(router *gin.Engine, log *zap.Logger) {
+	citationExtractor := services.NewCitationExtractor(log)
+	rg := router.Group("/citations")
+
+	// POST - Extract citations and references from text
+	rg.POST("/extract", func(c *gin.Context) {
+		var request struct {
+			Text string `json:"text" binding:"required"`
+		}
+
+		if err := c.ShouldBindJSON(&request); err != nil {
+			log.Error("Invalid request body for citation extraction", zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'text' field is required."})
+			return
+		}
+
+		if len(request.Text) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Text cannot be empty"})
+			return
+		}
+
+		log.Info("Starting citation extraction",
+			zap.Int("text_length", len(request.Text)))
+
+		result, err := citationExtractor.ExtractCitations(c.Request.Context(), request.Text)
+		if err != nil {
+			log.Error("Failed to extract citations", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to extract citations"})
+			return
+		}
+
+		log.Info("Citation extraction completed successfully",
+			zap.Int("in_text_citations", result.CitationCount),
+			zap.Int("full_references", result.ReferenceCount))
+
+		c.JSON(http.StatusOK, result)
+	})
+
+	// POST - Extract citations for n8n workflow (returns formatted text)
+	rg.POST("/extract-for-n8n", func(c *gin.Context) {
+		var request struct {
+			Text string `json:"text" binding:"required"`
+		}
+
+		if err := c.ShouldBindJSON(&request); err != nil {
+			log.Error("Invalid request body for n8n citation extraction", zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'text' field is required."})
+			return
+		}
+
+		if len(request.Text) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Text cannot be empty"})
+			return
+		}
+
+		log.Info("Starting n8n citation extraction",
+			zap.Int("text_length", len(request.Text)))
+
+		result, err := citationExtractor.ExtractCitations(c.Request.Context(), request.Text)
+		if err != nil {
+			log.Error("Failed to extract citations for n8n", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to extract citations"})
+			return
+		}
+
+		// Format für n8n Workflow
+		formattedOutput := citationExtractor.FormatForN8N(result)
+
+		log.Info("N8N citation extraction completed successfully",
+			zap.Int("in_text_citations", result.CitationCount),
+			zap.Int("full_references", result.ReferenceCount))
+
+		// n8n erwartet oft JSON mit einem "output" Feld
+		c.JSON(http.StatusOK, gin.H{
+			"output": formattedOutput,
+			"statistics": gin.H{
+				"in_text_citations": result.CitationCount,
+				"full_references":   result.ReferenceCount,
+			},
+		})
+	})
+
+	// POST - Inject citations into simplified text
+	rg.POST("/inject", func(c *gin.Context) {
+		var request struct {
+			SimplifiedText   string                     `json:"simplified_text" binding:"required"`
+			OriginalMappings []services.CitationMapping `json:"original_mappings" binding:"required"`
+		}
+
+		if err := c.ShouldBindJSON(&request); err != nil {
+			log.Error("Invalid request body for citation injection", zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'simplified_text' and 'original_mappings' fields are required."})
+			return
+		}
+
+		if len(request.SimplifiedText) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Simplified text cannot be empty"})
+			return
+		}
+
+		log.Info("Starting citation injection",
+			zap.Int("text_length", len(request.SimplifiedText)),
+			zap.Int("mappings_count", len(request.OriginalMappings)))
+
+		result, err := citationExtractor.InjectCitations(c.Request.Context(), request.SimplifiedText, request.OriginalMappings)
+		if err != nil {
+			log.Error("Failed to inject citations", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to inject citations"})
+			return
+		}
+
+		log.Info("Citation injection completed successfully")
+
+		c.JSON(http.StatusOK, gin.H{
+			"enhanced_text":   result,
+			"original_length": len(request.SimplifiedText),
+			"enhanced_length": len(result),
+		})
+	})
+
+	// POST - Inject citations for n8n workflow (simplified interface)
+	rg.POST("/inject-for-n8n", func(c *gin.Context) {
+		var request struct {
+			SimplifiedText string `json:"simplified_text" binding:"required"`
+			MappingsJSON   string `json:"mappings_json" binding:"required"`
+		}
+
+		if err := c.ShouldBindJSON(&request); err != nil {
+			log.Error("Invalid request body for n8n citation injection", zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			return
+		}
+
+		// Parse mappings from JSON string
+		var mappings []services.CitationMapping
+		if err := json.Unmarshal([]byte(request.MappingsJSON), &mappings); err != nil {
+			log.Error("Failed to parse mappings JSON", zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid mappings JSON format"})
+			return
+		}
+
+		log.Info("Starting n8n citation injection",
+			zap.Int("text_length", len(request.SimplifiedText)),
+			zap.Int("mappings_count", len(mappings)))
+
+		result, err := citationExtractor.InjectCitations(c.Request.Context(), request.SimplifiedText, mappings)
+		if err != nil {
+			log.Error("Failed to inject citations for n8n", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to inject citations"})
+			return
+		}
+
+		log.Info("N8N citation injection completed successfully")
+
+		// n8n-friendly response format
+		c.JSON(http.StatusOK, gin.H{
+			"output":  result,
+			"success": true,
+			"statistics": gin.H{
+				"original_length": len(request.SimplifiedText),
+				"enhanced_length": len(result),
+				"mappings_used":   len(mappings),
+			},
+		})
+	})
+
+	// GET - Health check for citation service
+	rg.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"status":   "healthy",
+			"service":  "citation-extractor",
+			"version":  "2.0.0", // Updated version with mapping support
+			"features": []string{"extract", "inject", "mappings", "n8n-integration"},
+		})
+	})
+
+	log.Info("Citation routes configured successfully",
+		zap.String("base_path", "/citations"),
+		zap.Strings("endpoints", []string{"/extract", "/extract-for-n8n", "/inject", "/inject-for-n8n", "/health"}))
 }

@@ -1,0 +1,2804 @@
+Pharmacological effects,
+molecular mechanisms and
+strategies to improve
+bioavailability of curcumin in the
+treatment of neurodegenerative
+diseases
+Gang Wang
+1
+,
+2†
+*, Xueyuan Zhou
+1
+,
+2†
+, Xiaoyan Pang
+1
+,
+2
+, Ke Ma
+1
+,
+2
+,
+Lu Li
+1
+,
+2
+, Yuexin Song
+1
+,
+2
+, Dongxia Hou
+1
+,
+2
+* and Xiaohua Wang
+1
+,
+2
+*
+1
+Department of Genetics, Inner Mongolia Maternity and Child Health Care Hospital, Hohhot, China,
+2
+Inner Mongolia Engineering Research Center of Medical Genetics, Hohhot, China
+With the global population aging, the incidence of neurodegenerative diseases (NDs),
+such as Alzheimer’s disease, Parkinson’s disease, Huntington’s disease and
+amyotrophic lateral sclerosis, has been progressively increasing. However,
+effective therapeutic strategies and clinical drugs for these disorders remain
+scarce. Curcumin, a natural polyphenolic compound primarily derived from the
+herbaceous plant Curcuma longa L., has been proposed as a promising candidate for
+ND treatment based on the excellent antioxidant, anti-inflammatory and
+neuroprotective properties. Its pharmacological activities encompass scavenging
+reactive oxygen species, mitigating toxic protein aggregation and cytotoxicity,
+repairing mitochondrial dysfunction, and inhibiting excessive neuronal apoptosis.
+Compared with synthetic drugs, curcumin demonstrates a more favorable safety
+profile with fewer side effects. Nevertheless, its clinical application is substantially
+hindered by poor bioavailability, which stems from low aqueous solubility, inefficient
+intestinal absorption, and rapid metabolism and systemic elimination. Conventional
+administration methods often fail to achieve effective concentrations in vivo. Further
+clinical trials are also required to validate the therapeutic efficacy and potential
+adverse effects in human subjects. This article systematically reviews the
+pathogenesis of NDs and the knowledge on curcumin including pharmacological
+effects, neuroprotective mechanisms, functions across specific NDs and advanced
+strategies to enhance the bioavailability, with the aim of promoting the development
+and clinical translation of curcumin-based therapeutics for NDs.
+KEYWORDS
+curcumin, natural medicine, neurodegenerative disease, pharmacological activity,
+bioavailability
+1 Introduction
+Neurodegenerative diseases (NDs) represent a group of disorders characterized by
+progressive degeneration of the structure and function of the nervous system, particularly
+affecting neurons in the brain and spinal cord. These conditions often arise from a complex
+interplay of genetic, environmental and lifestyle factors (Zhang W. et al., 2023;
+OPEN ACCESS
+EDITED BY
+Paul Chazot,
+Durham University, United Kingdom
+REVIEWED BY
+Venkata Ramireddy Narala,
+Yogi Vemana University, India
+Tapan A. Patel,
+University of Nebraska Medical Center,
+United States
+Mahmood Ahmed,
+University of Education Lahore, Pakistan
+Limamanen Phom,
+Sao Chang College, India
+*CORRESPONDENCE
+Gang Wang,
+wgimplad@163.com
+Dongxia Hou,
+houdx1121@126.com
+Xiaohua Wang,
+wangxiaohua2222@163.com
+†
+These authors have contributed equally to
+this work
+RECEIVED 09 May 2025
+ACCEPTED 30 June 2025
+PUBLISHED 10 July 2025
+CITATION
+Wang G, Zhou X, Pang X, Ma K, Li L, Song Y,
+Hou D and Wang X (2025) Pharmacological
+effects, molecular mechanisms and strategies
+to improve bioavailability of curcumin in the
+treatment of neurodegenerative diseases.
+Front. Pharmacol. 16:1625821.
+doi: 10.3389/fphar.2025.1625821
+COPYRIGHT
+© 2025 Wang, Zhou, Pang, Ma, Li, Song, Hou
+and Wang. This is an open-access article
+distributed under the terms of the Creative
+Commons Attribution License (CC BY). The use,
+distribution or reproduction in other forums is
+permitted, provided the original author(s) and
+the copyright owner(s) are credited and that the
+original publication in this journal is cited, in
+accordance with accepted academic practice.
+No use, distribution or reproduction is
+permitted which does not comply with these
+terms.
+Frontiers in Pharmacology frontiersin.org01
+TYPE Review
+PUBLISHED 10 July 2025
+DOI 10.3389/fphar.2025.1625821
+
+Swaddiwudhipong et al., 2023). The most prevalent NDs include
+Alzheimer’s disease (AD), Parkinson’s disease (PD), amyotrophic
+lateral sclerosis (ALS) and Huntington’s disease (HD). Typical
+symptoms encompass memory loss, cognitive decline, motor
+dysfunction and behavioral changes, which vary depending on
+the specific disease and affected brain regions. The pathogenesis
+involves multiple interconnected mechanisms, including genetic
+mutations, protein misfolding and aggregation, oxidative stress,
+mitochondrial dysfunction and chronic neuroinflammation (Zhao
+et al., 2020; Song et al., 2020). NDs are closely related to age, as the
+onset risk increases and symptom severity worsens with advancing
+age (Sun et al., 2024). Consequently, the global aging of the
+population is expected to increase the incidence and prevalence
+of NDs, presenting a major challenge for healthcare systems
+worldwide (Pichet Binette et al., 2020; Shen et al., 2021). Current
+therapeutic strategies predominantly focus on symptom
+management and slowing disease progression. For instance,
+cholinesterase inhibitors and NMDA receptor antagonists are
+widely used for AD, while dopamine replacement therapies
+remain the standard for PD (D’Angremont et al., 2023; Liang
+et al., 2024). However, these treatments are not curative and only
+provide temporary relief. Long-term use may lead to reduced
+FIGURE 1
+Mechanism of curcumin exerting the neuroprotective effect. (1) Antioxidation: Ⅰ. Direct scavenging of ROS; Ⅱ. Enhancement of antioxidant enzyme
+activity, such as SOD, CAT and GPx; Ⅲ. Promoting the dissociation of Nrf2 from Keap1 to bind to antioxidant response elements (ARE), inducing the
+expression of antioxidant genes. (2) Anti-inflammation: Ⅰ. Inhibition of the activities of cyclooxygenase (COX), lipoxygenase (LOX), etc.; Ⅱ. Inhibition of the
+activation of the inflammasome NLRP3; Ⅲ. Inhibiting the activity of the IκB kinase (IKK) complex, thereby suppressing NF-κB, and consequently
+reducing the expression of NF-κB-mediated pro-inflammatory factors such as IL-1β, IL-6, TNF-α, etc.; Ⅳ. Reduced abnormal activation of astrocytes and
+microglia; Ⅴ. Promoting the production of short-chain fatty acids (SCFAs) of intestinal microbes to regulate the brain-gut axis, maintaining the integrity of
+the blood-brain barrier and indirectly protecting the nervous system. (3) Removal of toxic proteins: Ⅰ. Inhibition of the formation of toxic protein
+aggregates; Ⅱ. Prevention of tau phosphorylation; Ⅲ. Activating the PI3K/AKT/mTOR pathway to promote autophagic clearance of formed toxic proteins
+and damaged cells. (4) Maintenance of metal homeostasis: Ⅰ. Chelating heavy metal ions to alleviate neurotoxicity; Ⅱ. Prevention of intracellular calcium
+overload. (5) Inhibition of excessive apoptosis: Upregulating Bcl-2 and downregulating Bax to reduce mitochondrial cytochrome C release and inhibit
+caspase-9/6/3 activation, suppressing excessive apoptosis. (6) Promotion of regeneration and repair of neurons: Ⅰ. Increasing the expression of brain-
+derived neurotrophic factor (BDNF); Ⅱ. Upregulation of Wnt/β-catenin (WβC) pathway.
+Frontiers in Pharmacology frontiersin.org02
+Wang et al. 10.3389/fphar.2025.1625821
+
+TABLE 1 Clinical trials of curcumin on the effect of central nervous system.
+No. Object Research
+type
+Formulation/
+Dosage
+Group Duration Outcome Side effect References
+1 40 non-
+demented adults
+Randomized,
+double-blind,
+and placebo-
+controlled
+Highly absorptive
+curcumin dispersed with
+colloidal nanoparticles-
+Theracurmin, 90 mg twice
+daily (180 mg/day)
+Placebo-19;
+Intervention-
+21
+18 months Memory and
+attention improved
+with Theracurmin;
+less
+neuropathological
+accumulation in
+the amygdala and
+hypothalamus
+Four curcumin-
+treated and two
+placebo-treated
+subjects
+experienced
+gastrointestinal
+side effects
+(transient
+abdominal pain,
+gastritis, or
+nausea)
+Small et al.
+(2018)
+2 36 patients with
+mild-to-
+moderate AD
+Randomized,
+double blind,
+and placebo-
+controlled
+Oral curcumin
+C3 complex (95%
+curcuminoids with 70%–
+80% comprised by
+curcumin, 15%–25%
+demethoxycurcumin, and
+2.5%–6.5%
+bisdemethoxycurcumin),
+capsules taken twice daily
+with a fatty meal
+Placebo-12
+2 g/day-12
+4 g/day-12
+24 weeks No differences
+between treatment
+groups in clinical or
+biomarker efficacy
+measures; low
+native curcumin
+measured in
+plasma
+(7.32 ng/mL)
+5/24 subjects
+withdrew in the
+curcumin group
+due to
+gastrointestinal
+symptoms
+Ringman et al.
+(2012)
+3 60 healthy adults
+aged 60–85
+Randomized,
+double-blind,
+and placebo-
+controlled
+400 mg Longvida
+®
+optimized curcumin
+containing approximately
+80 mg curcumin in a solid
+lipid formulation, capsules
+taken once daily
+Placebo-30;
+Intervention-
+30
+4 weeks Improved
+performance on
+sustained attention
+and working
+memory tasks one
+hour after
+administration
+curcumin; better
+working memory
+and mood
+following chronic
+treatment
+(4 weeks); reduced
+total and LDL
+cholesterol levels
+Curcumin
+treatment was well
+tolerated and did
+not significantly
+impact of any of
+the examined
+hematological
+safety measures
+Cox et al. (2015)
+4 48 AD patients
+with moderate
+dementia
+Randomized,
+double-blind,
+and placebo-
+controlled
+Unformulated standard
+curcumin complex
+with >95% purity (USC);
+curcumin-galactomannan
+complex (CGM);
+400 mg × 2/day
+Placebo-16
+USC group-
+16
+CGM
+group-16
+6 months Improved MMSE
+and GLFS scores,
+significant delay in
+the progress of AD,
+and improved
+serum levels of
+specific biomarkers
+(BDNF, Aβ42, tau
+protein, IL-6 and
+TNF-α) in CGM
+group
+No adverse events
+were reported in
+the placebo, USC
+or CGM groups
+Das et al. (2023)
+5 60 idiopathic PD
+patients aged≥30
+Randomized,
+triple-blind,
+and placebo-
+controlled
+Curcumin nanomicelles in
+soft gelatin capsules,
+80 mg/daily
+Placebo-30;
+Intervention-
+30
+9 months No significant
+difference between
+placebo and
+curcumin groups
+A total of
+12 subjects
+showed nausea
+and vomiting,
+gastroesophageal
+reflux, and
+dyspepsia in
+curcumin group
+while 8 patients
+were reported
+with side effects
+related to
+gastrointestinal
+system in placebo
+group
+Ghodsia et al.
+(2022)
+6 96 primiparous
+women
+Randomized,
+double-blind,
+and placebo-
+controlled
+500 mg of curcumin
+capsules, once daily
+Placebo-48;
+Intervention-
+48
+8 weeks The mean score of
+depression and
+anxiety were
+significantly lower
+Four individuals
+in the intervention
+group and one
+person in the
+Hamlbar et al.
+(2025)
+(Continued on following page)
+Frontiers in Pharmacology frontiersin.org03
+Wang et al. 10.3389/fphar.2025.1625821
+
+efficacy and increased adverse effects (Xu et al., 2023). In recent
+years, significant advancements has been made in drug
+development, with a growing emphasis on targeting the
+underlying pathological mechanisms. Key targets include β-
+amyloid (Aβ) and tau proteins of AD, α-synuclein (α-syn) of PD
+and huntingtin proteins of HD (Ran and Zhu, 2024; Martic, 2022).
+Additionally, emerging approaches like gene therapy,
+immunotherapies and stem cell-based treatments also hold great
+potential, although many are still in clinical trial stages (Sun and
+Roy, 2021). The development of more effective interventions and
+novel drugs is urgently required to address the multifaceted
+challenges posed by NDs.
+Curcumin, a natural polyphenolic compound, is primarily
+derived from the rhizomes of Curcuma longa L. (turmeric) which
+is a perennial herbaceous plant that has been extensively utilized in
+traditional medicine and culinary practices (Rafiee et al., 2019). The
+synthesis of curcumin has been also investigated to develop optimal
+procedures for the rapid acquisition (Ahmed et al., 2017). The
+chemical structure is characterized by two aromatic rings linked
+by a seven-carbon chain with β-diketone functional groups,
+conferring the diverse biological activities (Figure 1). Curcumin
+exhibits a broad spectrum of pharmacological properties, including
+anti-inflammatory, antioxidant, anti-cancer and neuroprotective
+effects, making it a promising therapeutic candidate for NDs
+(Tandon et al., 2020). It can inhibit the aggregation of
+pathological proteins, mitigate oxidative stress and suppresses
+neuroinflammation. Furthermore, curcumin enhances the
+expression of neurotrophic factors and promotes autophagy,
+aiding in the clearance of damaged cellular components (Gao
+et al., 2020; Namgyal et al., 2021). Despite its prospective
+pharmaceutical benefits, the clinical application of curcumin is
+hampered by poor bioavailability due to low solubility, structural
+instability, rapid metabolism and fast systemic elimination. These
+pharmacokinetic challenges prevent it from reaching an effective
+concentration in target tissues. To overcome the limitations, some
+strategies have been proposed such as the development of curcumin
+analogs, nanoparticle-based delivery systems, liposomal
+encapsulation and the use of adjuvants like piperine (Olmos-Juste
+et al., 2021; Liu et al., 2020; Zhang et al., 2018). It was demonstrated
+that curcumin nano-formulations exhibited excellent solubility and
+stability, along with antioxidant and enzyme inhibition properties,
+as evidenced by molecular docking and simulation studies (Kanwal
+et al., 2023). These approaches are of significant potential in
+improving the efficacy and feasibility of curcumin in the
+treatment of neurodegenerative disorders.
+In light of the increasing interest in natural medicine for the
+management of NDs, curcumin has garnered extensive attention as a
+highly promising therapeutic agent. Some clinical studies have
+explored the neuroprotective effects of curcumin, but their
+overall findings remain promising yet inconclusive (Table 1).
+Most trials were short-term and involved small sample sizes, with
+considerable dosage variability. Particularly noteworthy is the
+heterogeneity in therapeutic outcomes among studies targeting
+the same neurodegenerative conditions, such as AD. Trials
+TABLE 1 (Continued) Clinical trials of curcumin on the effect of central nervous system.
+No. Object Research
+type
+Formulation/
+Dosage
+Group Duration Outcome Side effect References
+in the intervention
+group
+placebo group
+reported
+gastrointestinal
+symptoms, such as
+nausea and
+stomach pain
+7 80 patients with
+diabetic
+polyneuropathy
+Randomized,
+double-blind,
+and placebo-
+controlled
+Nano-curcumin capsules
+(curcumin 72%,
+desmethoxycurcumin
+25%, and
+bisdemethoxycurcumin
+3%), one capsule daily
+(80 mg)
+Placebo-40;
+Intervention-
+40
+8 weeks Significant
+reduction in the
+mean score of
+depression and
+anxiety in the
+nano-curcumin
+group; changes in
+stress score were
+not statistically
+significant
+Stomachache was
+reported by two
+patients
+Asadi et al.
+(2019)
+8 42 ALS patients Double-blind Brainoil, a dietary
+supplement containing
+600 mg of curcumin,
+100 mg of Coenzyme Q10,
+300 mg of Bacopa
+monnieri, 250 mg of
+Withania somnifera,
+250 mg of Centella
+asiatica, and 1 mg of Piper
+nigrum, once daily
+Group A-24:
+placebo for
+3 months
+(T1), then
+Brainoil for
+the following
+3 months
+(T2)
+Group B-18:
+only Brainoil
+for 6 months
+6 months Group B: a stable
+score of the ALS-
+FRS-r; reduced
+AOPPs; stable
+FRAP exercise
+values
+Group A: FRAP
+exercise values at
+T1 were reduced
+and then increased
+at T2 with
+introduction of
+therapy
+Gastralgia (N = 3),
+diarrhea (N = 1),
+and skin rush
+(N = 1)
+Chico et al.
+(2018)
+AD, Alzheimer’s disease; LDL, low density lipoprotein; MMSE, mini-mental state examination; GLFS, geriatric locomotive function scale; BDNF, brain-derived neurotrophic factor; Aβ,
+amyloid β; IL, interleukin; TNF, tumor necrosis factor; PD, Parkinson’s disease; ALS, amyotrophic lateral sclerosis; ALS-FRS-r, revised ALS functional rating scale; AOPPs, advanced oxidation
+protein products; FRAP, ferric reducing antioxidant power.
+Frontiers in Pharmacology frontiersin.org04
+Wang et al. 10.3389/fphar.2025.1625821
+
+employing unmodified prototype curcumin preparations showed
+negligible differences from placebo controls, primarily due to the
+inherently low bioavailability and inadequate systemic absorption.
+This review systematically synthesizes the knowledge on curcumin,
+including the pharmacological effects, underlying neuroprotective
+mechanisms, functions across specific NDs, and cutting-edge
+strategies for bioavailability enhancement. Meanwhile, the
+limitations of current research and the unresolved issues
+requiring further investigation are critically discussed. These
+insights will contribute to the advancement of novel drug
+development and the translation of curcumin-based therapies
+toward clinical practice.
+2 Review methodology
+The review and research articles were retrieved using relevant
+keywords (involving curcumin, neurodegenerative diseases,
+Alzheimer’s disease, Parkinson’s disease, Huntington’s disease,
+amyotrophic lateral sclerosis, toxic proteins, tau protein, β-
+Amyloid, alpha synuclein, brain, neuron, apoptosis, metal
+homeostasis, chelation, ferroptosis, cuproptosis, mitochondria
+damage, inflammation, oxidative stress, pharmacological effects,
+neuroprotection, antioxidation/antioxidant, anti-inflammation/
+anti-inflammatory, mechanism, signal pathway, bioavailability,
+clinical trial, and so on) from the website and databases
+including ScienceDirect, Google Scholar, Web of Science,
+ResearchGate, and PubMed. For the included clinical studies of
+curcumin in the treatment of neurological diseases, the necessary
+information was required to be reported, including the clinical trial
+registration, the inclusion criteria of subjects, the basic information
+of drugs (source, composition, formulation type, dosage and
+administration method), placebo, treatment time, measured
+indicators, outcomes, side effects, etc. More than 200 articles
+published mainly from 2015 to 2025 were selected in this way.
+Then the useful information related to the topic of this paper was
+extracted and summarized from these collected references.
+3 Pharmacological effects of curcumin
+3.1 Antioxidation
+Oxidative stress is a critical factor contributing to the onset and
+progression of NDs. It arises from an imbalance between the
+production of reactive oxygen species (ROS) and the body’s
+antioxidant defenses (Keeney et al., 2024). ROS, such as
+superoxide anions, hydrogen peroxide and hydroxyl radicals, are
+byproducts of normal cellular metabolism, particularly
+mitochondrial respiration. Under physiological conditions, ROS
+levels are tightly regulated by endogenous antioxidant systems,
+including superoxide dismutase (SOD), catalase (CAT) and
+glutathione peroxidase (GPx) (Li et al., 2025). However, excessive
+ROS and impaired antioxidant mechanisms will cause oxidative
+damage to lipids, proteins, DNA and other cellular components
+(Dorszewska et al., 2023). In neurons, oxidative stress disrupts
+mitochondrial function, leading to reduced ATP (adenosine
+triphosphate) and increased ROS, which forms a vicious cycle of
+oxidative damage. Cell homeostasis is thus destroyed, and the
+misfolding and aggregation of toxic proteins are exacerbated, like
+Aβ in AD and α-syn in PD (Van Laar et al., 2020; Meng et al., 2011).
+Oxidative stress induces lipid peroxidation, and impairs the
+structural and functional integrity of cell membranes and
+organelles. Moreover, the damage to DNA caused by excessive
+ROS activates apoptotic pathways to accelerate neuronal cell
+death (Al Olayan et al., 2020). The imbalance between ROS and
+cellular defense aggravates neuroinflammation by stimulating
+microglia and astrocytes to release pro-inflammatory cytokines
+(Wang et al., 2021a; Dash et al., 2025). The blood-brain barrier is
+also impaired under such conditions, losing the ability to prevent
+peripheral immune cells and harmful molecules from infiltrating the
+central nervous system (CNS), which thereby accelerates
+neurodegeneration (Yang et al., 2024; Kim S. et al., 2024). The
+cumulative impact of these processes results in the gradual loss of
+neuronal structure and function, manifesting as cognitive decline,
+motor impairments and other degenerative symptoms
+associated with NDs.
+Curcumin exerts the antioxidant effects through multiple
+pathways. Firstly, it can directly scavenge ROS and reactive
+nitrogen species, thereby reducing oxidative damage to cellular
+components (Alisi et al., 2018). It is attributed to the well-
+characterized structural motifs (Ahmed et al., 2024). The
+chemical structure including two phenolic rings connected by a
+β-diketone moiety enables curcumin to neutralize free radicals and
+inhibit lipid peroxidation. The activity of endogenous antioxidant
+enzymes such as SOD, CAT and GPx is enhanced by curcumin,
+which plays a crucial role in detoxifying ROS and maintaining
+cellular redox homeostasis (Santana-Martínez et al., 2019). In
+addition to the direct antioxidant effects, curcumin can also
+regulate the signaling pathways of antioxidant reactions to
+protect neurons from damage (Duan et al., 2022). For instance,
+nuclear factor erythroid 2-related factor 2 (Nrf2) is a master
+regulator of antioxidant responses. Under normal conditions,
+Nrf2 is sequestered in the cytoplasm by the inhibitor, Kelch-like
+ECH-associated protein 1 (Keap1). When subjected to oxidative
+stress, Nrf2 translocates to the nucleus and binds to antioxidant
+response elements (ARE), inducing the expression of antioxidant
+genes (Kang et al., 2024). Curcumin can promote the dissociation of
+Nrf2 from Keap1 and enhance its activation to facilitate the
+upregulation of antioxidant enzymes and phase II detoxifying
+enzymes, which collectively reduce oxidative stress and
+strengthen cellular resilience (Rathore et al., 2023). On the other
+hand, nuclear factor-kappa B (NF-κB) is a transcription factor that
+promotes the expression of pro-inflammatory cytokines and related
+enzymes such as cyclooxygenase, inducible nitric oxide synthase and
+nicotinamide adenine dinucleotide phosphate (NADPH) oxidase
+(Patel et al., 2017). Cysteine-alanine-glutamine-lysine peptide-
+modified antioxidant nanoparticles were developed for co-
+delivery of curcumin (C-PPS/C) to modulate oxidative and
+neuroinflammatory disturbances of mice with traumatic brain
+injury. It was revealed that C-PPS/C nanoparticles accumulated
+at the injury site and broke the “ROS-neuroinflammation” cycle to
+protect the blood-brain barrier and promote long-term neurological
+recovery. The hydrophobic core of C-PPS/C composed of poly
+(propylene sulfide) can react with and scavenge ROS, while
+curcumin release further suppressed ROS and inflammation.
+Frontiers in Pharmacology frontiersin.org05
+Wang et al. 10.3389/fphar.2025.1625821
+
+Meanwhile, C-PPS/C nanoparticles were found to inhibit the NF-κB
+pathway to reduce the expression of pro-inflammatory genes (Fu X.
+et al., 2025). Additionally, curcumin’s ability to chelate metal ions
+like iron and copper further contributes to the antioxidant effects, as
+these metals are known to catalyze the production of highly reactive
+hydroxyl radicals through Fenton reactions (Cengiz et al., 2023). For
+example, Cd exposure (2.5 mg/kg for 60 days) induced behavioral
+impairments in mice through prefrontal cortex cellular
+inflammation and oxidative stress, as a result of the reduction of
+endogenous antioxidant enzyme activity, and the increase of pro-
+inflammatory markers (IL-6 and TNFα) and decrease of anti-
+inflammatory cytokine IL-10. Curcumin treatment
+(20–160 mg/kg for 30 days) could mitigate these behavioral and
+biochemical impairments by reducing the neuroinflammation and
+oxidative damage as well as increasing the number of viable
+prefrontal cortex neuronal cells (Namgyal et al., 2021).
+3.2 Anti-inflammation
+Inflammation is triggered by body’s defense responses to stimuli
+such as injury and infection, and is usually conducive to tissue repair
+and pathogen clearance. Acute inflammation is always short-term
+and beneficial, but the chronic inflammation, caused by persistent
+triggering or immune dysregulation, can damage tissues and lead to
+neurodegeneration (Zhang W. et al., 2023). Neuroinflammation is
+characterized by the activation of microglia and astrocytes, and the
+release of pro-inflammatory cytokines (Gulen et al., 2023). Microglia
+are resident immune cells in CNS, which perform the functions of
+synaptic pruning, damage repair, homeostasis maintenance and cell
+phagocytosis. However, facing pathological stimuli such as protein
+aggregates, microglia are activated and adopt a pro-inflammatory
+phenotype, leading to the release of cytokines involving interleukin-
+1β (IL-1β), interleukin-6 (IL-6) and tumor necrosis factor-alpha
+(TNF-α) to exacerbate neuronal impairment (Peruzzotti-Jametti
+et al., 2024; Nikolopoulos et al., 2023). The activation of
+microglia is regulated by pattern recognition receptors (PRRs),
+including Toll-like receptors (TLRs) and nucleotide-binding and
+oligomerization domain (NOD)-like receptors (NLRs), which can
+recognize pathogen-associated molecular patterns (PAMPs) and
+damage-associated molecular patterns (DAMPs) (Li and Wu,
+2021). Astrocytes are another type of glial cells related to
+neuroinflammation. In response to inflammatory signals,
+astrocytes undergo reactive astrogliosis, accompanied by cellular
+hypertrophy and the upregulation of glial fibrillary acidic protein
+(GFAP) (Lopez Rodriguez et al., 2021; Linard et al., 2023). Reactive
+astrocytes release cytokines and chemokines that further amplify the
+inflammatory response and disrupt the blood-brain barrier, allowing
+peripheral immune cells to infiltrate the CNS (Ghita et al., 2021;
+Qian et al., 2023). The chronic activation of microglia and astrocytes
+leads to a self-perpetuating cycle of inflammation and
+neurodegeneration. Pro-inflammatory cytokines and ROS not
+only damage neurons directly but also induce the misfolding and
+aggregation of toxic proteins, a hallmark event of NDs. Additionally,
+inflammation destroys synaptic plasticity and inhibits the clearance
+of harmful substances to further aggravate neuronal dysfunction
+(Geng et al., 2020; Zhang et al., 2014). In summary, the activation of
+microglia and astrocytes, and the subsequent release of pro-
+inflammatory cytokines and ROS, create an unfavorable
+environment for neuronal damage and death.
+Regulating inflammatory signaling pathways and inhibiting
+inflammatory mediators are the main mechanisms of curcumin
+to achieve anti-inflammatory effects. By inhibiting the activity of the
+inhibitory kappa B kinase (IKK), curcumin prevents the
+translocation and activation of NF-κB, thereby reducing the
+expression of chemokines and pro-inflammatory cytokines such
+as TNF-α, IL-1β and IL-6, which ultimately attenuates inflammatory
+responses (Jobin et al., 1999). NOD-like receptor protein 3 (NLRP3)
+inflammasome is a protein complex involved in the development of
+immune and inflammation-related diseases. Curcumin can directly
+restrain the assembly of NLRP3 inflammasome, or inhibit its
+activation by restricting the NF-κB pathway (Cai et al., 2025;
+Ruan et al., 2022). T helper 17 cells (Th17), one of the targets of
+curcumin, are an important pro-inflammatory cell that secretes IL-
+17, IL-22 and IL-23 to promote inflammation responses. On the
+contrary, regulatory T cells (Tregs) possess prominent anti-
+inflammatory effects. The imbalance of Th17 and Tregs can lead
+to an abnormal immune response (Chaudhry et al., 2011).
+Curcumin suppresses Th17 differentiation and regulates Treg/
+Th17 rebalance by inhibiting IL-23/Th17 pathway to maintain
+immune homeostasis. The expression of Th17 cells related
+cytokine profiles (IL-17A and RORγt) was dramatically decreased
+in curcumin-treated mice, indicating the inhibited differentiation
+and development of Th17 cells. Besides, it was demonstrated that
+type 4 metabotropic glutamate receptor (mGluR4) was
+constitutively expressed in mouse bone marrow-derived dendritic
+cells (BMDC), and mGluR4 siRNA-transfected BMDC tipped the
+balance of T cell differentiation toward the Th17 phenotype.
+Curcumin upregulated mGluR4 expression in mouse BMDC,
+which likely contributed to the mechanism of inhibiting the
+Th17 cell differentiation (Zhao et al., 2017; Rahimi et al., 2019).
+Mitogen-activated protein kinases (MAPKs) are an pivotal group of
+regulatory factors in cellular stress response. Inhibiting the MAPK
+pathway is another way for curcumin to reduce the release of
+inflammatory mediators and cell apoptosis (Maugeri et al., 2023).
+It was recently found that curcumin interacted with the Z1-type
+protein tyrosine phosphatase receptor (PTPRZ1) to maintain the
+enzymatic activity, thereby regulating the phosphorylation of the
+m6A-reader YTH domain-containing family protein 2 (YTHDF2)
+and avoiding the overactivation of microglia (Zhang et al., 2025).
+This process is beneficial to relieve neuroinflammation, alleviate
+brain damage and promote neuronal repair. In addition to the above
+strategies, curcumin inhibits inflammation-related transcription
+factors by reducing the accumulation of ROS (Chen T. et al.,
+2024). Autophagy-related pathways (such as AMPK/mTOR) can
+be also activated to promote the clearance of toxic protein aggregates
+and damaged cells, so as to avoid inflammation and neuronal
+damage (Khayatan et al., 2025; Fu Y. et al., 2025).
+3.3 Apoptosis inhibition
+Apoptosis, also called programmed cell death, is a highly
+regulated process that automatically eliminates damaged or
+unnecessary cells to maintain tissue homeostasis (Baar et al.,
+2017). Apoptotic cells are characterized by distinct morphological
+Frontiers in Pharmacology frontiersin.org06
+Wang et al. 10.3389/fphar.2025.1625821
+
+changes, including cell shrinkage, chromatin condensation, DNA
+fragmentation, and the formation of apoptotic bodies which are
+subsequently phagocytosed by neighboring cells (Arvanitaki et al.,
+2024). However, when apoptosis is dysregulated as a result of
+oxidative stress, neurotrophic factor deficiency, inflammatory
+responses, and protein misfolding and aggregation, it can induce
+excessive and premature cell death, thereby contributing to
+progressive neuronal loss (Kumari et al., 2023; Norton et al.,
+2024). The principal factors of apoptosis program include Apaf-1
+(apoptotic protease-activating factor 1), Bcl-2 (B cell lymphoma-2)
+family proteins and caspases (cysteinyl aspartate-specific
+proteinases) (Qin et al., 1999). The Bcl-2 family, comprising both
+anti-apoptotic proteins (like Bcl-2 and Bcl-xl) and pro-apoptotic
+proteins (like Bax and Bak), governs apoptosis primarily by
+modulating mitochondrial permeability. Under normal
+physiological conditions, anti-apoptotic proteins, such as Bcl-2
+and Bcl-xl, form homodimers or multimers on the mitochondrial
+outer membrane to maintain its integrity and inhibit cytochrome c
+release. In contrast, pro-apoptotic Bax and Bak predominantly exist
+as inactive monomers (Edlich et al., 2011). Upon exposure to
+apoptotic stimuli, Bax and Bak undergo conformational changes,
+become activated, and insert into the mitochondrial membrane,
+which then heightens mitochondrial permeability and facilitates the
+release of cytochrome c (Antonsson et al., 1997). The released
+cytochrome c subsequently binds to Apaf-1 to generate the
+apoptosome that recruits and activates caspase-9 as well as
+downstream effector caspases (like caspase-3/caspase-6),
+ultimately executing cell death (Kim et al., 2005; Li et al., 1997).
+Bcl-2 can interact with Bax to form heterodimers, thereby
+suppressing Bax activity and cytochrome c release to block the
+subsequent apoptotic cascade. Excessive accumulation of toxic
+proteins induces endoplasmic reticulum stress to disrupt calcium
+homeostasis, activating the apoptotic pathway (Lim et al., 2023).
+Additionally, neurofibrillary tangles formed by
+hyperphosphorylated tau proteins reduce their binding affinity
+with neuronal tubulin, destabilizing microtubules and promoting
+neurodegeneration (Savastano et al., 2021; McMillan et al., 2023). By
+secreting Il-1α, TNF and complement component subunit 1q, the
+activated microglia induce the formation of neurotoxic reactive
+astrocytes which lose the ability to support neuronal survival,
+outgrowth, synaptogenesis and phagocytosis, leading to the death
+of neurons and oligodendrocytes (Zhang L. et al., 2023).
+Furthermore, reduced levels of neurotrophic factors, such as
+brain-derived neurotrophic factor (BDNF), diminish the
+initiation of anti-apoptotic process, rendering neurons more
+vulnerable to apoptosis (Zhang K. et al., 2023).
+Curcumin, on the one hand, scavenges ROS to improve
+neuronal microenvironment and prevent apoptosis; on the other
+hand, it promotes microglial polarization toward an M2 phenotype
+and inhibits M1 polarization, thereby suppressing inflammation-
+induced apoptosis and fostering neuronal regeneration (Qian et al.,
+2024; Chen Z. et al., 2024). The expression of pro-apoptotic proteins
+Caspase 3/8/9, Bax and apoptotic peptidase activating factor 1 is
+reduced by curcumin while that of anti-apoptotic proteins Bcl-2 is
+increased. Endoplasmic reticulum stress is mitigated by curcumin-
+mediated downregulation of Grp78 (glucose-regulated protein 78)
+and CHOP (C/EBP homologous protein) expression. This effect is
+likely attributed to curcumin’s ability to upregulate CAT and
+glutathione reductase levels, thereby enhancing cellular
+antioxidant capacity. The resulting reduction in ROS
+overproduction helps preserve the functional integrity of
+mitochondrial respiratory chain complexes I and II (Wu et al.,
+2024). The combination of curcumin and vagus nerve stimulation
+was found to significantly lower the neurological deficits, infract
+volume, neural apoptosis and inflammatory cytokines release. The
+phosphorylation levels of AKT and ERK2 were both increased after
+the combination therapy (Xu et al., 2018). Mitochondrial damage
+and dysfunction are key factors of neuron loss. Curcumin protects
+mitochondrial respiratory chain by maintaining the stability of
+membrane potential. At the same time, mitochondrial
+dysfunction is ameliorated via promoting mitochondrial
+biogenesis to inhibit abnormal neuronal apoptosis (Zheng et al.,
+2023). Excessive autophagy can lead to metabolic stress and
+degradation of cellular components, which exacerbates the
+structural destruction and functional decline of tissues (Aman
+et al., 2021). It was indicated that curcumin significantly reduced
+the level of H
+2
+O
+2
+-induced autophagy with a decreased expression of
+autophagy marker proteins LC3-II and Beclin-1. The ERK1/
+2 signaling pathway was also inactivated by inhibiting
+phosphorylation, thereby reducing autophagy responses and
+protecting nerve cells from oxidative stress (Ruan et al., 2024).
+Curcumin (200 mg/kg) significantly ameliorated brain injury and
+neurological deficits in rats subjected to middle cerebral artery
+occlusion by upregulating autophagy-related proteins p-Akt and
+p-mTOR, while downregulating autophagy-associated proteins
+LC3-II/LC3-I and inflammation-related proteins IL-1, TLR4, p-38
+and p-p38. However, these protective effects were attenuated when
+either LY294002 (a specific inhibitor of the PI3K/Akt/mTOR
+pathway) or anisomycin (an activator of the TLR4/p38/MAPK
+pathway) was administered. It was suggested that curcumin
+exhibited neuroprotective effects by modulating autophagic
+activities via the PI3K/Akt/mTOR signaling pathway and
+simultaneously suppressing inflammatory responses through
+regulation of the TLR4/p38/MAPK pathway (Huang et al., 2018).
+In summary, the excessive loss of neurons is avoided by curcumin
+through multiple mechanisms to prevent progressive
+neurodegeneration.
+3.4 Metal chelation
+Metal ions are widely present in biological systems and
+participate in many key biochemical processes including material
+transport, energy conversion, information transmission and
+metabolic regulation (Chen et al., 2022; Maniscalchi et al., 2024).
+Common ions, like zinc (Zn
+2+
+), magnesium (Mg
+2+
+), iron (Fe
+2+
+/Fe
+3+
+)
+and copper (Cu
+2+
+), are co-factors of a variety of enzymes which play
+an important role in stabilizing enzyme conformation, transferring
+electrons, and connecting enzymes and substrates in enzymatic
+reactions (Valdez et al., 2014). They are indispensable in human
+bodies. However, the imbalance of metal ions, whether deficiency or
+excess, can lead to metabolic disorders, cell and tissue damage,
+weakened immunity and neurological dysfunction (Tian et al.,
+2024). The accumulation of metal ions promotes the production
+of hydrogen peroxide and hydroxyl radical through Fenton and
+Haber-Weiss reactions, resulting in lipid peroxidation of cell
+Frontiers in Pharmacology frontiersin.org07
+Wang et al. 10.3389/fphar.2025.1625821
+
+membrane (von Krusenstiern et al., 2023). Cellular integrity is
+damaged by the oxidative damage of lipids, proteins and DNA
+(Khan et al., 2020). Metal ion imbalance and oxidative stress trigger
+the overproduction of Aβ by activating β- or γ-secretases and
+inhibiting α-secretase, and also cause tau hyperphosphorylation
+by activating protein kinases, such as glycogen synthase kinase-
+3β (GSK-3β), cyclin-dependent protein kinase-5 and MAPKs, and
+inhibiting protein phosphatase 2A (Wang et al., 2020). It has been
+found that both essential (Mn, Fe, Cu and Zn) and nonessential (Pb,
+Al and Cd) metals can accumulate in the brain and activate
+microglia and astrocytes to release pro-inflammatory factors
+(Domingo-Relloso et al., 2024). The inflammation and oxidative
+stress intensify each other, forming a vicious cycle. In addition, metal
+ion imbalance interferes with the electron transport chain in
+mitochondria, leading to the loss of membrane potential and
+energy metabolism disorders. The corresponding decrease in
+ATP production eventually leads to cell apoptosis (Shen et al.,
+2023). Calcium ions (Ca
+2+
+) are indispensable to physiological
+activities, which participate in the signal transduction,
+neurotransmitter release and hormone secretion. Excessive metal
+ions impair Ca
+2+
+channels and calmodulin function, generating
+abnormally elevated intracellular calcium concentrations. The
+breakdown of calcium homeostasis affects the synthesis, release
+and reuptake of neurotransmitters, followed by excitotoxicity and
+loss of neurons (Fan et al., 2020; Bharat et al., 2023).
+Ferroptosis and cuproptosis are two specific modes of cell death
+that depend on the exposure to iron and copper, respectively (Zou
+et al., 2020; Li S. et al., 2022). The ferroptosis is characterized by iron
+metabolism disorder, ROS accumulation, reduced glutathione levels
+and the inactivation of glutathione peroxidase 4 (GPX4). The
+presence of Fe
+2+
+and lipoxygenases facilitates the lipid
+peroxidation of cell membranes and ultimately induces
+ferroptosis (Qiu et al., 2024). Both exogenous and endogenous
+pathways drive this process. Exogenous pathways rely on the
+inhibition of system Xc– (cystine/glutamate transporter) and the
+activation of the transferrin and transferrin receptor 1, while the
+endogenous pathway mainly involves blocking the activation of
+GPX4 (Xue et al., 2023). As for cuproptosis, it is closely related to
+mitochondrial metabolism. The excess copper binds to lipase in the
+mitochondrial TCA cycle, which accelerates protein aggregation and
+proteotoxic stress, leading to cell death (Chen et al., 2022). It has
+been proved that changes of iron and copper homeostasis is directly
+linked to the progression of multiple NDs, including AD, HD and
+ALS (Maniscalchi et al., 2024).
+The metal chelation of curcumin is mainly attributed to the unique
+chemical structure, including two adjacent phenolic hydroxyl groups
+and a β-diketone moiety, which enable it to form stable complexes with
+various metal ions through coordination covalent bonds (Mari et al.,
+2022). The oxygen atoms in phenolic hydroxyl groups provide lone pair
+electrons to interact with positively charged metal ions, and the
+carbonyl oxygen atoms in the β-diketone structure further enhance
+the stability of metal-curcumin complexes by providing additional
+coordination sites for metal ions (Moradi et al., 2020). The metal-
+chelating ability is affected by many factors, especially the pH. Under
+acidic conditions, the phenol hydroxyl groups are more readily
+protonated, thereby increasing the affinity to metal ions (Wahyudi
+et al., 2022; Rasouli and Ghavami, 2021). Neuroprotective effects are
+exerted by modulating the activity of metal-dependent enzymes,
+reducing the production of ROS, and inhibiting the aggregation of
+abnormal proteins. The chelating effect of curcumin reduces the levels
+of free metal ions and inhibits their participation in the reactions of free
+radical generation, which helps protect neurons from oxidative stress-
+induced cell death (Namgyal et al., 2021). Additionally, the aggregation
+of toxic proteins is also reduced, slowing the progression of
+neurodegeneration. The binding of cadmium or arsenic to SOD
+diminishes its enzymatic activity, whereas curcumin forms hydrogen
+bonds with histidine residues, thereby reducing SOD’s affinity for
+arsenic and cadmium and restoring its activity (Cengiz et al., 2023).
+Cerebral cortex acetylcholinesterase (AChE) and adenosine deaminase
+(ADA) activities were elevated in rats exposed to Cd (2.5 mg/kg). Co-
+treatment with curcumin reversed these enzyme activities back to
+control levels. Furthermore, Cd exposure induced an increase in
+lipid peroxidation in the cerebral cortex, accompanied by a
+reduction in functional sulfhydryl (-SH) groups and nitric oxide
+(NO), a critical neurotransmitter and neuromodulatory agent. Co-
+administration of curcumin (12.5 or 25 mg/kg) enhanced the non-
+enzymatic antioxidant status and NO levels while simultaneously
+reducing malondialdehyde levels. Therefore, the inhibition of AChE
+and ADA activities, along with the enhancement of the antioxidant
+status mediated by curcumin, may provide potential mechanisms
+underlying its cognitive-enhancing effects in Cd-induced memory
+dysfunction (Akinyemi et al., 2017). Curcumin can also improve the
+cell apoptosis caused by metal toxicity. Excessive accumulation of heavy
+metals promoted the cleavage of poly (ADP-ribose) polymerase-1 and
+caspase-3, suppressed Bcl-2 expression, and induced the release of
+cytochrome c and second mitochondria-derived activator of caspases
+from the mitochondria into the cytosol. Curcumin inhibited both early
+and late apoptosis induced by heavy metals and reversed the alterations
+in apoptotic markers. Metallothionein (MT), a cysteine-rich protein,
+plays a pivotal role in metal detoxification. Curcumin increased the level
+of MT2A mRNA and enhanced the expression of MT2. The
+antiapoptotic effects of curcumin were attenuated under MT2A
+knockdown conditions, suggesting that MT2A may be a critical
+target of curcumin (Wahyudi et al., 2022). Aluminum is known as a
+neurotoxic metal, which may show negative effects on the nervous
+system, particularly at higher concentrations (Bishop et al., 1997). The
+symptoms include movement disorders, seizures, memory loss, learning
+disabilities and depressive tendencies. Curcumin has the potential of
+reducing the bonding affinity of Al
+3+
+to DNA and preventing the Al
+3+
+-
+induced cognitive impairment (Sood et al., 2012). It can be concluded
+the metal-chelating ability of curcumin, driven by its unique chemical
+structure, plays a crucial role in neuroprotection by modulating enzyme
+activity, reducing oxidative stress and inflammation, inhibiting toxic
+protein aggregation, and alleviating metal-induced apoptosis, thereby
+offering a promising therapeutic strategy for NDs.
+4 Function of curcumin in the
+treatment of specific NDs
+4.1 Alzheimer’s disease
+4.1.1 Pathogenesis of AD
+Alzheimer’s disease (AD) is a progressive neurodegenerative
+disorder that accounts for 60%–80% of all dementia cases
+worldwide. The main manifestations are behavioral changes and
+Frontiers in Pharmacology frontiersin.org08
+Wang et al. 10.3389/fphar.2025.1625821
+
+gradual decline of cognitive functions, which seriously affect daily
+life (Self and Holtzman, 2023). It is estimated that over 50 million
+people are currently living with AD, and this number is projected to
+rise to 152 million by 2050 (Long and Holtzman, 2019). The
+prevalence of AD increases with age. Approximately 5%–10% of
+individuals over 65 years old and more than 20% of those over
+85 years old are affected. With the aging of global population, AD
+has become a major public health challenge (Pichet Binette et al.,
+2020). Hallmark pathological features of AD are the accumulation of
+Aβ plaques and neurofibrillary tangles composed of
+hyperphosphorylated tau proteins (Islam et al., 2025). Aβ plaques
+are formed due to the abnormal cleavage of amyloid precursor
+protein by β- and γ-secretases that leads to the production and
+aggregation of toxic peptides in brain. The plaques disrupt neuronal
+communication and trigger inflammatory responses (Pang et al.,
+2022). Tau, on the other hand, is a structural protein mainly
+distributed in CNS, which is responsible for maintaining the
+stability of microtubules, like the “skeleton of neurons”. It
+facilitates the efficient transport of nutrients to support the
+optimal exercise of physiological functions (Roemer-Cassiano
+et al., 2025). However, in AD, tau becomes hyperphosphorylated
+to detach from microtubules and form toxic neurofibrillary tangles
+that impair cellular transport and accelerate neuronal death (Berlind
+et al., 2025). The upregulation of histone deacetylase 7 (HDAC7)
+induces AD-like tau pathologies by deacetylating the transcriptional
+factor EB (TFEB) and inhibiting lysosomal biogenesis in astrocytes.
+Suppressing HDAC7-TFEB signaling is promising for alleviating
+AD and other neurodegenerative disorders (Ye et al., 2025). The
+recent findings also suggested that Aβ promoted tau spreading in
+AD by eliciting neuronal hyperactivity and hyperconnectivity
+(Roemer-Cassiano et al., 2025). These pathological changes
+primarily affect the hippocampus and cerebral cortex, which are
+critical regions for memory and cognitive functions.
+Oxidative stress, neuroinflammation driven by activated
+microglia and astrocytes, mitochondrial dysfunction and genetic
+variation are all key factors in the development of AD (Long and
+Holtzman, 2019). It has been found that mutations in the amyloid
+protein precursor (APP), presenilin-1 (PSEN1), and presenilin-2
+(PSEN2) genes are associated with autosomal dominant early-onset
+familial AD, while apolipoprotein E4 (APOE4) represents the most
+significant genetic risk factor for late-onset sporadic AD,
+contributing to the deposition of Aβ peptides and
+hyperphosphorylated tau proteins (Giau et al., 2019; Rao et al.,
+2025). Accumulating evidence has unveiled the bidirectional
+communication between gut microbiome and CNS, referred to as
+the “microbiota-gut-brain axis” (Forner et al., 2021; Wang X. et al.,
+2019; Boehme et al., 2021). The gut microbiome regulates microglial
+maturation and activation via short-chain fatty acids (SCFAs)
+release. The depletion of SCFAs stimulates the transition of cells
+towards a pro-inflammatory state. The elevated immune activation
+is coupled with impaired hippocampal synaptic transmission, and
+cholinergic gamma oscillations (Loh et al., 2024). Akkermansia
+muciniphila, a mucin- and SCFA-yielding intestinal
+microorganism, is essential for the regulation of metabolic
+homeostasis and immune system, and propionic acid is one of
+the main metabolites. It was revealed that propionate reduced
+mitochondrial over-division by downregulating mitochondrial
+fission protein (DRP1) via G-protein coupled receptor 41, and
+activated PINK1/PARKIN-mediated mitophagy via GPR43 to
+maintain mitochondrial homeostasis and improve the
+pathological injury of AD (Wang Z. et al., 2025).
+4.1.2 Function of curcumin in AD
+The strategies of curcumin to address AD mainly include the
+inhibition of Aβ aggregation and tau hyperphosphorylation, anti-
+oxidation, anti-inflammation and brain-gut axis regulation (Pei
+et al., 2024; Ruan et al., 2024). Curcumin directly binds to small
+Aβ peptides to block the aggregation and fibril formation, which
+attenuates their destructive effect on cell membranes, thereby
+reducing cytotoxicity and improving cell survival (Chen Z. et al.,
+2024; Zhang et al., 2010). Moreover, curcumin facilitates the
+clearance of Aβ by enhancing microglial phagocytic activity and
+up-regulating Aβ-degrading enzymes. Neprilysin (NEP) is the most
+important Aβ-degrading enzyme. Its expression decreases with age
+and is negatively correlated with Aβ accumulation (Iwata et al., 2001;
+Kim et al., 2023). The investigation of 25 curcumin analogs
+surprisingly showed that dihydroxylated curcumin,
+monohydroxylated demethoxycurcumin, and mono- and di-
+hydroxylated bisdemethoxycurcumin, increased NEP activity, but
+curcumin did not. Thus, it was proposed that
+polyhydroxycurcuminoids might be better candidates than
+curcumin as a dietary supplement in the prevention and therapy
+of AD (Chen et al., 2016). Exposing organotypic hippocampal
+cultures to Aβ, curcumin and/or LY294002, it was found that
+curcumin treatment mitigated the Aβ-induced decline in
+synaptophysin expression, and significantly reduced cell death.
+Aβ resulted in the increase of phosphorylated (Ser45) β-catenin
+and the decrease of β-catenin immunocontent, but curcumin
+prevented this destabilization. Additionally, the neuroprotective
+effects of curcumin was inhibited by LY294002, and the
+phosphorylation/activation of Akt and the phosphorylation/
+inactivation of GSK-3β were activated, which revealed that the
+neuroprotection may involve the PI3-K pathway and β-catenin
+signaling, a key transduction factor of Wnt signaling pathway
+(Hoppe et al., 2011). Metabolomic studies of other natural
+compounds, have similarly identified hippocampal and cortical
+metabolic pathways critical for counteracting Aβ-induced
+neurotoxicity, reinforcing the potential of phytochemicals in
+multi-target AD therapies (Li H. et al, 2022). On the other hand,
+curcumin inhibits the activation of NLRP3 inflammasomes in
+neurons and microglia to relieve neuroinflammation and reduce
+the amyloid plaque burden in AD (Guglielmo et al., 2017; Ruan
+et al., 2022). Molecular docking indicated that there were putative
+binding sites with curcumin in microtubule-binding regions of tau.
+It could not only inhibit the oligomerization of tau, but also
+disintegrate preformed tau filaments (Rane et al., 2017). The
+curcumin-primed exosomes effi
+ciently penetrate blood-brain
+barrier through receptor-mediated transcytosis to access brain
+tissues, and inhibit tau phosphorylation by activating the AKT/
+GSK-3β pathway, which holds great potential in improving targeted
+drug delivery and restoring neuronal function (Wang H. et al.,
+2019). In the initial stage of AD, copper accumulation triggers a self-
+assembly of both Aβ40 and Aβ42 (Tian et al., 2024). Under
+inflammatory conditions, high levels of copper in serum can also
+induce oxidative stress and promote inflammatory response. The
+difluoroboron curcumin derivative (DF-Cur) showed highly specific
+Frontiers in Pharmacology frontiersin.org09
+Wang et al. 10.3389/fphar.2025.1625821
+
+and selective recognition of Cu
+2+
+, which could serve as a diagnostic
+agent for the copper detection. Additionally, DF-Cur promoted the
+excretion of Cu
+2+
+and reduced its accumulation in vivo, alleviating
+the damage to nervous system (Wang M. et al., 2021). It was
+demonstrated that curcumin functioned as prebiotics, which
+adjusted the gut microbiota community, improved intestinal
+barrier integrity, and prevented the release of detrimental
+metabolites and pro-inflammatory factors. Considering the link
+between gut health and neurodegeneration, the treatments
+targeting gut microbiota may be a promising strategy to address
+neuroinflammation and delay AD (Kim Y. et al., 2024; Su
+J. et al., 2021).
+Although curcumin has demonstrated promising anti-AD
+activity in cellular and murine models, consistent clinical
+evidence remains lacking. In a clinical trial involving 36 patients
+with mild-to-moderate AD, no significant differences were observed
+between oral curcumin (2 or 4 g/day) and placebo after 24 weeks of
+treatment (Ringman et al., 2012). Pretty low native curcumin
+(7.32 ng/mL) was measured in the plasma. Gastrointestinal
+adverse effects were reported in five participants from the
+intervention group. Conversely, a separate six-month randomized
+controlled trial revealed that a curcumin-galactomannan complex
+(400 mg twice daily) significantly improved Mini-Mental State
+Examination (MMSE) and Geriatric Locomotive Function Scale
+(GLFS) scores of AD patients compared to both placebo and
+unformulated standard curcumin, suggesting a potential delay in
+disease progression (Das et al., 2023). This formulation positively
+modulated serum levels of AD-specific biomarkers, including
+BDNF, Aβ42, tau protein, IL-6 and TNF-α. Notably, no adverse
+effects were reported in either the curcumin or placebo groups in
+this trial. These findings highlight that the clinical efficacy of
+curcumin may depend on formulation type, dosage and
+bioavailability. Further large-scale, long-term studies are
+warranted to conclusively establish its therapeutic effects and
+safety profile in AD populations.
+4.2 Parkinson’s disease
+4.2.1 Pathogenesis of PD
+Parkinson’s disease (PD) is the second most prevalent
+neurodegenerative disorder after AD, mainly manifested as motor
+dysfunction and cognitive decline. Globally, more than 10 million
+individuals currently suffer from PD, with a prevalence rate of 1%–
+2% among those over 65 years old (Bloem et al., 2021; Ben-Shlomo
+et al., 2024). PD can be categorized into two distinct subtypes,
+familial (genetic) PD and sporadic PD, based on the etiological
+origins. Familial PD results from well-defined pathogenic mutations
+in associated genes (like SNCA, LRRK2, PRKN, PINK1 and DJ-1).
+These mutations exhibit autosomal dominant or recessive
+inheritance patterns and can be transmitted across generations,
+often leading to multiple affected individuals within families. As
+for sporadic PD which accounts for approximately 90% of cases, it
+lacks clear familial aggregation. The pathogenesis involves complex
+interactions between environmental exposure, lifestyle and age. The
+primary pathogenesis of PD involves the degeneration and death of
+dopaminergic neurons in midbrain substantia nigra, as well as the
+presence of abundant filamentous inclusions of α-syn in the form of
+Lewy bodies and Lewy neurites (Yang et al., 2022; Mahul-Mellier
+et al., 2020). As a widely expressed protein in CNS, α-syn normally
+plays a role in neuronal signal transduction and synaptic function.
+However, in PD, α-syn monomers undergo misfolding and
+aggregate into fibrous structures that transfer between neurons
+and rapidly spread throughout brain regions, causing functional
+damage and neuronal death (Hallacli et al., 2022). Toxic proteins
+infiltrating the midbrain substantia nigra can trigger the demise of
+dopaminergic neurons, leading to motor symptoms such as
+bradykinesia, resting tremor, and muscle rigidity. When they
+disseminate to the cerebral cortex, cognitive deficits like memory
+decline, anxiety and somnipathy may emerge (Park et al., 2025).
+FAM171A2 is a key regulatory gene of progranulin, a secreted
+pleiotropic glycoprotein associated with NDs (Xu W. et al., 2020).
+The expression of FAM171A2 was found to be significantly elevated
+in PD and positively correlated with the aggregation of α-syn. The
+domain 1 of FAM171A2 protein is tightly bound to the C-terminal
+region of α-syn by electrostatic interaction, and the binding degree
+of FAM171A2 to pathological α-syn fibers is much stronger than
+that of monomeric α-syn. Their combination enhances the
+endocytosis of neurons, encouraging toxic proteins to enter the
+cells (Wu et al., 2025). The endosomal sorting complex required for
+transport (ESCRT) system is responsible for the sorting, trafficking
+and degradation of proteins and other cellular components. It is
+critical in facilitating the degradation of ubiquitinated α-syn through
+the endosome pathway (Nim et al., 2023). The E3 ubiquitin ligase
+Listerin promotes K27-linked polyubiquitination of α-syn, directing
+it to the endosome for the subsequent degradation. It has been
+revealed that the deletion of the Listerin gene exacerbates α
+-syn-
+induced olfactory dysfunction and motor deficits in a mouse model
+of PD (Qin et al., 2025). Parthanatos-associated apoptosis-inducing
+factor nuclease (PAAN), also known as macrophage migration
+inhibitory factor (MIF), is a critical member of the PD-D/E(X)K
+nuclease family that serves as a terminal executor in the parthanatos
+pathway (Wang et al., 2016). Neurodegeneration is triggered by
+pathological α-syn through the nuclease activity of PAAN/MIF.
+Both genetic ablation of PAAN/MIF and the nuclease-deficient
+mutant have been demonstrated to protect against dopaminergic
+neuron loss and mitigate behavioral impairments in the α-syn
+preformed fibril mouse model of sporadic PD (Park et al., 2022).
+Epigenetic mechanisms, including DNA methylation, histone
+modifications and non-coding RNA regulation, play significant roles
+in modulating dopamine transporter (DAT) endocytosis, a process
+implicated in PD pathogenesis (Liang et al., 2025). While no direct
+epigenetic regulator of DAT endocytosis has been identified, DNA
+methyltransferases can indirectly affect this process by altering the
+expression of genes involved in key signaling pathways, such as
+protein kinase C and D2 receptor systems (Cremona et al., 2011; Su
+and Liu, 2017). Similarly, RNA-modifying enzymes, particularly
+m6A methyltransferases, influence DAT endocytosis by regulating
+the synthesis and functionality of associated proteins (Jiang et al.,
+2021). Histone-modifying enzymes contribute to this regulatory
+network by controlling chromatin accessibility, thereby affecting
+the expression of genes critical for endocytosis, endosome formation
+and recycling process (Wang H. et al., 2021). Collectively, these
+epigenetic modifications establish a sophisticated regulatory
+network that indirectly controls the dynamics of DAT
+Frontiers in Pharmacology frontiersin.org10
+Wang et al. 10.3389/fphar.2025.1625821
+
+endocytosis and recycling, representing a crucial regulatory node in
+neurotransmitter transport and PD progression.
+Genetic variation, including single nucleotide variants, small
+indels, structural variants, copy number variants and short tandem
+repeats, is another important cause of PD, which is associated with
+about 10% of cases (Wang C. et al., 2024; Hop et al., 2024). For
+example, the variant of LRRK2 is a risk factor for PD in Chinese and
+Korean populations, corresponding to SNCA and MAPT genes in
+Europeans and GBA1 in Africans (Rizig et al., 2023). SNCA is
+responsible for encoding α-syn. Its mutation can cause the
+overexpression and aggregation of α-syn, resulting in the
+formation of Lewy bodies. The leucine-rich repeat kinase 2
+(LRRK2) is a multifunctional protein that coordinates a variety
+of cellular processes, including vesicle transport, autophagy,
+lysosomal degradation, neurotransmission and mitochondrial
+activity (Zhu et al., 2023; Deniston et al., 2020). Gain-of-function
+mutations of LRRK2 gene trigger lysosomal dysfunction and
+abnormal cellular response to membrane damage, leading to
+vesicular transport dysfunction, neuroinflammation, accumulation
+of alpha-synuclein, mitochondrial dysfunction and ciliary loss,
+ultimately leading to PD (Gustavsson et al., 2024; Simuni et al.,
+2020). In addition to the above factors, the identified mechanisms of
+PD also include oxidative stress, ferroptosis, gut dysbiosis and so on.
+Their interaction complicates the disease and poses great challenges
+to clinical treatment and drug development (Dong-Chen et al., 2023;
+Kotsiliti, 2023).
+4.2.2 Function of curcumin in PD
+Up to now, the research on curcumin in the treatment of PD has
+been mainly conducted at the molecular level and in mouse models.
+There is still a lack of large-scale human experiments and convincing
+clinical evidence. Curcumin mitigates neuronal degeneration by
+blocking the histone deacetylase 6 (HDAC6)-NLRP3 signaling
+pathway to suppress NLRP3 inflammasome-mediated
+inflammatory responses and counteracts α-syn-induced
+neurotoxicity (Cai et al., 2025). At the molecular level, curcumin
+dose-dependently reduces intracellular ROS, inhibits mitochondrial
+membrane potential collapse and cytochrome c release, and
+suppresses caspase-9/caspase-3 activation, thereby interrupting
+mitochondria-dependent apoptosis (Liu et al., 2011).
+Additionally, by inhibiting the hyperphosphorylation of c-Jun
+N-terminal kinase, curcumin prevents the mitochondrial
+translocation of the pro-apoptotic factor Bax, subsequently
+reducing dopaminergic neuronal death and striatal axonal
+degeneration (Pan et al., 2012). The coordination polymers,
+composed of ferric ions and curcumin at an ultrasmall nanoscale,
+exhibit blood-brain barrier permeability, which can effectively
+scavenge free radicals, inhibit neuroinflammation and restore
+mitochondrial function. These polymers significantly alleviate
+oxidative stress and inflammatory states in the midbrain and
+striatum (Cheng et al., 2022). In animal models, curcumin
+treatment (80 mg/kg) reversed rotenone (2.5 mg/kg)-induced
+motor coordination deficits while restoring antioxidant capacity
+and mitochondrial function. The rotenone-induced PD model
+displayed compromised autophagy, characterized by reduced
+p62 and LC3-II expression levels which led to excessive
+accumulation of misfolded α-syn. In contrast, curcumin
+promoted the autophagic clearance of pathological α-syn by
+upregulating LC3-II expression and inhibiting the apoptotic
+cascade. Furthermore, curcumin administration upregulated
+Nrf2 expression and normalized the Nrf2-Keap1 pathway,
+thereby enhancing antioxidant activity (Rathore et al., 2023). The
+curcumin analogue-derived nanoscavenger (NanoCA) with a
+controlled-release property was designed to facilitate the nuclear
+translocation of TFEB, which activated both autophagy and
+calcium-dependent exosome secretion to clear α-syn. Pre-
+treatment with NanoCA has been shown to shield cell lines and
+primary neurons from MPP
++
+-induced neurotoxicity. Significantly, a
+novel rapid arousal intranasal delivery system (RA-IDDS) was
+developed to ensure targeted delivery of NanoCA to the brain,
+which provided substantial neuroprotection to alleviate behavioral
+deficits and enhance the clearance of monomers, oligomers and
+aggregates of α-syn in the midbrain (Liu et al., 2020). Emerging
+evidence suggests that the activation of the gut-brain axis through
+intestinal inflammation may contribute to PD pathogenesis, with
+gastrointestinal dysfunction representing the most common non-
+motor symptom (Kotsiliti, 2023). In the N-methyl-4-phenyl-1,2,3,6-
+tetrahydropyridine (MPTP)-induced PD mouse model, curcumin
+intervention attenuated the reduction of tyrosine hydroxylase levels
+in both substantia nigra pars compacta and striatum, inhibited
+AIM2-mediated pyroptosis and caspase-1 activation, and
+decreased pro-inflammatory factors and inflammatory responses
+in the intestinal tract. The gastrointestinal disorders and barrier
+function were improved, and motor dysfunction and dopaminergic
+neuron loss were reversed (Zhong et al., 2022; Cai et al., 2023). These
+findings highlight curcumin’s potential as a multi-target therapeutic
+agent in PD, addressing both central and peripheral mechanisms of
+the disease.
+4.3 Amyotrophic lateral sclerosis
+4.3.1 Pathogenesis of ALS
+Amyotrophic lateral sclerosis (ALS) is pathologically defined by
+the degeneration of both upper and lower motor neurons followed
+by muscle denervation, atrophy and ultimately profound motor
+disability. The annual incidence is 1.5–2.7 per 100,000 individuals,
+with a corresponding prevalence of 3-5 per 100,000 (Xu L. et al.,
+2020). The peak period of disease onset is between 55 and 65 years
+old. Approximately 10% of ALS patients are hereditary, called
+familial ALS (fALS), while the remaining 90% (sALS) occur
+sporadically without apparent genetic predisposition (Van Daele
+et al., 2023). Notably, the mean onset age of fALS tends to be earlier
+than that of sALS. Cognitive impairments occur in 20%–50% of
+cases, with a subset (5%–15%) progressing to full-blown
+frontotemporal dementia. The average survival time ranges from
+2 to 5 years post-diagnosis, and respiratory failure is the primary
+cause of mortality. About 5%–10% of individuals exhibit
+significantly prolonged survival exceeding 10 years (Su W. et al.,
+2021). The exact pathogenic mechanisms of ALS have not been fully
+elucidated. Potential risk factors include genetic predisposition,
+neurotoxicant exposure (organic solvents, pesticides and heavy
+metals), chronic nutritional deficiencies, metabolic disorders,
+immune dysregulation, viral infections and neuroinflammation
+(Newell et al., 2022; Xue et al., 2022). The widely accepted
+hypothesis proposes that motor neuron degeneration arises from
+Frontiers in Pharmacology frontiersin.org11
+Wang et al. 10.3389/fphar.2025.1625821
+
+the interaction between genetic susceptibility and environmental
+factors, primarily through mitochondrial dysfunction and
+cytoskeletal disruption mediated by oxidative stress and
+excitotoxicity (Zhou et al., 2023). The neurodegenerative cascade
+typically originates at the neuromuscular junction and distal axons,
+characterized by early synaptic dysfunction and axonal degeneration
+that progresses to neuronal death, ultimately causing neural
+transmission failure and motor impairment (Berth and Lloyd,
+2023). Axonal lesions are the earliest clinical symptom and
+crucial cause of ALS (Luan et al., 2024). Among the ALS-
+associated genes, multiple mutations have been demonstrated to
+be strongly correlated with axonal dysfunction (Mizielinska et al.,
+2025). The highly efficient transport system within neuronal axons is
+essential for maintaining material and energy supply, and transport
+defects constitutes a major contributor to ALS. Kinesin, a motor
+protein responsible for anterograde transport of organelles, vesicles,
+and protein complexes from the cell body to synaptic terminals,
+causes transport disruption when mutated. Conversely, the dynein
+mediates retrograde transport of various cargoes, and ALS-related
+mutations lead to transport abnormalities, axonal swelling and
+ultimately motor neuron degeneration (Cristofani et al., 2017).
+Additionally, the change of tubulin can destabilize microtubule
+networks, which also impairs axonal transport (Fumagalli
+et al., 2021).
+The abnormal accumulation of proteins in motor neurons is a
+hallmark pathological feature of ALS, mainly including transactive
+response DNA-binding protein 43 (TDP-43), fused in sarcoma (FUS),
+SOD1 and sequestosome 1 (SQSTM1). RNA-binding proteins,
+particularly TDP-43, play a key role in protein aggregation. TDP-
+43 aggregates are found in over 90% of ALS cases (Lepine et al., 2022).
+Most disease-causing mutations in these proteins occur in low-
+complexity domains mediating liquid-liquid phase separation to
+alter protein conformation, which promotes the aggregation and
+disrupts RNA regulation while also generating additional toxicity.
+Notably, many protein aggregates also present in neuronal axons,
+such as mutated TDP-43 and FUS, resulting in abnormal RNA
+transport and dysregulated protein synthesis (Marrone et al.,
+2019). SOD1 was the first identified ALS-associated gene, and
+mutations alter the protein conformation to expose hydrophobic
+surfaces and facilitate the aggregation (Wang L. et al., 2024).
+C9ORF72 (chromosome 9 open reading frame 72) is another core
+genetic contributor to ALS. The expansion of a G4C2 (GGGGCC)
+hexanucleotide repeat in the non-coding region leads to the
+production and accumulation of dipeptide repeat proteins in
+neurons (Maor-Nof et al., 2021). In addition, SOD1, C9ORF72,
+TDP-43 and FUS are also crucial molecular players associated with
+mitochondrial defects in ALS. The SOD1 G93A mutation results in its
+accumulation within axons and significantly impedes mitochondrial
+trafficking. Furthermore, SOD1 G93A may form pathogenic
+complexes with Bcl-2 to potentiate cytochrome c release and
+subsequent activation of apoptotic pathways (Pedrini et al., 2010).
+Other SOD1 mutants, including A4V, H46R, D90A and R115G, have
+been also found to disrupt proteostasis, diminish mitochondrial
+membrane potential and compromise ATP generation (Rasouli
+et al., 2018). The poly-dipeptides derived from
+C9ORF72 hexanucleotide expansions exhibit high affinity for
+mitochondrial proteins, thereby impairing mitochondrial structural
+integrity and intracellular transport dynamics, as well as Ca
+2+
+uptake
+and ATP synthesis (Fumagalli et al., 2021). Pathogenic mutations in
+TDP-43, like Q331K and M337V, interfere with the microtubule-
+dependent mitochondrial transport system, leading to profound
+mitochondrial dysfunction. Excessive TDP-43 can also induce
+mitochondrial DNA leakage into the cytosol, which activates NF-
+κB and type I interferon pathways that drive neuroinflammatory
+responses (Yu et al., 2020). In summary, aberrant protein changes are
+crucial of ALS. Nevertheless, the distinct aggregation behaviors
+underscore the multifaceted nature of the pathology and present
+formidable challenges for therapeutic development.
+4.3.2 Function of curcumin in ALS
+Curcumin is recommended as a dietary supplement to reduce
+the risk of ALS (D’Antona et al., 2021). However, to date, research
+on its therapeutic potential in ALS remains limited (de Oliveira et al.,
+2016). Both mutant and wild-type TDP-43 elevate neuronal
+excitability, with mutant TDP-43 exhibiting greater toxicity. The
+hyperexcitability is accompanied by oxidative stress and
+mitochondrial dysfunction. Treatment with dimethoxy curcumin
+(DMC) significantly normalizes aberrant action potentials and
+voltage-gated sodium (Nav) channel activity, indicating a
+dropping-excitability state. The rescue involves DMC-mediated
+mitigation of oxidative stress and restoration of mitochondrial
+function (Dong et al., 2014). Men and postmenopausal women
+show a higher incidence and more severe progression of ALS and
+FTLD (frontotemporal lobar degeneration) compared to younger
+women, pointing to a key role for sex hormones in disease
+development (McCombe and Henderson, 2010). In Prp-TDP-
+43
+A315T
+mice, dysregulated expression of estrogen-related enzymes
+(CYP19A1 and CYP3A4) was observed relative to wild-type
+controls, which suggested that toxic phosphorylated TDP-43
+oligomers may disrupt the balance between CYP19A1 and
+CYP3A4 expression, resulting in reduced estrogen biosynthesis
+and accelerated degradation. Remarkably, oral administration of
+solid lipid curcumin particles (SLCP) improved survival in female
+Prp-TDP-43
+A315T
+mice and diminished pathological TDP-43
+deposits. The treatment also mitigated TDP-43-driven
+neurodegeneration by regulating estrogen production and
+CYP450 enzyme activity. These findings highlight SLCP as a
+potential estrogen replacement therapy for ALS and FTLD
+(Majumder et al., 2025). Curcumin shows enhanced binding
+affinity for mutant proteins compared to the native form,
+primarily through increased hydrophobic interactions (Srinivasan
+and Rajasekaran, 2016). By targeting amyloidogenic regions,
+curcumin blocks SOD1 fibrillation and promotes the formation
+of smaller and disordered aggregates. While pre-fibrillar and fibrillar
+SOD1 aggregates exhibit significant toxicity, this effect is absent in
+curcumin-treated samples, suggesting its ability to neutralize
+harmful intermediates (Bhatia et al., 2015). Additionally,
+curcumin potently inhibits FUS liquid-liquid phase separation by
+suppresses droplet formation and stress granule assembly. Based on
+hydrophobic interactions, it reduces FUS β-sheet content, mitigates
+aberrant aggregation, and rescues cellular metabolic dysfunction by
+reversing FUS-induced sequestration of pyruvate kinase and
+restoring ATP production. (Shi et al., 2023). These properties
+position curcumin as a promising candidate for ALS, but further
+investigation is still warranted to fully elucidate its efficacy and
+mechanism of action.
+Frontiers in Pharmacology frontiersin.org12
+Wang et al. 10.3389/fphar.2025.1625821
+
+4.4 Huntington’s disease
+4.4.1 Pathogenesis of HD
+Huntington’s disease (HD) is an autosomal dominant
+neurodegenerative disorder characterized by progressive motor
+dysfunction, cognitive decline and psychiatric disturbances, which
+typically manifests in mid-adulthood with an average age of
+30–50 years old (Ling et al., 2025; Eddy et al., 2016). It has been
+reported across diverse ethnic populations, with the highest
+prevalence observed in Caucasian populations (10.6–13.7/
+100,000). In contrast, Asian populations including those in Japan,
+Taiwan (China) and Hong Kong (China) demonstrate substantially
+lower prevalence (0.1–0.7/100,000), suggesting potential genetic
+and/or environmental modifying factors (Wise, 2010; Buchanan
+et al., 2023). The disease is invariably fatal, with a life expectancy of
+15–20 years after symptom onset. The neuropathological features of
+HD are selective and massive degeneration of medium spiny
+neurons (MSNs) in the striatum, and mild degeneration of
+cortical pyramidal neurons, accompanied by astrocyte
+proliferation (Wright et al., 2020). It arises from an abnormally
+expanded CAG trinucleotide repeat encoding the elongated
+polyglutamine (polyQ) within exon 1 of Huntingtin (HTT) gene,
+which results in the production of toxic mutant huntingtin proteins
+(mHTT) that accumulate in neurons, particularly in the striatum
+and cortex (Genetic Modifiers of Huntington’s Disease Consortium,
+2019). In healthy individuals, the HTT gene normally contains 10 to
+35 CAG trinucleotide repeats, while HD patients exhibit more than
+36 repeats. Emerging evidence indicates that pronounced neurotoxic
+effects manifest only when CAG repeats exceed 150 copies. These
+exceptionally large repeat expansions demonstrate striking cellular
+specificity, being predominantly localized to MSNs (Matlik et al.,
+2024). Upon exceeding 150 CAG repeats, MSNs undergo
+progressive loss of neuronal characteristics while concurrently
+upregulating senescence-related and pro-apoptotic gene
+programs, culminating in neuronal degeneration. Notably, MSNs
+maintain stable gene expression profiles when CAG repeat lengths
+remain below the critical threshold (Handsaker et al., 2025). Longer
+CAG repeats are correlated significantly with earlier onset age and
+more severe clinical manifestations (Genetic Modifiers of
+Huntington’s Disease Consortium, 2019).
+Genome-wide association studies have identified potential
+genetic modifiers, including mismatch-repair (MMR) genes
+(MSH3, MLH1, PMS1 and PMS2) and other DNA repair genes
+(FAN1 and LIG1) (Aldous et al., 2024). The MMR system comprises
+specialized protein complexes with distinct functions: MutSβ
+(MSH2-MSH3 heterodimer) primarily recognizes large insertion-
+deletion loops (IDLs) and repetitive sequence extrusions, whereas
+MutSα (MSH2-MSH6 heterodimer) detects smaller 1-2 bp IDLs
+(Ferguson et al., 2024). Following mismatch recognition, MutS
+complexes recruit specific MutL heterodimers including MutLα
+(MLH1-PMS2), MutLβ (MLH1-PMS1) and MutLγ (MLH1-
+MLH3) (Dai et al., 2021; Ortega et al., 2021). While MutLα and
+MutLγ possess critical endonuclease activities essential for MMR
+initiation, the biological role of MutLβ remains enigmatic due to
+the lack of demonstrated nuclease activity. The knockout of MMR
+genes (MSH3, PMS1, MSH2 and MLH1) ameliorates both early-
+onset phenotypes in MSNs and late-onset manifestations in
+cortical neurons, including somatic CAG-repeat expansion,
+transcriptionopathy and mHTT aggregation (Moss et al., 2017).
+MSH3 deficiency specifically improves open-chromatin
+dysregulation in neurons. The rapid linear expansion rate of
+CAG repeats in MSNs is sharply reduced or terminated by MMR
+mutants. The deficiencies in either MSH3 or PMS1 effectively
+prevent mHTT aggregation by maintaining somatic CAG repeat
+lengths below the critical threshold of 150 repeats (Wang N. et al.,
+2025). Moreover, MSH3 deficiency demonstrates comprehensive
+therapeutic potential by correcting synaptic dysfunction, astrocytic
+abnormalities and locomotor deficits in HD mice (Bunting et al.,
+2025). These findings establish that MSH3 and PMS1 play pivotal
+roles in driving accelerated somatic mHTT CAG expansion rates
+specifically in HD-vulnerable neurons, underlying the repeat length-
+dependent, threshold-sensitive, selective and progressive
+pathogenesis in vivo.
+TDP-43 is a DNA/RNA-binding protein essential for splicing
+regulation. TDP-43 and the N6-methyladenosine (m6A) writer
+protein METTL3 are upstream regulators of exon skipping in
+HD (Mendel et al., 2018). TDP-43 exhibits disrupted nuclear
+localization and accumulates in the cytoplasm in a
+phosphorylated form in HD mouse and human brains. Notably,
+TDP-43 co-localizes with mHTT nuclear aggregates, suggesting a
+potential interaction within pathological inclusion bodies (Sanchez
+et al., 2021). The binding of TDP-43 to RNAs encoding HD-
+associated genes, many of which are differentially expressed and
+aberrantly spliced, is significantly reduced. Concurrently, m6A RNA
+modifications are diminished on RNAs that are abnormally
+expressed in the striatum, particularly at clustered sites near
+TDP-43 binding regions (Yu et al., 2018). The spatial and
+functional overlap between reduced m6A marks and impaired
+TDP-43-RNA interactions suggests a synergistic mechanism: the
+loss of METTL3-mediated m6A modifi
+cation may destabilize RNA-
+protein complexes, exacerbating the inability of TDP-43 to regulate
+splicing fidelity (Tollervey et al., 2011). These findings support TDP-
+43 dysfunction and altered m6A modification converge to drive
+alternative splicing defects in HD (Nguyen et al., 2025). It has been
+also unveiled that the adenosine can be methylated to N
+1
+-
+methyladenosine (m1A) by the enzyme TRMT61A, while m1A
+can be demethylated by ALKBH3. The m1A/adenosine ratio in
+CAG repeat RNA exhibits a positive correlation with repeat length, a
+phenomenon attributed to the reduced expression of
+ALKBH3 elicited by the repeat RNA. TDP-43 binds directly and
+with high affinity to m1A in RNA, which promotes the cytoplasmic
+mis-localization and subsequent formation of gel-like aggregates
+(Sun et al., 2023).
+4.4.2 Function of curcumin in HD
+Although multiple cellular events, including oxidative stress,
+mitochondrial dysfunction, neuroinflammation and transcriptional
+dysregulation, have been identified in HD, the development of
+effective therapies with favorable safety profiles remains an
+unmet medical need (Elifani et al., 2016). Curcumin
+demonstrated potent anti-aggregation effects in yeast,
+significantly inhibiting the formation of both htt72Q-GFP (a
+polyglutamine-rich protein) and Het-s-GFP (a non-polyglutamine
+protein) aggregates. It was found that curcumin prevented htt72Q-
+GFP aggregation through the downregulation of Vps36, a crucial
+component of the ESCRT-II complex. On the other hand, it also
+Frontiers in Pharmacology frontiersin.org13
+Wang et al. 10.3389/fphar.2025.1625821
+
+exhibited disaggregation activity, effectively disrupting pre-formed
+htt72Q-GFP aggregates (Verma et al., 2012). Curcumin treatment
+enhances mitochondrial function by upregulating the activity of
+electron transport chain complexes and elevating cytochrome levels.
+This restoration is accompanied by increased glutathione content
+and SOD activity, indicating improved redox homeostasis.
+Furthermore, curcumin administration significantly attenuates
+mitochondrial swelling, reduces lipid peroxidation and protein
+carbonyl formation, and decreases ROS production in HD rats
+(Sandhir et al., 2014). These protective effects are mediated partly
+through the activation of Nrf2 antioxidant pathway, leading to
+marked improvements in neuromotor coordination (Santana-
+Martínez et al., 2019). The CAG140 knock-in (KI) mouse model
+exhibits abnormal mHTT aggregates, striatal transcriptional deficits,
+and early-onset motor, cognitive and affective impairments.
+Curcumin-supplemented KI mice showed reduced mHTT
+aggregation and upregulated mRNA expression of striatal
+DARPP-32 and dopamine receptor D1, which were accompanied
+by behavioral recovery, particularly in rearing deficits (Hickey et al.,
+2012). Curcumin enhanced the phagocytic activity by upregulating
+the expression of key phagocytic receptors in HD flies, while
+simultaneously suppressing the transcriptional expression of pro-
+inflammatory cytokines and anti-microbial peptides (Dhankhar
+et al., 2023). It was found that curcumin normalized body weight
+and restored lipid and carbohydrate homeostasis. The treatment also
+reduced elevated ROS levels in adipose tissue and significantly
+improved both survival rates and locomotor function, even at
+advanced disease stages (Aditi et al., 2022). A recent study
+elucidated the mechanism of curcumin modulating the
+aggregation of huntingtin exon 1. Under substoichiometric
+amounts, curcumin was found to perturb primary and/or
+secondary nucleation events, thereby extending the lag phase
+preceding aggregation. Notably, this disruption of the aggregation
+kinetics not only altered the structural properties of the resulting
+aggregates but also their cellular metabolic profiles. When applied to
+neuronal cells, the “break-through” aggregates, formed in the
+presence of curcumin, induced markedly lower cellular stress
+compared to those generated without the inhibitor. It was
+believed that the differential effect was attributed to structural
+modifications, particularly the presence or absence of the
+polyglutamine (polyQ) β-hairpin conformation in the aggregates
+(Jain et al., 2025).
+5 Strategies to enhance the
+bioavailability and pharmacological
+efficacy of curcumin
+5.1 Poor bioavailability of curcumin
+Although curcumin has demonstrated excellent
+pharmacological activities, the extremely low bioavailability
+significantly restricts its clinical application in disease prevention
+and treatment. After a single oral dose of 10 or 12 g of curcumin for
+0.25–72 h, almost no free form is detectable in human plasma
+(Vareed et al., 2008). Achieving health-promoting effects often
+requires long-term intake of high doses of curcumin, which may
+lead to adverse reactions and poor compliance. The low
+bioavailability is attributed to multiple factors, including poor
+solubility, low stability, inefficient absorption and rapid
+metabolism and excretion (Sabet et al., 2021). Curcumin exhibits
+poor stability in aqueous solutions and degrades rapidly in a pH-
+dependent manner. Its half-life ranges from approximately
+100–200 min at pH 3–6.5, but sharply decreases to 1–9 min at
+pH 7.2–8.0. Notably, the biological activity of the hydrolysis
+products is generally lower or negligible. The primary absorption
+site of curcumin in the gastrointestinal tract (GIT) is the small
+intestine (Luo et al., 2022). As a lipophilic polyphenolic compound,
+curcumin is difficult to be absorbed by small intestinal epithelial
+cells. Even when absorbed, its hydrophobic nature often leads to
+efflux back into the intestinal lumen via the P-glycoprotein
+transporter, which is highly expressed in the intestine
+(Culbertson and Liao, 2025). This process significantly reduces
+curcumin’s entry into the bloodstream. Following oral
+administration, curcumin undergoes rapid metabolism, including
+reduction (Phase I metabolism) and conjugation (Phase II
+metabolism) in GIT and liver. Enzymes like NADPH reductase
+metabolize curcumin into various products, including
+dihydrocurcumin, tetrahydrocurcumin, hexahydrocurcumin and
+octahydrocurcumin (Metzler et al., 2013). Additionally, gut
+bacteria, like Escherichia coli, can catalyze curcumin reduction
+through a unique bacterial enzyme, CurA (NADPH-dependent
+curcumin/dihydrocurcumin reductase), resulting in the
+production of dihydrocurcumin and tetrahydrocurcumin
+(Hassaninasab et al., 2011). The two phenolic groups of
+curcumin also make it susceptible to Phase II detoxifying
+enzymes, such as glucuronosyltransferases and sulfotransferases,
+leading to the formation of glucuronide and sulfate conjugates
+(Pan et al., 1999). These metabolites possess significantly reduced
+biological activity compared to curcumin itself. Conventional tablet
+or powder formulations release curcumin quickly in the GIT but fail
+to address the poor solubility and metabolic challenges. Non-oral
+routes, such as intravenous injection, can bypass some of these
+issues; however, curcumin tends to aggregate or precipitate in the
+bloodstream, raising safety concerns. Therefore, improving
+curcumin’s bioavailability remains a critical challenge for its
+therapeutic potential.
+5.2 Nano-delivery systems
+To overcome the above limitations, several strategies have been
+developed to enhance the utilization efficiency and pharmacological
+efficacy of curcumin, focusing on nanoparticle formulations,
+chemical modification, novel delivery systems and drug
+combination. Particle size is closely related to drug solubility.
+Nanoparticle-based formulations, including nanoemulsions,
+micelles, liposomes and solid dispersions, are widely used to
+improve curcumin’s solubility and bioavailability (Xu et al., 2024;
+Olmos-Juste et al., 2021). Through non-covalent interactions,
+curcumin (Cur) and poly (−)-epigallocatechin-3-gallate (pEGCG)
+were co-encapsulated within hyaluronic acid (HA) to form HA-
+CurNPs nanoparticles that exhibited sustained-release properties
+(Chen T. et al., 2024). The released drugs synergistically scavenged
+ROS and inhibited apoptosis while modulating CD74 to promote
+microglial polarization toward the M2 phenotype, thereby
+Frontiers in Pharmacology frontiersin.org14
+Wang et al. 10.3389/fphar.2025.1625821
+
+alleviating neuroinflammation and enhancing neurogenesis.
+Additionally, these nanoparticles effectively maintained neuronal
+integrity, reduced glial scarring, and ultimately restored electrical
+signaling and motor functions at injury sites. To overcome the
+blood-brain barrier, curcumin-loaded polysorbate 80-modified
+cerasome nanoparticles (CPC NPs, ~110 nm) were developed,
+coupled with ultrasound-targeted microbubble destruction
+(UTMD) to enhance brain targeting (Zhang et al., 2018). The
+nanohybrid cerasomes demonstrated superior stability against
+surfactant solubilization and extended circulation time. The
+combined CPC NPs-UTMD approach achieved 1.7-fold greater
+brain permeation compared to CPC alone at 6 h post-
+administration. In MPTP-induced PD models, this strategy
+effectively delivered curcumin to the striatum, clearing α-syn
+aggregates and restoring normal motor function, dopamine levels
+and tyrosine hydroxylase expression. This novel delivery system
+with higher therapeutic relevance and fewer unwanted
+complications could be a promising choice for PD treatment.
+Liposomes, composed of phospholipid bilayers, can encapsulate
+curcumin, enhancing its hydrophilicity and mimicking cell
+membranes to promote transmembrane absorption (Fernandes
+et al., 2021). PEGylation of liposomes further reduces the
+clearance of the reticuloendothelial system and prolongs systemic
+circulation. Solid dispersions, such as those prepared with
+polyvinylpyrrolidone or poloxamer, increased curcumin’s
+solubility and stability by converting crystalline forms into
+amorphous structures (Yang et al., 2023). However, low
+encapsulation efficiency, complex preparation processes and
+instability persist as challenges in nanoparticle-based systems.
+5.3 Chemical structure modification
+Chemical structure modification, including synthesizing analogs
+and designing prodrugs, is another effective approach. Curcumin
+predominantly exists in the bis-keto form in acidic to neutral
+conditions (pH 3–7), stabilized by an acidic proton on the
+activated interaromatic carbon. Conversely, under alkaline
+conditions (pH > 8), the enolic form becomes predominant,
+conferring electron-donating properties (Genchi et al., 2024). The
+β-diketone moiety, responsible for keto-enol tautomerism, can be
+modified to enhance its antioxidant activity. 3,5-bis(2-
+fluorobenzylidene)piperidin-4-one (EF24) demonstrated potent
+NF-κB suppression by directly inhibiting IKK (Kasinski et al.,
+2008). EF24 blocked TNF-α-induced IκB phosphorylation and
+degradation, with in vitro studies confirming the inhibition of
+IKK catalytic activity. These findings identified IKK as the
+molecular target of EF24 and elucidated its superior efficacy
+compared to curcumin prototype. Prodrugs are
+pharmacologically inactive derivatives that are metabolized into
+active forms within the body. Common modifications involve
+esterification, etherification, hydrazone and disulfide bond
+formation. For example, curcumin linked to glutaric acid via an
+ester bond showed improved water solubility, while curcumin
+conjugated with poly (lactic-co-glycolic acid) enabled controlled
+release, enhancing cellular uptake (Muangnoi et al., 2018; Sampath
+et al., 2014). In addition, co-loading curcumin with doxorubicin in
+pH-sensitive nanoparticles has demonstrated enhanced
+bioavailability and reduced systemic toxicity (Zhang et al., 2016).
+Some prodrugs require specific enzymes or endogenous compounds
+for hydrolysis, such as the carboxylesterases including
+acetylcholinesterase, butyrylcholinesterase and arylesterase that
+are critically involved in the bioconversion of ester-based
+prodrugs into pharmacologically active forms (Liederer and
+Borchardt, 2006). Due to the substrate specificity of different
+esterases, the enzymatic consideration should be systematically
+incorporated into the early design stage.
+5.4 Combination drug therapy
+Combination therapies aim to improve curcumin bioavailability
+by inhibiting its inactivation and metabolism. Curcumin is primarily
+metabolized by UDP-glucuronosyltransferases and
+sulfotransferases. Natural compounds such as piperine, quercetin
+and silymarin have been shown to inhibit curcumin
+glucuronidation, thereby increasing its plasma levels and oral
+bioavailability (Grill et al., 2014; Rinwa and Kumar, 2013).
+Synergistic effects have also been observed when curcumin is
+combined with other bioactive compounds-naringenin, genistein
+and epigallocatechin gallate (Ghobadi and Asoodeh, 2023). For the
+rats administered either curcumin (25 or 50 mg/kg) or a
+combination of curcumin (25 mg/kg) with piperine (2.5 mg/kg)
+once daily for 21 consecutive days prior to 3-Nitropropionic acid
+administration (3-NP, a neurotoxin inducing symptoms of
+Huntington’s disease), it was found that both curcumin
+monotherapy and the curcumin-piperine combination
+demonstrated protective effects against 3-NP-induced motor
+deficit, biochemical alterations and neurochemical abnormalities.
+The combination treatment showed greater neuroprotection
+compared to curcumin alone, suggesting piperine as a
+bioavailability enhancer of curcumin (Singh et al., 2015). In the
+clinical trial involving 48 AD patients, there was no remarkable
+differences between the unformulated standard curcumin treatment
+and the placebo group. However, the curcumin-galactomannan
+complex significantly improved the MMSE and GLFS scores of
+the participants as well as the serum levels of specific biomarkers
+(Das et al., 2023).
+6 Conclusion and prospect
+6.1 Conclusion
+Neurodegenerative diseases represent a significant threat to
+public health, exacerbated by the global aging population. The
+pathogenesis of NDs, such as AD, PD, HD and ALS, is complex
+and multifactorial, involving oxidative stress, neuroinflammation,
+mitochondrial dysfunction and protein misfolding/aggregation.
+These pathological processes lead to progressive neuronal loss
+and subsequent neurological dysfunction. Curcumin, a natural
+polyphenolic compound, has emerged as a promising therapeutic
+candidate for NDs due to its excellent biological properties,
+including potent antioxidant, anti-inflammatory, anti-apoptotic
+and neuroprotective effects. It has been shown to scavenge ROS,
+inhibit pro-inflammatory pathways, reduce the accumulation and
+Frontiers in Pharmacology frontiersin.org15
+Wang et al. 10.3389/fphar.2025.1625821
+
+toxicity of misfolded proteins, and promote neuronal survival and
+regeneration. To overcome the limitations of curcumin’s low
+bioavailability in clinical applications, various strategies have also
+been developed to enhance the utilization efficiency and
+pharmacological efficacy, including nano-delivery systems,
+chemical modifications and combination therapies. In vitro
+experiments and a small number of clinical studies have
+confirmed the role of curcumin-related preparations in alleviating
+neurodegeneration and delaying disease progression. This approach
+is considered an additional option for managing the health issues
+arising from the global demographic shift toward an aging
+population.
+6.2 Future prospect
+Although curcumin has demonstrated potential neuroprotective
+effects, it is important to highlight that the clinical transformation
+still encounters numerous challenges and requires further
+investigation: (1) Most curcumin formulations used in current
+studies are complex mixtures primarily consisting of curcumin,
+demethoxycurcumin and bisdemethoxycurcumin. Moreover,
+significant variations exist across studies regarding the source,
+purity, and formulation of curcumin, complicating the
+comparison of clinical outcomes. To address this issue,
+standardized quality control protocols for curcumin preparations
+should be established to minimize batch-to-batch inconsistencies.
+(2) Clinical evidence remains inconsistent, with some trials
+reporting limited efficacy, potentially due to inadequate dosing,
+suboptimal trial design (e.g., insufficient sample size or duration),
+or patient heterogeneity. Additionally, high doses may induce
+gastrointestinal discomfort, and the potential hepatorenal toxicity
+necessitates further evaluation. Large-scale and long-term clinical
+trials are essential to resolve these concerns. (3) While curcumin
+exhibits a broad spectrum of molecular targets, its pleiotropic effects
+complicate the elucidation of precise mechanisms of action, thereby
+hindering targeted therapeutic applications. (4) Despite various
+strategies proposed to enhance curcumin’s bioavailability and
+therapeutic efficacy, the in vitro-in vivo correlation of cell
+cytotoxicity and bioavailability remains poorly understood,
+warranting additional human studies. (5) A comprehensive
+assessment of the safety, stability and long-term effects of
+excipients and polymers utilized in novel delivery systems is
+required. Current in vitro and animal models inadequately
+replicate the complexity of human gastrointestinal absorption,
+limiting their predictive value for drug behavior in humans.
+Further research into pharmacokinetics, pharmacodynamics and
+optimal delivery strategies is necessary for successful clinical
+application. (6) Integrating curcumin with complementary
+therapies, such as lifestyle modifications, dietary interventions
+and physical activity, holds promise for improving outcomes in
+NDs. Incorporating curcumin into comprehensive treatment
+regimens could potentially slow ND progression and enhance life
+quality, addressing the growing global health challenge.
+Author contributions
+GW: Resources, Writing – original draft, Investigation,
+Methodology. XZ: Investigation, Writing – review and editing,
+Resources. XP: Resources, Writing – review and editing. KM:
+Resources, Writing – review and editing. LL: Writing – review
+and editing, Resources. YS: Writing – review and editing,
+Resources. DH: Resources, Conceptualization,
+Writing – review and editing. XW: Funding acquisition,
+Supervision, Project administration, Writing – review and
+editing, Conceptualization.
+Funding
+The author(s) declare that financial support was received for the
+research and/or publication of this article. This work was supported
+by the Science and Technology Plan Project of Inner Mongolia
+Autonomous Region, China (2021GG0130), and Natural Science
+Foundation of Inner Mongolia Autonomous Region of China
+(2024MS08051).
+Conflict of interest
+The authors declare that the research was conducted in the
+absence of any commercial or financial relationships that could be
+construed as a potential conflict of interest.
+Generative AI statement
+The author(s) declare that no Generative AI was used in the
+creation of this manuscript.
+Publisher’s note
+All claims expressed in this article are solely those of the authors
+and do not necessarily represent those of their affiliated
+organizations, or those of the publisher, the editors and the
+reviewers. Any product that may be evaluated in this article, or
+claim that may be made by its manufacturer, is not guaranteed or
+endorsed by the publisher.
+References
+Aditi, K., Singh, A., Shakarad, M. N., and Agrawal, N. (2022). Management of altered
+metabolic activity in drosophila model of huntington’s disease by curcumin. Exp. Biol.
+Med. 247 (2), 152–164. doi:10.1177/15353702211046927
+Ahmed, M., Abdul Qadir, M., Imtiaz Shafiq, M., Muddassar, M., Hameed, A.,
+Nadeem Arshad, M., et al. (2017). Curcumin: synthesis optimization and in silico
+interaction with cyclin dependent kinase. Acta Pharm. 67 (3), 385–395. doi:10.1515/
+acph-2017-0023
+Ahmed, M., Basheer, S., AL Mughram, M. H., Iqbal, D. N., Qamar, S., Saeed,
+A., et al. (2024). Structural development of curcumin: a natural product arsenal
+for diverse therapeutic targets-seizing opportunities through serendipity and
+Frontiers in Pharmacology frontiersin.org16
+Wang et al. 10.3389/fphar.2025.1625821
+
+rational design. J. Mol. Struct. 1324, 140815. doi:10.1016/j.molstruc.2024.
+140815
+Akinyemi, A. J., Okonkwo, P. K., Faboya, O. A., Onikanni, S. A., Fadaka, A., Olayide,
+I., et al. (2017). Curcumin improves episodic memory in cadmium induced memory
+impairment through inhibition of acetylcholinesterase and adenosine deaminase
+activities in a rat model. Metab. Brain Dis. 32 (1), 87–95. doi:10.1007/s11011-016-
+9887-x
+Aldous, S. G., Smith, E. J., Landles, C., Osborne, G. F., Cañibano-Pico, M., Nita, I. M.,
+et al. (2024). A CAG repeat threshold for therapeutics targeting somatic instability in
+huntington’s disease. Brain 147 (5), 1784–1798. doi:10.1093/brain/awae063
+Alisi, I. O., Uzairu, A., Abechi, S. E., and Idris, S. O. (2018). Evaluation of the
+antioxidant properties of curcumin derivatives by genetic function algorithm. J. Adv.
+Res. 12, 47–54. doi:10.1016/j.jare.2018.03.003
+Al Olayan, E. M., Aloufi, A. S., Alamri, O. D., El-Habit, O. H., and Abdel Moneim, A.
+E. (2020). Protocatechuic acid mitigates cadmium-induced neurotoxicity in rats: role of
+oxidative stress, inflammation and apoptosis. Sci. Total Environ. 723, 137969. doi:10.
+1016/j.scitotenv.2020.137969
+Aman, Y., Schmauck-Medina, T., Hansen, M., Morimoto, R. I., Simon, A. K., Bjedov,
+I., et al. (2021). Autophagy in healthy aging and disease. Nat. Aging 1 (8), 634–650.
+doi:10.1038/s43587-021-00098-4
+Antonsson, B., Conti, F., Ciavatta, A., Montessuit, S., Lewis, S., Martinou, I., et al.
+(1997). Inhibition of bax channel-forming activity by Bcl-2. Science 277 (5324),
+370–372. doi:10.1126/science.277.5324.370
+Arvanitaki, E. S., Goulielmaki, E., Gkirtzimanaki, K., Niotis, G., Tsakani, E., Nenedaki,
+E., et al. (2024). Microglia-derived extracellular vesicles trigger age-related
+neurodegeneration upon DNA damage. Proc. Natl. Acad. Sci. 121 (17),
+e2317402121. doi:10.1073/pnas.2317402121
+Asadi, S., Gholami, M. S., Siassi, F., Qorbani, M., and Sotoudeh, G. (2019). Beneficial
+effects of nano-curcumin supplement on depression and anxiety in diabetic patients
+with peripheral neuropathy: a randomized, double-blind, placebo-controlled clinical
+trial. Phytother. Res. 34 (4), 896–903. doi:10.1002/ptr.6571
+Baar, M. P., Brandt, R. M. C., Putavet, D. A., Klein, J. D. D., Derks, K. W. J., Bourgeois,
+B. R. M., et al. (2017). Targeted apoptosis of senescent cells restores tissue homeostasis
+in response to chemotoxicity and aging. Cell 169 (1), 132–147.e16. doi:10.1016/j.cell.
+2017.02.031
+Ben-Shlomo, Y., Darweesh, S., Llibre-Guerra, J., Marras, C., San Luciano, M., and
+Tanner, C. (2024). The epidemiology of parkinson’s disease. Lancet 403 (10423),
+283–292. doi:10.1016/S0140-6736(23)01419-8
+Berlind, J. E., Lai, J. D., Lie, C., Vicente, J., Lam, K., Guo, S., et al. (2025).
+KCTD20 suppression mitigates excitotoxicity in tauopathy patient organoids.
+Neuron 113 (8), 1169–1189.e7. doi:10.1016/j.neuron.2025.02.001
+Berth, S. H., and Lloyd, T. E. (2023). Disruption of axonal transport in
+neurodegeneration. J. Clin. Invest 133 (11), e168554. doi:10.1172/JCI168554
+Bharat, V., Durairaj, A. S., Vanhauwaert, R., Li, L., Muir, C. M., Chandra, S., et al.
+(2023). A mitochondrial inside-out iron-calcium signal reveals drug targets for
+parkinson’s disease. Cell Rep. 42 (12), 113544. doi:10.1016/j.celrep.2023.113544
+Bhatia, N. K., Srivastava, A., Katyal, N., Jain, N., Khan, M. A. I., Kundu, B., et al.
+(2015). Curcumin binds to the pre-fibrillar aggregates of Cu/Zn superoxide dismutase
+(SOD1) and alters its amyloidogenic pathway resulting in reduced cytotoxicity. Biochim.
+Biophys. Acta 1854 (5), 426–436. doi:10.1016/j.bbapap.2015.01.014
+Bishop, N. J., Morley, R., Day, J. P., and Lucas, A. (1997). Aluminum neurotoxicity in
+preterm infants receiving intravenous-feeding solutions. N. Engl. J. Med. 336 (22),
+1557–1561. doi:10.1056/NEJM199705293362203
+Bloem, B. R., Okun, M. S., and Klein, C. (2021). Parkinson’s disease. Lancet 397
+(10291), 2284–2303. doi:10.1016/S0140-6736(21)00218-X
+Boehme, M., Guzzetta, K. E., Bastiaanssen, T. F. S., van de Wouw, M., Moloney, G. M.,
+Gual-Grau, A., et al. (2021). Microbiota from young mice counteracts selective age-
+associated behavioral deficits. Nat. Aging 1 (8), 666–676. doi:10.1038/s43587-021-
+00093-9
+Buchanan, D. A., Brown, A. E., Osigwe, E. C., Pfalzer, A. C., Mann, L. G., Yan, Y., et al.
+(2023). Racial differences in the presentation and progression of huntington’s disease.
+Mov. Disord. 38 (10), 1945–1949. doi:10.1002/mds.29536
+Bunting, E. L., Donaldson, J., Cumming, S. A., Olive, J., Broom, E., Miclăuș, M., et al.
+(2025). Antisense oligonucleotide-mediated MSH3 suppression reduces somatic CAG
+repeat expansion in huntington’s disease iPSC-derived striatal neurons. Sci. Transl.
+Med. 17 (785), eadn4600. doi:10.1126/scitranslmed.adn4600
+Cai, B., Zhong, L., Wang, Q., Xu, W., Li, X., and Chen, T. (2023). Curcumin alleviates
+1-methyl- 4-phenyl-1,2,3,6-tetrahydropyridine-induced parkinson’s disease in mice via
+modulating gut microbiota and short-chain fatty acids. Front. Pharmacol. 14, 1198335.
+doi:10.3389/fphar.2023.1198335
+Cai, Z., Liang, C., Huang, K., Luo, J., Lu, R., Lai, Y., et al. (2025). Curcumin prevents
+neurodegeneration by blocking HDAC6-NLRP3 pathway-dependent
+neuroinflammation in parkinson’s disease. Int. Immunopharmacol. 146, 113928.
+doi:10.1016/j.intimp.2024.113928
+Cengiz, M., Gur, B., Sezer, C. V., Cengiz, B. P., Gür, F., Bayrakdar, A., et al. (2023).
+Alternations in interleukin-1β and nuclear factor kappa beta activity (NF-kB) in rat liver
+due to the co-exposure of cadmium and arsenic: protective role of curcumin. Environ.
+Toxicol. Pharmacol. 102, 104218. doi:10.1016/j.etap.2023.104218
+Chaudhry, A., Samstein, R. M., Treuting, P., Liang, Y., Pils, M. C., Heinrich, J. M., et al.
+(2011). Interleukin-10 signaling in regulatory T cells is required for suppression of
+Th17 cell-mediated inflammation. Immunity 34 (4), 566–578. doi:10.1016/j.immuni.
+2011.03.018
+Chen, L., Min, J., and Wang, F. (2022). Copper homeostasis and cuproptosis in health
+and disease. Signal Transduct. Target Ther. 7 (1), 378. doi:10.1038/s41392-022-01229-y
+Chen, P., Chen, Z., Hou, W., Yu, L. C., and Chen, R. P. Y. (2016).
+Polyhydroxycurcuminoids but not curcumin upregulate neprilysin and can be
+applied to the prevention of alzheimer’s disease.
+Sci. Rep. 6, 29760. doi:10.1038/
+srep29760
+Chen, T., Wan, L., Xiao, Y., Wang, K., Wu, P., Li, C., et al. (2024). Curcumin/PEGCG-
+encapsulated nanoparticles enhance spinal cord injury recovery by regulating CD74 to
+alleviate oxidative stress and inflammation. J. Nanobiotechnology 22 (1), 653. doi:10.
+1186/s12951-024-02916-4
+Chen, Z., Xia, D., Liang, X., Liu, Q., Li, J., Li, Q., et al. (2024). Curcumin mitigates
+Aβ33-42 fibril-induced neuronal injury in the hippocampus. Mater Today Phys. 44,
+101436. doi:10.1016/j.mtphys.2024.101436
+Cheng, G., Liu, X., Liu, Y., Liu, Y., Ma, R., Luo, J., et al. (2022). Ultrasmall coordination
+polymers for alleviating ROS-mediated inflammatory and realizing neuroprotection
+against parkinson’s disease. Res. 2022, 9781323. doi:10.34133/2022/9781323
+Chico, L., Ienco, E. C., Bisordi, C., Lo Gerfo, A., Petrozzi, L., Petrucci, A., et al. (2018).
+Amyotrophic lateral sclerosis and oxidative stress: a double-blind therapeutic trial after
+curcumin supplementation. CNS Neurol. Disord. Drug Targets 17 (10), 767–779. doi:10.
+2174/1871527317666180720162029
+Cox, K., Pipingas, A., and Scholey, A. B. (2015). Investigation of the effects of solid
+lipidcurcumin on cognition and mood in a healthyolder population.
+J. Psychopharmacol. 29 (5), 642–651. doi:10.1177/0269881114552744
+Cremona, M. L., Matthies, H. J. G., Pau, K., Bowton, E., Speed, N., Lute, B. J., et al.
+(2011). Flotillin-1 is essential for PKC-Triggered endocytosis and membrane
+microdomain localization of DAT. Nat. Neurosci. 14 (4), 469–477. doi:10.1038/nn.2781
+Cristofani, R., Crippa, V., Rusmini, P., Cicardi, M. E., Meroni, M., Licata, N. V., et al.
+(2017). Inhibition of retrograde transport modulates misfolded protein accumulation
+and clearance in motoneuron diseases. Autophagy 13 (8), 1280–1303. doi:10.1080/
+15548627.2017.1308985
+Culbertson, A. T., and Liao, M. (2025). Cryo-EM of human P-glycoprotein reveals an
+intermediate occluded conformation during active drug transport. Nat. Commun. 16
+(1), 3619. doi:10.1038/s41467-025-58561-4
+Dai, J., Sanchez, A., Adam, C., Ranjha, L., Reginato, G., Chervy, P., et al. (2021).
+Molecular basis of the dual role of the Mlh1-Mlh3 endonuclease in MMR and in meiotic
+crossover formation. Proc. Natl. Acad. Sci. 118 (23), e2022704118. doi:10.1073/pnas.
+2022704118
+D’Angremont, E., Begemann, M. J. H., Van Laar, T., and Sommer, I. E. C. (2023).
+Cholinesterase inhibitors for treatment of psychotic symptoms in alzheimer disease and
+parkinson disease: a meta-analysis. JAMA Neurol. 80 (8), 813–823. doi:10.1001/
+jamaneurol.2023.1835
+D’Antona, S., Caramenti, M., Porro, D., Castiglioni, I., and Cava, C. (2021).
+Amyotrophic lateral sclerosis: a diet review. Foods 10 (12), 3128. doi:10.3390/
+foods10123128
+Das, S. S., Gopal, P. M., Thomas, J. V., Mohan, M. C., Thomas, S. C., Maliakel, B. P.,
+et al. (2023). Influence of CurQfen
+®
+-curcuminon cognitive impairment:
+arandomized,double-blindedplacebo-controlled, 3-arm3-sequence comparative study.
+Front. Dement. 2, 1222708. doi:10.3389/frdem.2023.1222708
+Dash, U. C., Bhol, N. K., Swain, S. K., Samal, R. R., Nayak, P. K., Raina, V., et al. (2025).
+Oxidative stress and inflammation in the pathogenesis of neurological disorders:
+mechanisms and implications. Acta Pharm. Sin. B 15 (1), 15–34. doi:10.1016/j.apsb.
+2024.10.004
+Deniston, C. K., Salogiannis, J., Mathea, S., Snead, D. M., Lahiri, I., Matyszewski, M.,
+et al. (2020). Structure of LRRK2 in parkinson’s disease and model for microtubule
+interaction. Nature 588 (7837), 344–349. doi:10.1038/s41586-020-2673-2
+De Oliveira, M. R., Jardim, F. R., Setzer, W. N., Nabavi, S. M., and Nabavi, S. F. (2016).
+Curcumin, mitochondrial biogenesis, and mitophagy: exploring recent data and
+indicating future needs. Biotechnol. Adv. 34 (5), 813–826. doi:10.1016/j.biotechadv.
+2016.04.004
+Dhankhar, J., Shrivastava, A., and Agrawal, N. (2023). Amendment of altered
+immune response by curcumin in drosophila model of huntington’s disease.
+J. Huntingt. Dis. 12 (4), 335–354. doi:10.3233/JHD-230595
+Domingo-Relloso, A., Mcgraw, K. E., Heckbert, S. R., Luchsinger, J. A., Schilling, K.,
+Glabonjat, R. A., et al. (2024). Urinary metal levels, cognitive test performance, and
+dementia in the multi-ethnic study of atherosclerosis. JAMA Netw. Open 7 (12),
+e2448286. doi:10.1001/jamanetworkopen.2024.48286
+Frontiers in Pharmacology frontiersin.org17
+Wang et al. 10.3389/fphar.2025.1625821
+
+Dong, H., Xu, L., Wu, L., Wang, X., Duan, W., Li, H., et al. (2014). Curcumin abolishes
+mutant TDP-43 induced excitability in a motoneuron-like cellular model of ALS.
+Neuroscience 272, 141–153. doi:10.1016/j.neuroscience.2014.04.032
+Dong-Chen, X., Yong, C., Yang, X., Chen-Yu, S., and Li-Hua, P. (2023). Signaling
+pathways in parkinson’s disease: molecular mechanisms and therapeutic interventions.
+Signal Transduct. Target Ther. 8 (1), 73. doi:10.1038/s41392-023-01353-3
+Dorszewska, J., Florczak Wyspianska, J., Zasada, A., Korczowska-Łącka, I.,
+Szymanowicz, O., and Kozubski, W. (2023). Analysis of genetic variants related to
+oxidative stress in patients with Alzheimer’s disease. Alzheimers Dement. 19 (S1),
+e062766. doi:10.1002/alz.062766
+Duan, C., Wang, H., Jiao, D., Geng, Y., Wu, Q., Yan, H., et al. (2022). Curcumin
+restrains oxidative stress of after intracerebral hemorrhage in rat by activating the Nrf2/
+HO-1 pathway. Front. Pharmacol. 13, 889226. doi:10.3389/fphar.2022.889226
+Eddy, C. M., Parkinson, E. G., and Rickards, H. E. (2016). Changes in mental state and
+behaviour in huntington’s disease. Lancet Psychiatry 3 (11), 1079–1086. doi:10.1016/
+S2215-0366(16)30144-4
+Edlich, F., Banerjee, S., Suzuki, M., Cleland, M. M., Arnoult, D., Wang, C., et al.
+(2011). Bcl-x(L) retrotranslocates bax from the mitochondria into the cytosol. Cell 145
+(1), 104–116. doi:10.1016/j.cell.2011.02.034
+Elifani, F., Crispi, S., Filosa, S., Castaldo, S., Capocci, L., Madonna, M., et al. (2016).
+Curcumin: a natural compound to counteract the pathology of huntington’s disease?
+J. Neurol. Neurosurg. Psychiatry 87 (S1), A93. doi:10.1136/jnnp-2016-314597.264
+Fan, M., Zhang, J., Tsai, C., Orlando, B. J., Rodriguez, M., Xu, Y., et al. (2020).
+Structure and mechanism of the mitochondrial Ca
+2+
+uniporter holocomplex. Nature
+582 (7810), 129–133. doi:10.1038/s41586-020-2309-6
+Ferguson, R., Goold, R., Coupland, L., Flower, M., and Tabrizi, S. J. (2024).
+Therapeutic validation of MMR-associated genetic modifiers in a human ex vivo
+model of huntington disease. Am. J. Hum. Genet. 111 (6), 1165–1183. doi:10.1016/j.
+ajhg.2024.04.015
+Fernandes, M., Lopes, I., Magalhães, L., Sárria, M. P., Machado, R., Sousa, J. C., et al.
+(2021). Novel concept of exosome-like liposomes for the treatment of alzheimer’s
+disease. J. Control Release 336, 130–143. doi:10.1016/j.jconrel.2021.06.018
+Forner, S., Kawauchi, S., Balderrama-Gutierrez, G., Kramár, E. A., Matheos, D. P.,
+Phan, J., et al. (2021). Systematic phenotyping and characterization of the 5xFAD
+mouse model of alzheimer’s disease. Sci. Data 8 (1), 270. doi:10.1038/s41597-021-
+01054-y
+Fu, X., Zhang, Y., Chen, G., Mao, G., Tang, J., Xu, J., et al. (2025). Responsive
+nanoparticles synergize with curcumin to break the reactive oxygen species-
+neuroinflammation vicious cycle, enhancing traumatic brain injury outcomes.
+J. Nanobiotechnology 23 (1), 172. doi:10.1186/s12951-025-03251-y
+Fu, Y., Zhang, J., Qin, R., Ren, Y., Zhou, T., Han, B., et al. (2025). Activating autophagy
+to eliminate toxic protein aggregates with small molecules in neurodegenerative
+diseases. Pharmacol. Rev. 77 (3), 100053. doi:10.1016/j.pharmr.2025.100053
+Fumagalli, L., Young, F. L., Boeynaems, S., De Decker, M., Mehta, A. R., Swijsen, A.,
+et al. (2021). C9orf72 -derived arginine-containing dipeptide repeats associate with
+axonal transport machinery and impede microtubule-based motility. Sci. Adv. 7 (15),
+eabg3013. doi:10.1126/sciadv.abg3013
+Gao, C., Wang, Y., Sun, J., Han, Y., Gong, W., Li, Y., et al. (2020). Neuronal
+mitochondria-targeted delivery of curcumin by biomimetic engineered nanosystems
+in alzheimer’s disease mice. Acta Biomater. 108, 285–299. doi:10.1016/j.actbio.2020.
+03.029
+Genchi, G., Lauria, G., Catalano, A., Carocci, A., and Sinicropi, M. S. (2024).
+Neuroprotective effects of curcumin in neurodegenerative diseases. Foods 13 (11),
+1774. doi:10.3390/foods13111774
+Genetic Modifiers of Huntington’s Disease Consortium, Genetic Modifiers of
+Huntington’s Disease GeM-HD Consortium (2019). CAG repeat not polyglutamine
+length determines timing of huntington’s disease onset. Cell 178 (4), 887–900.e14.
+doi:10.1016/j.cell.2019.06.036
+Geng, L., Fan, L. M., Liu, F., Smith, C., and Li, J. M. (2020). Nox2 dependent redox-
+regulation of microglial response to amyloid-β stimulation and microgliosis in aging.
+Sci. Rep. 10 (1), 1582. doi:10.1038/s41598-020-58422-8
+Ghita, L., Spanier, J., Chhatbar, C., Mulenge, F., Pavlou, A., Larsen, P. K., et al. (2021).
+MyD88 signaling by neurons induces chemokines that recruit protective leukocytes to
+the virus-infected CNS. Sci. Immunol. 6 (60), eabc9165. doi:10.1126/sciimmunol.
+abc9165
+Ghobadi, N., and Asoodeh, A. (2023). Co-administration of curcumin with other
+phytochemicals improves anticancer activity by regulating multiple molecular targets.
+Phytother. Res. 37 (4), 1688
+–1702. doi:10.1002/ptr.7794
+Ghodsia, H., Rahimib, H. R., Aghili, S. M., Saberi, A., and Shoeibi, A. (2022).
+Evaluation of curcumin as add-on therapy in patients with parkinson’s disease: a
+pilot randomized, triple-blind, placebo-controlled trial. Clin. Neurol. Neurosurg. 218,
+107300. doi:10.1016/j.clineuro.2022.107300
+Giau, V. V., Bagyinszky, E., Youn, Y. C., and Kim, S. (2019). APP, PSEN1, and PSEN2
+mutations in Asian patients with early-onset alzheimer disease. Int. J. Mol. Sci. 20 (19),
+4757. doi:10.3390/ijms20194757
+Grill, A. E., Koniar, B., and Panyam, J. (2014). Co-delivery of natural metabolic
+inhibitors in a self-microemulsifying drug delivery system for improved oral
+bioavailability of curcumin. Drug Deliv Transl Res. 4 (4), 344–352. doi:10.1007/
+s13346-014-0199-6
+Guglielmo, A., Sabra, A., Elbery, M., Cerveira, M. M., Ghenov, F., Sunasee, R., et al.
+(2017). A mechanistic insight into curcumin modulation of the IL-1β secretion and
+NLRP3 S-glutathionylation induced by needle-like cationic cellulose nanocrystals in
+myeloid cells. Chem. Biol. Interact. 274, 1–12. doi:10.1016/j.cbi.2017.06.028
+Gulen, M. F., Samson, N., Keller, A., Schwabenland, M., Liu, C., Glück, S., et al. (2023).
+cGAS-STING drives ageing-related inflammation and neurodegeneration. Nature 620
+(7973), 374–380. doi:10.1038/s41586-023-06373-1
+Gustavsson, E. K., Follett, J., Trinh, J., Barodia, S. K., Real, R., Liu, Z., et al. (2024).
+RAB32 Ser71Arg in autosomal dominant parkinson’s disease: linkage, association, and
+functional analyses. Lancet Neurol. 23 (6), 603–614. doi:10.1016/S1474-4422(24)
+00121-2
+Hallacli, E., Kayatekin, C., Nazeen, S., Wang, X. H., Sheinkopf, Z., Sathyakumar, S.,
+et al. (2022). The parkinson’s disease protein alpha-synuclein is a modulator of
+processing bodies and mRNA stability. Cell 185 (12), 2035–2056.e33. doi:10.1016/j.
+cell.2022.05.008
+Hamlbar, E. P., Mirghafourvand, M., Shaseb, E., and Kamalifard, M. (2025). The effect
+of curcumin on postpartum depression and anxiety in primiparous women: a double-
+blind randomized placebocontrolled clinical trial. BMC Complement. Med. Ther. 25 (1),
+157. doi:10.1186/s12906-025-04798-x
+Handsaker, R. E., Kashin, S., Reed, N. M., Tan, S., Lee, W. S., McDonald, T. M., et al.
+(2025). Long somatic DNA-repeat expansion drives neurodegeneration in huntington’s
+disease. Cell 188 (3), 623–639.e19. doi:10.1016/j.cell.2024.11.038
+Hassaninasab, A., Hashimoto, Y., Tomita-Yokotani, K., and Kobayashi, M. (2011).
+Discovery of the curcumin metabolic pathway involving a unique enzyme in an
+intestinal microorganism. Proc. Natl. Acad. Sci. 108 (16), 6615–6620. doi:10.1073/
+pnas.1016217108
+Hickey, M. A., Zhu, C., Medvedeva, V., Lerner, R. P., Patassini, S., Franich, N. R., et al.
+(2012). Improvement of neuropathology and transcriptional deficits in CAG 140 knock-
+in mice supports a beneficial effect of dietary curcumin in huntington’s disease. Mol.
+Neurodegener. 7, 12. doi:10.1186/1750-1326-7-12
+Hop, P. J., Lai, D., Keagle, P. J., Baron, D. M., Kenna, B. J., Kooyman, M., et al. (2024).
+Systematic rare variant analyses identify RAB32 as a susceptibility gene for familial
+parkinson’s disease. Nat. Genet. 56 (7), 1371–1376. doi:10.1038/s41588-024-01787-7
+Hoppe, J. B., Frozza, R., Meneghetti, A., Bernardi, A., da Silva, T., Gerhardt, D., et al.
+(2011). P2-216: involvement of PI3-K pathway and β-catenin signaling in curcumin
+protecting against Aβ1-42-induced neurotoxicity. Alzheimers Dement. 7 (4S),
+S381–S382. doi:10.1016/j.jalz.2011.05.1099
+Huang, L., Chen, C., Zhang, X., Li, X., Chen, Z., Yang, C., et al. (2018).
+Neuroprotective effect of curcumin against cerebral ischemia-reperfusion via
+mediating autophagy and inflammation. J. Mol. Neurosci. 64 (1), 129–139. doi:10.
+1007/s12031-017-1006-x
+Islam, T., Hill, E., Abrahamson, E. E., Servaes, S., Smirnov, D. S., Zeng, X., et al. (2025).
+Phospho-tau serine-262 and serine-356 as biomarkers of pre-tangle soluble tau
+assemblies in alzheimer’s disease. Nat. Med. 31 (2), 574–588. doi:10.1038/s41591-
+024-03400-0
+Iwata, N., Tsubuki, S., Takaki, Y., Shirotani, K., Lu, B., Gerard, N. P., et al. (2001).
+Metabolic regulation of brain abeta by neprilysin. Science 292 (5521), 1550–1552. doi:10.
+1126/science.1059946
+Jain, G., Trombetta-Lima, M., Matlahov, I., Ribas, H. T., Chen, T., Parlato, R., et al.
+(2025). Inhibitor-based modulation of huntingtin aggregation mechanisms mitigates
+fibril-induced cellular stress. Nat. Commun. 16, 3588. doi:10.1038/s41467-025-58691-9
+Jiang, X., Liu, B., Nie, Z., Duan, L., Xiong, Q., Jin, Z., et al. (2021). The role of m6A
+modification in the biological functions and diseases. Signal Transduct. Target Ther. 6
+(1), 74. doi:10.1038/s41392-020-00450-x
+Jobin, C., Bradham, C. A., Russo, M. P., Juma, B., Narula, A. S., Brenner, D. A., et al.
+(1999). Curcumin blocks cytokine-mediated NF-kappa B activation and
+proinflammatory gene expression by inhibiting inhibitory factor I-kappa B kinase
+activity. J. Immunol. 163 (6), 3474–3483. doi:10.4049/jimmunol.163.6.3474
+Kang, Y. J., Hyeon, S. J., Mcquade, A., Lim, J., Baek, S. H., Diep, Y. N., et al. (2024).
+Neurotoxic microglial activation via IFNγ-induced Nrf2 reduction exacerbating
+alzheimer’s disease. Adv. Sci. 11 (20), e2304357. doi:10.1002/advs.202304357
+Kanwal, Q., Ahmed, M., Hamza, M., Ahmad, M., Atiq-Ur-Rehman, Yousaf, N., et al.
+(2023). Curcumin nanoparticles: physicochemical fabrication, characterization,
+antioxidant, enzyme inhibition, molecular docking and simulation studies. RSC Adv.
+13, 22268–22280. doi:10.1039/d3ra01432k
+Kasinski, A. L., Du, Y., Thomas, S. L., Zhao, J., Sun, S. Y., Khuri, F. R., et al. (2008).
+Inhibition of IkappaB kinase-nuclear factor-kappaB signaling pathway by 3,5-bis(2-
+flurobenzylidene)piperidin-4-one (EF24), a novel monoketone analog of curcumin.
+Mol. Pharmacol. 74 (3), 654–661. doi:10.1124/mol.108.046201
+Keeney, M. T., Rocha, E. M., Hoffman, E. K., Farmer, K., Di Maio, R., Weir, J., et al.
+(2024). LRRK2 regulates production of reactive oxygen species in cell and animal
+Frontiers in Pharmacology frontiersin.org18
+Wang et al. 10.3389/fphar.2025.1625821
+
+models of parkinson’s disease. Sci. Transl. Med. 16 (767), eadl3438. doi:10.1126/
+scitranslmed.adl3438
+Khan, S., Zafar, A., and Naseem, I. (2020). Redox cycling of copper by coumarin-di(2-
+picolyl)amine hybrid molecule leads to ROS-Mediated modulation of redox scavengers,
+DNA damage and cell death in diethylnitrosamine induced hepatocellular carcinoma.
+Bioorg Chem. 99, 103818. doi:10.1016/j.bioorg.2020.103818
+Khayatan, D., Razavi, S. M., Arab, Z. N., Nasoori, H., Fouladi, A., Pasha, A. V. K., et al.
+(2025). Targeting mTOR with curcumin: therapeutic implications for complex diseases.
+Inflammopharmacology 33 (4), 1583–1616. doi:10.1007/s10787-025-01643-y
+Kim, E., Kim, H., Jedrychowski, M. P., Bakiasi, G., Park, J., Kruskop, J., et al. (2023).
+Irisin reduces amyloid-beta by inducing the release of neprilysin from astrocytes
+following downregulation of ERK-STAT3 signaling. Neuron 111 (22), 3619–3633.e8.
+doi:10.1016/j.neuron.2023.08.012
+Kim, H., Du, F., Fang, M., and Wang, X. (2005). Formation of apoptosome is initiated
+by cytochrome c-induced dATP hydrolysis and subsequent nucleotide exchange on
+Apaf-1. Proc. Natl. Acad. Sci. 102 (49), 17545–17550. doi:10.1073/pnas.0507900102
+Kim, S., Jung, U. J., and Kim, S. R. (2024). Role of oxidative stress in blood-brain
+barrier disruption and neurodegenerative diseases. Antioxidants 13 (12), 1462. doi:10.
+3390/antiox13121462
+Kim, Y., Lim, J., and Oh, J. (2024). Taming neuroinflammation in alzheimer’s disease:
+the protective role of phytochemicals through the gut-brain axis. Biomed.
+Pharmacother. 178, 117277. doi:10.1016/j.biopha.2024.117277
+Kotsiliti, E. (2023). Gut syndromes and parkinson disease prediction. Nat. Rev.
+Gastroenterol. Hepatol. 20 (11), 694. doi:10.1038/s41575-023-00851-7
+Kumari, S., Dhapola, R., and Reddy, D. H. (2023). Apoptosis in alzheimer’s disease:
+insight into the signaling pathways and therapeutic avenues. Apoptosis 28 (7-8),
+943–957. doi:10.1007/s10495-023-01848-y
+Lepine, S., Castellanos-Montiel, M. J., and Durcan, T. M. (2022). TDP-43
+dysregulation and neuromuscular junction disruption in amyotrophic lateral
+sclerosis. Transl. Neurodegener. 11 (1), 56. doi:10.1186/s40035-022-00331-z
+Li, B., Ming, H., Qin, S., Nice, E. C., Dong, J., Du, Z., et al. (2025). Redox regulation:
+mechanisms, biology and therapeutic targets in diseases. Signal Transduct. Target Ther.
+10 (1), 72. doi:10.1038/s41392-024-02095-6
+Li, D., and Wu, M. (2021). Pattern recognition receptors in health and diseases. Signal
+Transduct. Target Ther. 6 (1), 291. doi:10.1038/s41392-021-00687-0
+Li, H., Tan, Y., Cheng, X., Zhang, Z., Huang, J., Hui, S., et al. (2022). Untargeted
+metabolomics analysis of the hippocampus and cerebral cortex identified the
+neuroprotective mechanisms of bushen tiansui formula in an aβ
+25-35
+-induced rat model
+of alzheimer’s disease. Front. Pharmacol. 13, 990307. doi:10.3389/fphar.2022.990307
+Li, P., Nijhawan, D., Budihardjo, I., Srinivasula, S. M., Ahmad, M., Alnemri, E. S., et al.
+(1997). Cytochrome c and dATP-dependent formation of Apaf-1/caspase-9 complex
+initiates an apoptotic protease cascade. Cell 91 (4), 479–489. doi:10.1016/s0092-
+8674(00)80434-1
+Li, S., Bu, L., and Cai, L. (2022). Cuproptosis: lipoylated TCA cycle proteins-mediated
+novel cell death pathway. Signal Transduct. Target Ther. 7 (1), 158. doi:10.1038/s41392-
+022-01014-x
+Liang, K., Yang, L., Kang, J., Liu, B., Zhang, D., Wang, L., et al. (2024). Improving
+treatment for parkinson’s disease: harnessing photothermal and phagocytosis-driven
+delivery of levodopa nanocarriers across the blood-brain barrier. Asian J. Pharm. Sci. 19
+(6), 100963. doi:10.1016/j.ajps.2024.100963
+Liang, Z., Liu, W., Cao, M., Cui, J., Lan, J., Ding, Y., et al. (2025). Epigenetic
+regulation-mediated disorders in dopamine transporter endocytosis: a novel
+mechanism for the pathogenesis of parkinson’s disease. Theranostics 15 (6),
+2250–2278. doi:10.7150/thno.107436
+Liederer, B. M., and Borchardt, R. T. (2006). Enzymes involved in the bioconversion
+of ester-based prodrugs. J. Pharm. Sci. 95 (6), 1177–1195. doi:10.1002/jps.20542
+Lim, D., Tapella, L., Dematteis, G., Genazzani, A. A., Corazzari, M., and Verkhratsky,
+A. (2023). The endoplasmic reticulum stress and unfolded protein response in
+Alzheimer’s disease: a calcium dyshomeostasis perspective. Ageing Res. Rev. 87,
+101914. doi:10.1016/j.arr.2023.101914
+Linard, M., Martinuzzi, M., Samieri, C., Dartigues, J., Glaichenhaus, N., Féart, C., et al.
+(2023). High plasma glial fibrillary acidic protein levels are associated with an increased
+risk of dementia and Alzheimer’s disease over a 13-year follow-up period: results from a
+prospective population-based cohort. Alzheimers Dement. 19 (S2), e065653. doi:10.
+1002/alz.065653
+Ling, S., Zhang, X., Dai, Y., Jiang, Z., Zhou, X., Lu, S., et al. (2025). Customizable virus-
+like particles deliver CRISPR-Cas9 ribonucleoprotein for effective ocular neovascular
+and huntington’s disease gene therapy. Nat. Nanotechnol. 20, 543–553. doi:10.1038/
+s41565-024-01851-7
+Liu, J., Liu, C., Zhang, J., Zhang, Y., Liu, K., Song, J. X., et al. (2020). A self-assembled
+α-synuclein nanoscavenger for Parkinson’s disease. ACS Nano 14 (2), 1533–1549.
+doi:10.1021/acsnano.9b06453
+Liu, Z., Yu, Y., Li, X., Ross, C. A., and Smith, W. W. (2011). Curcumin protects against
+A53T alpha-synuclein-induced toxicity in a PC12 inducible cell model for
+parkinsonism. Pharmacol. Res. 63 (5), 439–444. doi:10.1016/j.phrs.2011.01.004
+Loh, J. S., Mak, W. Q., Tan, L. K. S., Ng, C. X., Chan, H. H., Yeow, S. H., et al. (2024).
+Microbiota-gut-brain axis and its therapeutic applications in neurodegenerative
+diseases. Signal Transduct. Target Ther. 9 (1), 37. doi:10.1038/s41392-024-01743-1
+Long, J. M., and Holtzman, D. M. (2019). Alzheimer disease: an update on
+pathobiology and treatment strategies. Cell 179 (2), 312–339. doi:10.1016/j.cell.2019.
+09.001
+Lopez Rodriguez, A. B., Hennessy, E., Murray, C. L., Nazmi, A., Delaney, H. J., Healy,
+D., et al. (2021). Acute systemic inflammation exacerbates neuroinflammation in
+alzheimer’s disease: IL-1β drives amplified responses in primed astrocytes and
+neuronal network dysfunction. Alzheimers Dement. 17 (10), 1735–1755. doi:10.1002/
+alz.12341
+Luan, T., Li, Q., Huang, Z., Feng, Y., Xu, D., Zhou, Y., et al. (2024). Axonopathy
+underlying amyotrophic lateral sclerosis: unraveling complex pathways and therapeutic
+insights. Neurosci. Bull. 40 (11), 1789–1810. doi:10.1007/s12264-024-01267-2
+Luo, H., Li, Z., Yao, M., McClements, D. J., and Xiao, H. (2022). Impact of excipient
+emulsions made from different types of oils on the bioavailability and metabolism of
+curcumin in gastrointestinal tract. Food Chem. 370, 130980. doi:10.1016/j.foodchem.
+2021.130980
+Mahul-Mellier, A., Burtscher, J., Maharjan, N., Weerens, L., Croisier, M., Kuttler, F.,
+et al. (2020). The process of lewy body formation, rather than simply alpha-synuclein
+fibrillization, is one of the major drivers of neurodegeneration. Proc. Natl. Acad. Sci. 117
+(9), 4971–4982. doi:10.1073/pnas.1913904117
+Majumder, P., Hsu, T., Hu, C., Huang, J. K., Lee, Y. C., Hsieh, Y. C., et al. (2025).
+Potential role of solid lipid curcumin particle (SLCP) as estrogen replacement therapy in
+mitigating TDP-43-related neuropathy in the mouse model of ALS disease. Exp. Neurol.
+383, 114999. doi:10.1016/j.expneurol.2024.114999
+Maniscalchi, A., Benzi Juncos, O. N., Conde, M. A., Funk, M. I., Fermento, M. E.,
+Facchinetti, M. M., et al. (2024). New insights on neurodegeneration triggered by iron
+accumulation: intersections with neutral lipid metabolism, ferroptosis, and motor
+impairment. Redox Biol. 71, 103074. doi:10.1016/j.redox.2024.103074
+Maor-Nof, M., Shipony, Z., Lopez-Gonzalez, R., Nakayama, L., Zhang, Y. J.,
+Couthouis, J., et al. (2021). p53 is a central regulator driving neurodegeneration
+caused by C9orf72 poly(PR). Cell 184 (3), 689–708.e20. doi:10.1016/j.cell.2020.12.025
+Mari, M., Carrozza, D., Malavasi, G., Venturi, E., Avino, G., Capponi, P. C., et al.
+(2022). Curcumin-based β-diketo ligands for Ga
+3+
+: thermodynamic investigation of
+potential metal-based drugs. Pharmaceuticals 15 (7), 854. doi:10.3390/ph15070854
+Marrone, L., Drexler, H. C. A., Wang, J., Tripathi, P., Distler, T., Heisterkamp, P., et al.
+(2019). FUS pathology in ALS is linked to alterations in multiple ALS-associated
+proteins and rescued by drugs stimulating autophagy. Acta Neuropathol. 138 (1), 67–84.
+doi:10.1007/s00401-019-01998-x
+Martic, S. (2022). Inhibition of tau protein aggregation using small molecule
+inhibitors and immunotherapies. Alzheimers Dement. 18 (S10), e065627. doi:10.
+1002/alz.065627
+Matlik, K., Baffuto, M., Kus, L., Deshmukh, A. L., Davis, D. A., Paul, M. R., et al.
+(2024). Cell-type-specific CAG repeat expansions and toxicity of mutant huntingtin in
+human striatum and cerebellum. Nat. Genet. 56 (3), 383–394. doi:10.1038/s41588-024-
+01653-6
+Maugeri, A., Russo, C., Patanè, G. T., Barreca, D., Mandalari, G., and Navarra, M.
+(2023). The inhibition of mitogen-activated protein kinases (MAPKs) and NF-κB
+underlies the neuroprotective capacity of a cinnamon/curcumin/turmeric spice blend in
+Aβ-exposed THP-1 cells. Molecules 28 (24), 7949. doi:10.3390/molecules28247949
+McCombe, P. A., and Henderson, R. D. (2010). Effects of gender in amyotrophic
+lateral sclerosis. Gend. Med. 7 (6), 557–570. doi:10.1016/j.genm.2010.11.010
+Mcmillan, P. J., Benbow, S. J., Uhrich, R., Saxton, A., Baum, M., Strovas, T., et al.
+(2023). Tau-RNA complexes inhibit microtubule polymerization and drive disease-
+relevant conformation change. Brain 146 (8), 3206–3220. doi:10.1093/brain/awad032
+Mendel, M., Chen, K., Homolka, D., Gos, P., Pandey, R. R., McCarthy, A. A., et al.
+(2018). Methylation of structured RNA by the m(6)A writer METTL16 is essential for
+mouse embryonic development. Mol. Cell 71 (6), 986–1000.e11. doi:10.1016/j.molcel.
+2018.08.004
+Meng, F., Yao, D., Shi, Y., Kabakoff, J., Wu, W., Reicher, J., et al. (2011). Oxidation of
+the cysteine-rich regions of parkin perturbs its E3 ligase activity and contributes to
+protein aggregation. Mol. Neurodegener. 6 (1), 34. doi:10.1186/1750-1326-6-34
+Metzler, M., Pfeiffer, E., Schulz, S. I., and Dempe, J. S. (2013). Curcumin uptake and
+metabolism. BioFactors 39 (1), 14–20. doi:10.1002/biof.1042
+Mizielinska, S., Hautbergue, G. M., Gendron, T. F., van Blitterswijk, M., Hardiman,
+O., Ravits, J., et al. (2025). Amyotrophic lateral sclerosis caused by hexanucleotide repeat
+expansions in C9orf72: from genetics to therapeutics. Lancet Neurol. 24 (3), 261–274.
+doi:10.1016/S1474-4422(25)00026-2
+Moradi, G., Zinadini, S., Rajabi, L., and Ashraf Derakhshan, A. (2020). Removal of
+heavy metal ions using a new high performance nanofiltration membrane modified with
+curcumin boehmite nanoparticles. Chem. Eng. J. 390, 124546. doi:10.1016/j.cej.2020.
+124546
+Moss, D. J. H., Pardinas, A. F., Langbehn, D., Lo, K., Leavitt, B. R., Roos, R., et al.
+(2017). Identification of genetic variants associated with huntington’s disease
+Frontiers in Pharmacology frontiersin.org19
+Wang et al. 10.3389/fphar.2025.1625821
+
+progression: a genome-wide association study. Lancet Neurol. 16 (9), 701–711. doi:10.
+1016/S1474-4422(17)30161-8
+Muangnoi, C., Jithavech, P., Ratnatilaka Na Bhuket, P., Supasena, W., Wichitnithad,
+W., Towiwat, P., et al. (2018). A curcumin-diglutaric acid conjugated prodrug with
+improved water solubility and antinociceptive properties compared to curcumin. Biosci.
+Biotechnol. Biochem. 82 (8), 1301–1308. doi:10.1080/09168451.2018.1462694
+Namgyal, D., Ali, S., Hussain, M. D., Kazi, M., Ahmad, A., and Sarwat, M. (2021).
+Curcumin ameliorates the Cd-induced anxiety-like behavior in mice by regulating
+oxidative stress and neuro-inflammatory proteins in the prefrontal cortex region of the
+brain. Antioxidants 10 (11), 1710. doi:10.3390/antiox10111710
+Newell, M. E., Adhikari, S., and Halden, R. U. (2022). Systematic and state-of the
+science review of the role of environmental factors in amyotrophic lateral sclerosis
+(ALS) or Lou gehrig’s disease. Sci. Total Environ. 817, 152504. doi:10.1016/j.scitotenv.
+2021.152504
+Nguyen, T. B., Miramontes, R., Chillon-Marinas, C., Maimon, R., Vazquez-Sanchez,
+S., Lau, A. L., et al. (2025). Aberrant splicing in huntington’s disease accompanies
+disrupted TDP-43 activity and altered m6A RNA modification. Nat. Neurosci. 28 (2),
+280–292. doi:10.1038/s41593-024-01850-w
+Nikolopoulos, D., Manolakou, T., Polissidis, A., Filia, A., Bertsias, G., Koutmani, Y.,
+et al. (2023). Microglia activation in the presence of intact blood–brain barrier and
+disruption of hippocampal neurogenesis via IL-6 and IL-18 mediate early diffuse
+neuropsychiatric lupus. Ann. Rheum. Dis. 82 (5), 646–657. doi:10.1136/ard-2022-
+223506
+Nim, S., O’Hara, D. M., Corbi-Verge, C., Perez-Riba, A., Fujisawa, K., Kapadia, M.,
+et al. (2023). Disrupting the alpha-synuclein-ESCRT interaction with a peptide inhibitor
+mitigates neurodegeneration in preclinical models of parkinson’s disease. Nat.
+Commun. 14 (1), 2150. doi:10.1038/s41467-023-37464-2
+Norton, C. E., Shaw, R. L., Domeier, T. L., Segal, S. S., and Dockery, B. (2024).
+Advanced age and female sex protect cerebral arteries from mitochondrial
+depolarization and apoptosis during acute oxidative stress. Aging Cell 23 (5),
+e14110. doi:10.1111/acel.14110
+Olmos-Juste, R., Alonso-Lerma, B., Pérez-Jiménez, R., Gabilondo, N., and Eceiza, A.
+(2021). 3D printed alginate-cellulose nanofibers based patches for local curcumin
+administration. Carbohydr. Polym. 264, 118026. doi:10.1016/j.carbpol.2021.118026
+Ortega, J., Lee, G. S., Gu, L., Yang, W., and Li, G. M. (2021). Mispair-bound human
+MutS-MutL complex triggers DNA incisions and activates mismatch repair. Cell Res. 31
+(5), 542–553. doi:10.1038/s41422-021-00468-y
+Pan, J., Li, H., Ma, J., Tan, Y. Y., Xiao, Q., Ding, J. Q., et al. (2012). Curcumin
+inhibition of JNKs prevents dopaminergic neuronal loss in a mouse model of
+parkinson’s disease through suppressing mitochondria dysfunction. Transl.
+Neurodegener. 1 (1), 16. doi:10.1186/2047-9158-1-16
+Pan, M., Huang, T., and Lin, J. (1999). Biotransformation of curcumin through
+reduction and glucuronidation in mice. Drug Metab. Dispos. 27 (4), 486–494. doi:10.
+1016/s0090-9556(24)15211-7
+Pang, K., Jiang, R., Zhang, W., Yang, Z., Li, L. L., Shimozawa, M., et al. (2022). An app
+knock-in rat model for alzheimer’s disease exhibiting A
+β and tau pathologies, neuronal
+death and cognitive impairments. Cell Res. 32 (2), 157–175. doi:10.1038/s41422-021-
+00582-x
+Park, H., Kam, T., Dawson, V. L., and Dawson, T. M. (2025). α-Synuclein pathology as
+a target in neurodegenerative diseases. Nat. Rev. Neurol. 21 (1), 32–47. doi:10.1038/
+s41582-024-01043-w
+Park, H., Kam, T., Peng, H., Chou, S. C., Mehrabani-Tabari, A. A., Song, J. J., et al.
+(2022). PAAN/MIF nuclease inhibition prevents neurodegeneration in parkinson’s
+disease. Cell 185 (11), 1943–1959.e21. doi:10.1016/j.cell.2022.04.020
+Patel, H., Mcintire, J., Ryan, S., Dunah, A., and Loring, R. (2017). Anti-inflammatory
+effects of astroglial α7 nicotinic acetylcholine receptors are mediated by inhibition of the
+NF-κB pathway and activation of the Nrf2 pathway. J. Neuroinflammation 14 (1), 192.
+doi:10.1186/s12974-017-0967-6
+Pedrini, S., Sau, D., Guareschi, S., Bogush, M., Brown, R. H., Jr, Naniche, N., et al.
+(2010). ALS-Linked mutant SOD1 damages mitochondria by promoting
+conformational changes in Bcl-2. Hum. Mol. Genet. 19 (15), 2974–2986. doi:10.
+1093/hmg/ddq202
+Pei, J., Palanisamy, C. P., Natarajan, P. M., Umapathy, V. R., Roy, J. R., Srinivasan, G.
+P., et al. (2024). Curcumin-loaded polymeric nanomaterials as a novel therapeutic
+strategy for alzheimer’s disease: a comprehensive review. Ageing Res. Rev. 99, 102393.
+doi:10.1016/j.arr.2024.102393
+Peruzzotti-Jametti, L., Willis, C. M., Krzak, G., Hamel, R., Pirvan, L., Ionescu, R. B.,
+et al. (2024). Mitochondrial complex I activity in microglia sustains neuroinflammation.
+Nature 628 (8006), 195–203. doi:10.1038/s41586-024-07167-9
+Pichet Binette, A., Gonneaud, J., Vogel, J. W., La Joie, R., Rosa-Neto, P., Collins, D. L.,
+et al. (2020). Morphometric network differences in ageing versus alzheimer’s disease
+dementia. Brain 143 (2), 635–649. doi:10.1093/brain/awz414
+Qian, D., Xu, J., Zhang, X., Hu, F., Cao, S., Dong, Y., et al. (2024). Microenvironment
+self-adaptive nanomedicine promotes spinal cord repair by suppressing inflammation
+Cascade and neural apoptosis. Adv. Mater 36 (50), e2307624. doi:10.1002/adma.
+202307624
+Qian, K., Jiang, X., Liu, Z., Zhang, J., Fu, P., Su, Y., et al. (2023). Revisiting the critical
+roles of reactive astrocytes in neurodegeneration. Mol. Psychiatry 28 (7), 2697–2706.
+doi:10.1038/s41380-023-02061-8
+Qin, F., Cao, R., Cui, W., Bai, X., Yuan, J., Zhang, Y., et al. (2025). Listerin promotes
+alpha-synuclein degradation to alleviate parkinson’s disease through the ESCRT
+pathway. Sci. Adv. 11 (7), eadp3672. doi:10.1126/sciadv.adp3672
+Qin, H., Srinivasula, S. M., Wu, G., Fernandes-Alnemri, T., Alnemri, E. S., and Shi, Y.
+(1999). Structural basis of procaspase-9 recruitment by the apoptotic protease-
+activating factor 1. Nature 399 (6736), 549–
+557. doi:10.1038/21124
+Qiu, B., Zandkarimi, F., Bezjian, C. T., Reznik, E., Soni, R. K., Gu, W., et al. (2024).
+Phospholipids with two polyunsaturated fatty acyl tails promote ferroptosis. Cell 187
+(5), 1177–1190.e18. doi:10.1016/j.cell.2024.01.030
+Rafiee, Z., Nejatian, M., Daeihamed, M., and Jafari, S. M. (2019). Application of
+curcumin-loaded nanocarriers for food, drug and cosmetic purposes. Trends Food Sci.
+Tech. 88, 445–458. doi:10.1016/j.tifs.2019.04.017
+Rahimi, K., Ahmadi, A., Hassanzadeh, K., Soleimani, Z., Sathyapalan, T.,
+Mohammadi, A., et al. (2019). Targeting the balance of T helper cell responses by
+curcumin in inflammatory and autoimmune states. Autoimmun. Rev. 18 (7), 738–748.
+doi:10.1016/j.autrev.2019.05.012
+Ran, C., and Zhu, B. (2024). Molecular chemiluminescence imaging of misfolded
+proteins with a versatile and highly sensitive probe in neurodegenerative disease models.
+Alzheimers Dement. 20 (S6), e090061. doi:10.1002/alz.090061
+Rane, J. S., Bhaumik, P., and Panda, D. (2017). Curcumin inhibits tau aggregation and
+disintegrates preformed tau filaments in vitro. J. Alzheimers Dis. 60 (3), 999–1014.
+doi:10.3233/JAD-170351
+Rao, A., Chen, N., Kim, M. J., Blumenfeld, J., Yip, O., Liang, Z., et al. (2025). Microglia
+depletion reduces human neuronal APOE4-related pathologies in a chimeric
+alzheimer’s disease model. Cell Stem Cell 32 (1), 86–104.e7. doi:10.1016/j.stem.2024.
+10.005
+Rasouli, S., Abdolvahabi, A., Croom, C. M., Plewman, D. L., Shi, Y., and Shaw, B. F.
+(2018). Glycerolipid headgroups control rate and mechanism of superoxide dismutase-
+1 aggregation and accelerate fibrillization of slowly aggregating amyotrophic lateral
+sclerosis mutants. ACS Chem. Neurosci. 9 (7), 1743–1756. doi:10.1021/acschemneuro.
+8b00086
+Rasouli, Z., and Ghavami, R. (2021). A 3×3 visible-light cross-reactive sensor array
+based on the nanoaggregation of curcumin in different pH and buffers for the
+multivariate identification and quantification of metal ions. Talanta 226, 122131.
+doi:10.1016/j.talanta.2021.122131
+Rathore, A. S., Singh, S. S., Birla, H., Zahra, W., Keshri, P. K., Dilnashin, H., et al.
+(2023). Curcumin modulates p62-Keap1-Nrf2-mediated autophagy in rotenone-
+induced parkinson’s disease mouse models. ACS Chem. Neurosci. 14 (8). doi:10.
+1021/acschemneuro.2c00706
+Ringman, J. M., Frautschy, S. A., Teng, E., Begum, A. N., Bardens, J., Beigi, M., et al.
+(2012). Oral curcumin for alzheimer’s disease: tolerability and efficacy in a 24-week
+randomized, double blind, placebo-controlled study. Alzheimers Res. Ther. 4 (5), 43.
+doi:10.1186/alzrt146
+Rinwa, P., and Kumar, A. (2013). P1–013: piperine enhances the neuroprotective
+effects of curcumin against mild traumatic brain injury–induced cognitive deficits:
+behavioral, biochemical, mitochondrial and molecular correlates. Alzheimers Dement. 9
+(4), 158. doi:10.1016/j.jalz.2013.05.233
+Rizig, M., Bandres-Ciga, S., Makarious, M. B., Ojo, O. O., Crea, P. W., Abiodun, O. V.,
+et al. (2023). Identification of genetic risk loci and causal insights associated with
+parkinson’s disease in African and African admixed populations: a genome-wide
+association study. Lancet Neurol. 22 (11), 1015–1025. doi:10.1016/S1474-4422(23)
+00283-1
+Roemer-Cassiano, S. N., Wagner, F., Evangelista, L., Rauchmann, B. S., Dehsarvi, A.,
+Steward, A., et al. (2025). Amyloid-associated hyperconnectivity drives tau spread
+across connected brain regions in alzheimer’s disease. Sci. Transl. Med. 17 (782),
+eadp2564. doi:10.1126/scitranslmed.adp2564
+Ruan, Y., Luo, H., Tang, J., Ji, M., Yu, D., Yu, Q., et al. (2024). Curcumin inhibits
+oxidative stress and autophagy in C17.2 neural stem cell through ERK1/2 signaling
+pathways. Aging Med. 7 (5), 559–570. doi:10.1002/agm2.12361
+Ruan, Y., Xiong, Y., Fang, W., Yu, Q., Mai, Y., Cao, Z., et al. (2022). Highly sensitive
+curcumin-conjugated nanotheranostic platform for detecting amyloid-beta plaques by
+magnetic resonance imaging and reversing cognitive deficits of alzheimer’s disease via
+NLRP3-inhibition. J. Nanobiotechnology 20 (1), 322. doi:10.1186/s12951-022-01524-4
+Sabet, S., Rashidinejad, A., Melton, L. D., and McGillivray, D. J. (2021). Recent
+advances to improve curcumin oral bioavailability. Trends Food Sci. Tech. 110, 253–266.
+doi:10.1016/j.tifs.2021.02.006
+Sampath, M., Lakra, R., Korrapati, P., and Sengottuvelan, B. (2014). Curcumin loaded
+poly (lactic-co-glycolic) acid nanofiber for the treatment of carcinoma. Colloids Surf. B,
+Biointerfaces 117, 128–134. doi:10.1016/j.colsurfb.2014.02.020
+Sanchez, I. I., Nguyen, T. B., England, W. E., Lim, R. G., Vu, A. Q., Miramontes, R.,
+et al. (2021). Huntington’s disease mice and human brain tissue exhibit increased
+G3BP1 granules and TDP43 mislocalization. J. Clin. Invest 131 (12), e140723. doi:10.
+1172/JCI140723
+Frontiers in Pharmacology frontiersin.org20
+Wang et al. 10.3389/fphar.2025.1625821
+
+Sandhir, R., Yadav, A., Mehrotra, A., Sunkaria, A., Singh, A., and Sharma, S. (2014).
+Curcumin nanoparticles attenuate neurochemical and neurobehavioral deficits in
+experimental model of huntington’s disease. Neuromolecular Med. 16 (1), 106–118.
+doi:10.1007/s12017-013-8261-y
+Santana-Martínez, R. A., Silva-Islas, C. A., Fernández-Orihuela, Y. Y., Barrera-
+Oviedo, D., Pedraza-Chaverri, J., Hernández-Pando, R., et al. (2019). The
+therapeutic effect of curcumin in quinolinic acid-induced neurotoxicity in rats is
+associated with BDNF, ERK1/2, Nrf2, and antioxidant enzymes. Antioxidants 8 (9),
+388. doi:10.3390/antiox8090388
+Savastano, A., Flores, D., Kadavath, H., Biernat, J., Mandelkow, E., and Zweckstetter,
+M. (2021). Disease-associated tau phosphorylation hinders tubulin assembly within tau
+condensates. Angew. Chem. Int. Ed. 60 (2), 726–730. doi:10.1002/anie.202011157
+Self, W. K., and Holtzman, D. M. (2023). Emerging diagnostics and therapeutics for
+alzheimer disease. Nat. Med. 29 (9), 2187–2199. doi:10.1038/s41591-023-02505-2
+Shen, C., Sheng, Z., Shao, J., Tang, M., Mao, L., Huang, C. H., et al. (2023).
+Mechanistic investigation of the differential synergistic neurotoxicity between
+pesticide metam sodium and copper or zinc. Chemosphere 328, 138430. doi:10.1016/
+j.chemosphere.2023.138430
+Shen, J., Lu, Z., Wang, J., Hao, Q., Ji, W., Wu, Y., et al. (2021). Traceable nano-
+biohybrid complexes by one-step synthesis as CRISPR-chem vectors for
+neurodegenerative diseases synergistic treatment. Adv. Mater 33 (27), e2101993.
+doi:10.1002/adma.202101993
+Shi, W., Lin, W., Ge, W., Chen, L. L., Zhang, T. D., Guo, W. H., et al. (2023). Curcumin
+inhibits liquid-liquid phase separation of fused in sarcoma and attenuates the
+sequestration of pyruvate kinase to restore cellular metabolism. Food Funct. 14 (1),
+4621–4631. doi:10.1039/d2fo03224d
+Simuni, T., Uribe, L., Cho, H. R., Caspell-Garcia, C., Coffey, C. S., Siderowf, A., et al.
+(2020). Clinical and dopamine transporter imaging characteristics of non-manifest
+LRRK2 and GBA mutation carriers in the Parkinson’s progression markers initiative
+(PPMI): a cross-sectional study. Lancet Neurol. 19 (1), 71–80. doi:10.1016/S1474-
+4422(19)30319-9
+Singh, S., Jamwal, S., and Kumar, P. (2015). Piperine enhances the protective effect of
+curcumin against 3-NP induced neurotoxicity: possible neurotransmitters modulation
+mechanism. Neurochem. Res. 40 (8), 1758–1766. doi:10.1007/s11064-015-1658-2
+Small, G. W., Siddarth, P., Li, Z., Miller, K. J., Ercoli, L., Emerson, N. D., et al. (2018).
+Memory and brain amyloid and tau effects of a bioavailable form of curcumin in non-
+demented adults: a double-blind, placebo-controlled 18-month trial. Am. J. Geriatr.
+Psychiatry 26 (3), 266–277. doi:10.1016/j.jagp.2017.10.010
+Song, H., Sieurin, J., Wirdefeldt, K., Pedersen, N. L., Almqvist, C., Larsson, H., et al.
+(2020). Association of stress-related disorders with subsequent neurodegenerative
+diseases. JAMA Neurol. 77 (6), 700–709. doi:10.1001/jamaneurol.2020.0117
+Sood, P. K., Nahar, U., and Nehru, B. (2012). Stress proteins and glial cell functions
+during chronic aluminium exposures: protective role of curcumin. Neurochem. Res. 37
+(3), 639–646. doi:10.1007/s11064-011-0655-3
+Srinivasan, E., and Rajasekaran, R. (2016). Computational investigation of curcumin,
+a natural polyphenol that inhibits the destabilization and the aggregation of human
+SOD1 mutant (Ala4Val). RSC Adv. 6 (14), 102744–102753. doi:10.1039/c6ra21927f
+Su, J., Cai, Y., Zhi, Z., Guo, Q., Mao, L., Gao, Y., et al. (2021). Assembly of propylene
+glycol alginate/β-lactoglobulin composite hydrogels induced by ethanol for co-delivery
+of probiotics and curcumin.
+Carbohydr. Polym. 254, 117446. doi:10.1016/j.carbpol.2020.
+117446
+Su, P., and Liu, F. (2017). A peptide disrupting the D2R-DAT interaction protects
+against dopamine neurotoxicity. Exp. Neurol. 295, 176–183. doi:10.1016/j.expneurol.
+2017.05.010
+Su, W., Cheng, Y., Jiang, Z., Duan, Q. Q., Yang, T. M., Shang, H. F., et al. (2021).
+Predictors of survival in patients with amyotrophic lateral sclerosis: a large meta-
+analysis. EBioMedicine 74, 103732. doi:10.1016/j.ebiom.2021.103732
+Sun, E. D., Zhou, O. Y., Hauptschein, M., Rappoport, N., Xu, L., Navarro Negredo, P.,
+et al. (2024). Spatial transcriptomic clocks reveal cell proximity effects in brain ageing.
+Nature 638 (8049), 160–171. doi:10.1038/s41586-024-08334-8
+Sun, J., and Roy, S. (2021). Gene-based therapies for neurodegenerative diseases. Nat.
+Neurosci. 24 (3), 297–311. doi:10.1038/s41593-020-00778-1
+Sun, Y., Dai, H., Dai, X., Yin, J., Cui, Y., Liu, X., et al. (2023). m(1)A in CAG repeat
+RNA binds to TDP-43 and induces neurodegeneration. Nature 623 (7987), 580–587.
+doi:10.1038/s41586-023-06701-5
+Swaddiwudhipong, N., Whiteside, D. J., Hezemans, F. H., Street, D., Rowe, J. B., and
+Rittman, T. (2023). Pre-diagnostic cognitive and functional impairment in multiple
+sporadic neurodegenerative diseases. Alzheimers Dement. 19 (5), 1752–1763. doi:10.
+1002/alz.12802
+Tandon, A., Singh, S. J., Gupta, M., Singh, N., Shankar, J., Arjaria, N., et al. (2020).
+Notch pathway up-regulation via curcumin mitigates bisphenol-A (BPA) induced
+alterations in hippocampal oligodendrogenesis. J. Hazard Mater. 392, 122052.
+doi:10.1016/j.jhazmat.2020.122052
+Tian, Y., Shang, Q., Liang, R., and Viles, J. H. (2024). Copper(II) can kinetically trap
+arctic and Italian amyloid-β40 as toxic oligomers, mimicking Cu(II) binding to wild-
+type amyloid-β42: implications for familial Alzheimer’s disease. JACS Au 4 (2),
+578–591. doi:10.1021/jacsau.3c00687
+Tollervey, J. R., Curk, T., Rogelj, B., Briese, M., Cereda, M., Kayikci, M., et al. (2011).
+Characterizing the RNA targets and position-dependent splicing regulation by TDP-43.
+Nat. Neurosci. 14 (4), 452–458. doi:10.1038/nn.2778
+Valdez, C. E., Smith, Q. A., Nechay, M. R., and Alexandrova, A. N. (2014). Mysteries
+of metals in metalloenzymes. Acc. Chem. Res. 47 (10), 3110–3117. doi:10.1021/
+ar500227u
+Van Daele, S. H., Moisse, M., Van Vugt, J. J. F. A., Zwamborn, R. A. J., van der Spek,
+R., van Rheenen, W., et al. (2023). Genetic variability in sporadic amyotrophic lateral
+sclerosis. Brain 146 (9), 3760–3769. doi:10.1093/brain/awad120
+Van Laar, V. S., Chen, J., Zharikov, A. D., Bai, Q., Di Maio, R., Dukes, A. A., et al.
+(2020). α-Synuclein amplifies cytoplasmic peroxide flux and oxidative stress provoked
+by mitochondrial inhibitors in CNS dopaminergic neurons in vivo. Redox Biol. 37,
+101695. doi:10.1016/j.redox.2020.101695
+Vareed, S. K., Kakarala, M., Ruffin, M. T., Crowell, J. A., Normolle, D. P., Djuric, Z.,
+et al. (2008). Pharmacokinetics of curcumin conjugate metabolites in healthy human
+subjects. Cancer Epidemiol. Biomarkers Prev.
+17 (6), 1411–1417. doi:10.1158/1055-
+9965.EPI-07-2693
+Verma, M., Sharma, A., Naidu, S., Bhadra, A. K., Kukreti, R., and Taneja, V. (2012).
+Curcumin prevents formation of polyglutamine aggregates by inhibiting Vps36, a
+component of the ESCRT-II complex. PLoS One 7 (8), e42923. doi:10.1371/journal.
+pone.0042923
+von Krusenstiern, A. N., Robson, R. N., Qian, N., Qiu, B., Hu, F., Reznik, E., et al.
+(2023). Identification of essential sites of lipid peroxidation in ferroptosis. Nat. Chem.
+Biol. 19 (6), 719–730. doi:10.1038/s41589-022-01249-3
+Wahyudi, L. D., Yu, S. H., and Cho, M. K. (2022). The effect of curcumin on the
+cadmium-induced mitochondrial apoptosis pathway by metallothionein 2A regulation.
+Life Sci. 310, 121076. doi:10.1016/j.lfs.2022.121076
+Wang, C., Liu, H., Li, X., Ma, J., Gu, Z., Feng, X., et al. (2024). High-depth whole-
+genome sequencing identifies structure variants, copy number variants and short
+tandem repeats associated with parkinson’s disease. NPJ Park. Dis. 10 (1), 134.
+doi:10.1038/s41531-024-00722-1
+Wang, H., Shan, X., Ren, M., Shang, M., and Zhou, C. (2021). Nucleosomes enter cells
+by clathrin- and caveolin-dependent endocytosis. Nucleic Acids Res. 49 (21),
+12306–12319. doi:10.1093/nar/gkab1121
+Wang, H., Sui, H., Zheng, Y., Jiang, Y., Shi, Y., Liang, J., et al. (2019). Curcumin-
+primed exosomes potently ameliorate cognitive function in AD mice by inhibiting
+hyperphosphorylation of the tau protein through the AKT/GSK-3β pathway. Nanoscale
+11 (15), 7481–7496. doi:10.1039/c9nr01255a
+Wang, L., Ma, Y., Zhang, M., Yuan, H. Y., Li, X. N., Xia, W., et al. (2024). Amyloid
+fibril structures and ferroptosis activation induced by ALS-Causing SOD1 mutations.
+Sci. Adv. 10 (44), eado8499. doi:10.1126/sciadv.ado8499
+Wang, L., Yin, Y., Liu, X., Shen, P., Zheng, Y. G., Lan, X. R., et al. (2020). Current
+understanding of metal ions in the pathogenesis of alzheimer’s disease. Transl.
+Neurodegener. 9, 10. doi:10.1186/s40035-020-00189-z
+Wang, M., Zhang, R., Dehaen, W., Fang, Y., Qian, S., Ren, Y., et al. (2021). Specific
+recognition, intracellular assay and detoxification of fluorescent curcumin derivative for
+copper ions. J. Hazard Mater 420, 126490. doi:10.1016/j.jhazmat.2021.126490
+Wang, N., Zhang, S., Langfelder, P., Ramanathan, L., Gao, F., Plascencia, M., et al.
+(2025). Distinct mismatch-repair complex genes set neuronal CAG-repeat expansion
+rate to drive selective pathogenesis in HD mice. Cell 188 (6), 1524–1544.e22. doi:10.
+1016/j.cell.2025.01.031
+Wang, X., Sun, G., Feng, T., Zhang, J., Huang, X., Wang, T., et al. (2019). Sodium
+oligomannate therapeutically remodels gut microbiota and suppresses gut bacterial
+amino acids-shaped neuroinflammation to inhibit alzheimer’s disease progression. Cell
+Res. 29 (10), 787–803. doi:10.1038/s41422-019-0216-x
+Wang, Y., An, R., Umanah, G. K., Park, H., Nambiar, K., Eacker, S. M., et al. (2016). A
+nuclease that mediates cell death induced by DNA damage and poly(ADP-ribose)
+polymerase-1. Science 354 (6308), aad6872. doi:10.1126/science.aad6872
+Wang, Z., Wang, C., Yuan, B., Liu, L., Zhang, H., Zhu, M., et al. (2025).
+Akkermansia muciniphila and its metabolite propionic acid maintains neuronal
+mitochondrial division and autophagy homeostasis during alzheimer
+’s disease
+pathologic process via GPR41 and GPR43. Microbiome 13 (1), 16. doi:10.1186/
+s40168-024-02001-w
+Wang, G., Yin, W., Shin, H., Tian, Q., Lu, W., and Hou, S. X. (2021). Neuronal
+accumulation of peroxidated lipids promotes demyelination and neurodegeneration
+through the activation of the microglial NLRP3 inflammasome. Nat. aging 1 (11),
+1024–1037. doi:10.1038/s43587-021-00130-7
+Wise, J. (2010). Prevalence of Huntington’s disease is underestimated in UK. BMJ 340,
+c3516. doi:10.1136/bmj.c3516
+Wright, G. E. B., Black, H. F., Collins, J. A., Gall-Duncan, T., Caron, N. S., Pearson, C.
+E., et al. (2020). Interrupting sequence variants and age of onset in huntington’s disease:
+clinical implications and emerging therapies. Lancet Neurol. 19 (11), 930–939. doi:10.
+1016/S1474-4422(20)30343-4
+Frontiers in Pharmacology frontiersin.org21
+Wang et al. 10.3389/fphar.2025.1625821
+
+Wu, K., Xu, Q., Liu, Y., Feng, Y. W., Han, S. D., Zhang, Y. R., et al. (2025). Neuronal
+FAM171A2 mediates alpha-synuclein fibril uptake and drives parkinson’s disease.
+Science 387 (6736), 892–900. doi:10.1126/science.adp3645
+Wu, L., Zhao, P., Wu, P., Jiang, W., Liu, Y., Ren, H., et al. (2024). Curcumin attenuates
+ochratoxin A and hypoxia co-induced liver injury in grass carp (Ctenopharyngodon
+idella) by dual targeting endoplasmic reticulum stress and apoptosis via reducing ROS
+content. J. Anim. Sci. Biotechnol. 15 (1), 131. doi:10.1186/s40104-024-01089-2
+Xu, H., Garcia-Ptacek, S., Bruchfeld, A., Fu, E. L., Shori, T. D., Lindholm, B., et al.
+(2023). Association between cholinesterase inhibitors and kidney function decline in
+patients with Alzheimer’s dementia. Kidney Int. 103 (1), 166–176. doi:10.1016/j.kint.
+2022.09.022
+Xu, H., Ma, Q., Qiu, C., Wang, J., Jin, Z., and Hu, Y. (2024). Encapsulation and
+controlled delivery of curcumin by self-assembled cyclodextrin succinate/chitosan
+nanoparticles. Food Hydrocoll. 157, 110465. doi:10.1016/j.foodhyd.2024.110465
+Xu, J., Kong, X., Xiu, H., Dou, Y., Wu, Z., and Sun, P. (2018). Combination of
+curcumin and vagus nerve stimulation attenuates cerebral ischemia/reperfusion injury-
+induced behavioral deficits. Biomed. Pharmacother. 103, 614–620. doi:10.1016/j.biopha.
+2018.04.069
+Xu, L., Chen, L., Wang, S., Feng, J., Liu, L., Liu, G., et al. (2020). Incidence and
+prevalence of amyotrophic lateral sclerosis in urban China: a national population-based
+study. J. Neurol. Neurosurg. Psychiatry 91 (5), 520–525. doi:10.1136/jnnp-2019-322317
+Xu, W., Han, S., Zhang, C., Li, J. Q., Wang, Y. J., Tan, C. C., et al. (2020). The
+FAM171A2 gene is a key regulator of progranulin expression and modifies the risk of
+multiple neurodegenerative diseases. Sci. Adv. 6 (43), eabb3063. doi:10.1126/sciadv.
+abb3063
+Xue, Q., Yan, D., Chen, X., Li, X., Kang, R., Klionsky, D. J., et al. (2023). Copper-
+dependent autophagic degradation of GPX4 drives ferroptosis. Autophagy 19 (7),
+1982–1996. doi:10.1080/15548627.2023.2165323
+Xue, Y. C., Liu, H., Mohamud, Y., Bahreyni, A., Zhang, J., Cashman, N. R., et al.
+(2022). Sublethal enteroviral infection exacerbates disease progression in an ALS mouse
+model. J. Neuroinflammation 19 (1), 16. doi:10.1186/s12974-022-02380-7
+Yang, Q., Cai, W., Wang, Z., Li, Y., Zhang, Y., Lin, X., et al. (2023). Structural
+characteristics, binding behaviors, and stability of ternary nanocomplexes of lecithin,
+polyvinylpyrrolidone, and curcumin. LWT 175, 114489. doi:10.1016/j.lwt.2023.114489
+Yang, Q., Li, R., Hong, Y., Liu, H., Jian, C., and Zhao, S. (2024). Curcumin-loaded
+gelatin nanoparticles cross the blood-brain barrier to treat ischemic stroke by
+attenuating oxidative stress and neuroinflammation. Int. J. Nanomedicine 19,
+11633–11649. doi:10.2147/IJN.S487628
+Yang, Y., Shi, Y., Schweighauser, M., Zhang, X., Kotecha, A., Murzin, A. G., et al.
+(2022). Structures of alpha-synuclein filaments from human brains with lewy pathology.
+Nature 610 (7933), 791–795. doi:10.1038/s41586-022-05319-3
+Ye, J., Zhong, S., Wan, H., Guo, X., Yao, X., Liu, Q., et al. (2025). Upregulated astrocyte
+HDAC7 induces alzheimer-like tau pathologies via deacetylating transcription factor-
+EB and inhibiting lysosome biogenesis. Mol. Neurodegener. 20 (1), 5. doi:10.1186/
+s13024-025-00796-2
+Yu, C., Davidson, S., Harapas, C. R., Hilton, J. B., Mlodzianoski, M. J.,
+Laohamonthonkul, P., et al. (2020). TDP-43 triggers mitochondrial DNA release via
+mPTP to activate cGAS/STING in ALS. Cell 183 (3), 636–649.e18. doi:10.1016/j.cell.
+2020.09.020
+Yu, J., Chen, M., Huang, H., Zhu, J., Song, H., Zhu, J., et al. (2018). Dynamic m6A
+modification regulates local translation of mRNA in axons. Nucleic Acids Res. 46 (3),
+1412–1423. doi:10.1093/nar/gkx1182
+Zhang, C., Browne, A., Child, D., and Tanzi, R. E. (2010). Curcumin decreases
+amyloid-beta peptide levels by attenuating the maturation of amyloid-beta precursor
+protein. J. Biol. Chem. 285 (37), 28472–28480. doi:10.1074/jbc.M110.133520
+Zhang, J., Malik, A., Choi, H. B., Ko, R. W. Y., Dissing-Olesen, L., and MacVicar, B. A.
+(2014). Microglial CR3 activation triggers long-term synaptic depression in the
+hippocampus via NADPH oxidase. Neuron 82 (1), 195–207. doi:10.1016/j.neuron.
+2014.01.043
+Zhang K., K., Wang, F., Zhai, M., He, M., Hu, Y., Feng, L., et al. (2023). Hyperactive
+neuronal autophagy depletes BDNF and impairs adult hippocampal neurogenesis in a
+corticosterone-induced mouse model of depression. Theranostics 13 (3), 1059–1075.
+doi:10.7150/thno.81067
+Zhang, L., Jia, Z., Wu, Q., Bai, T., Wang, B., Hu, X., et al. (2023). Alleviating symptoms
+of neurodegenerative disorders by astrocyte-specific overexpression of TMEM164 in
+mice. Nat. Metab. 5 (10), 1787–1802. doi:10.1038/s42255-023-00887-8
+Zhang, N., Lin, R., Gao, W., Xu, H., Li, Y., Huang, X., et al. (2025). Curcumin
+modulates PTPRZ1 activity and RNA m6A modifications in neuroinflammation-
+associated microglial response. Adv. Sci. 12 (15), e2405263. doi:10.1002/advs.202405263
+Zhang, N., Yan, F., Liang, X., Wu, M., Shen, Y., Chen, M., et al. (2018). Localized
+delivery of curcumin into brain with polysorbate 80-modified cerasomes by ultrasound-
+targeted microbubble destruction for improved parkinson’s disease therapy.
+Theranostics 8 (8), 2264–2277. doi:10.7150/thno.23734
+Zhang, W., Xiao, D., Mao, Q., and Xia, H. (2023). Role of neuroinflammation in
+neurodegeneration development. Signal Transduct. Target Ther. 8 (1), 267. doi:10.1038/
+s41392-023-01486-5
+Zhang, Y., Yang, C., Wang, W., Liu, J., Liu, Q., Huang, F., et al. (2016). Co-delivery of
+doxorubicin and curcumin by pH-sensitive prodrug nanoparticle for combination
+therapy of cancer. Sci. Rep. 6 (1), 21225. doi:10.1038/srep21225
+Zhao, G., Liu, Y., Yi, X., Wang, Y., Qiao, S., Li, Z., et al. (2017). Curcumin inhibiting
+Th17 cell differentiation by regulating the metabotropic glutamate receptor-4
+expression on dendritic cells. Int. Immunopharmacol. 46, 80–86. doi:10.1016/j.
+intimp.2017.02.017
+Zhao, Y., Qin, L., Pan, H., Liu, Z., Jiang, L., He, Y., et al. (2020). The role of genetics in
+parkinson’s disease: a large cohort study in Chinese mainland population. Brain 143 (7),
+2220–2234. doi:10.1093/brain/awaa167
+Zheng, Q., Liu, H., Zhang, H., Han, Y., Yuan, J., Wang, T., et al. (2023). Ameliorating
+mitochondrial dysfunction of neurons by biomimetic targeting nanoparticles mediated
+mitochondrial biogenesis to boost the therapy of parkinson’s disease.
+Adv. Sci. 10 (22),
+e2300758. doi:10.1002/advs.202300758
+Zhong, L., Cai, B., Wang, Q., Li, X., Xu, W., and Chen, T. (2022). Exploring the
+neuroprotective mechanism of curcumin inhibition of intestinal inflammation against
+parkinson’s disease based on the gut-brain axis. Pharmaceuticals 16 (1), 39. doi:10.3390/
+ph16010039
+Zhou, Y., Tang, J., Lan, J., Zhang, Y., Wang, H., Chen, Q., et al. (2023). Honokiol
+alleviated neurodegeneration by reducing oxidative stress and improving mitochondrial
+function in mutant SOD1 cellular and mouse models of amyotrophic lateral sclerosis.
+Acta Pharm. Sin. B 13 (2), 577–597. doi:10.1016/j.apsb.2022.07.019
+Zhu, H., Tonelli, F., Turk, M., Prescott, A., Alessi, D. R., and Sun, J. (2023). Rab29-
+dependent asymmetrical activation of leucine-rich repeat kinase 2. Science 382 (6677),
+1404–1411. doi:10.1126/science.adi9926
+Zou, Y., Li, H., Graham, E. T., Deik, A. A., Eaton, J. K., Wang, W., et al. (2020).
+Cytochrome P450 oxidoreductase contributes to phospholipid peroxidation in
+ferroptosis. Nat. Chem. Biol. 16 (3), 302–309. doi:10.1038/s41589-020-0472-6
+Frontiers in Pharmacology frontiersin.org22
+Wang et al. 10.3389/fphar.2025.1625821

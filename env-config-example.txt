@@ -1,0 +1,43 @@
+# =============================================================================
+# PAPER-HAND GO-BACKEND CONFIGURATION EXAMPLE
+# =============================================================================
+
+# HTTP Server
+HTTP_PORT=8080
+
+# PostgreSQL Database - Raw Papers
+POSTGRES_RAW_HOST=localhost
+POSTGRES_RAW_PORT=5432
+POSTGRES_RAW_USER=paperhand_user
+POSTGRES_RAW_PASSWORD=secure_password_123
+POSTGRES_RAW_DB=paperhand_raw
+
+# PostgreSQL Database - Rated Papers
+POSTGRES_RATED_HOST=localhost
+POSTGRES_RATED_PORT=5433
+POSTGRES_RATED_USER=paperhand_rated_user
+POSTGRES_RATED_PASSWORD=secure_password_456
+POSTGRES_RATED_DB=paperhand_rated
+
+# API Security (für n8n HTTP Requests)
+API_SECRET_KEY=your-super-secure-api-key-here
+
+# PubMed API (Optional - nur für Paper-Fetching, NOT needed for Citations!)
+PUBMED_API_KEY=optional
+PUBMED_EMAIL=your-email@example.com
+
+# Unpaywall API (Optional - nur für Paper-Fetching, NOT needed for Citations!)
+UNPAYWALL_EMAIL=your-email@example.com
+
+# S3 Storage (Optional - nur für Paper-Storage, NOT needed for Citations!)
+STRATO_S3_KEY=optional
+STRATO_S3_SECRET=optional
+STRATO_S3_URL=optional
+STRATO_S3_REGION=optional
+STRATO_S3_BUCKET=optional
+
+# Cron Schedule (Optional - nur für automatisches Fetching, NOT needed for Citations!)
+CRON_SCHEDULE="0 0 * * *"
+
+# Debug Settings
+DEBUG_MAX_RECORDS=30

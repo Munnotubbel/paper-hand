@@ -1,0 +1,681 @@
+{
+  "name": "Paper to Blog Article",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $input.all().length }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    },
+                    "id": "9ca3c566-4222-4f04-8f7a-53905212265f"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Paper gefunden"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5f928ef1-de1c-4891-9681-2190b23cdfab",
+                    "leftValue": "={{ $input.all().length }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Keine Papers gefunden"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -128,
+        -272
+      ],
+      "id": "46354f47-fbbd-4691-a189-9ee62a622093",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "bucketName": "paper-store",
+        "fileKey": "={{ $json.pmid }}.pdf"
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        128,
+        -272
+      ],
+      "id": "e761e396-a59d-444b-b960-e1b1966d0102",
+      "name": "Download a file",
+      "credentials": {
+        "s3": {
+          "id": "lXbGUFRjp6Yya8kj",
+          "name": "Strato S3 Images"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        288,
+        -272
+      ],
+      "id": "a84dff59-b1a8-4321-9a25-c89c17e2e985",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        96,
+        -64
+      ],
+      "id": "76d32056-4749-4e5c-ac36-4c2c14ad2cda",
+      "name": "Wait",
+      "webhookId": "a6bc83e6-f697-4b8c-8da2-3a3e0daacf16"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -576,
+        -272
+      ],
+      "id": "ece2a857-1377-4e78-99fe-450754755e12",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://paper-backend:4242/rated-papers/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"min_rating\": 6.1,\n  \"content_status\": \"idee\",\n  \"category_keywords\": [\n    \"Solide Grundlage\", \n    \"Content-Gold\", \n    \"Interessanter Ansatz\"\n  ],\n  \"limit\": 1\n}",
+        "options": {}
+      },
+      "id": "583ef1bf-fccf-439b-8b5c-78900055cb55",
+      "name": "1. Get Rated Paper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -320,
+        -272
+      ],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "ijgx3lz1xx4Q9zxn",
+          "name": "Bearer Auth account"
+        },
+        "httpHeaderAuth": {
+          "id": "RTzRC0AggRABuRdo",
+          "name": "Auth Header Paper Backend API KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=🎯 **SCIENCE-TO-PEOPLE TRANSLATOR MIT REFERENZ-BEWAHRUNG** 🎯\n\n🚨 **KRITISCHE ANFORDERUNG - REFERENZEN MÜSSEN 100% ERHALTEN BLEIBEN!** 🚨\n- JEDE wissenschaftliche Aussage MUSS mit der Originalreferenz belegt werden: (Autor et al., Jahr)\n- ALLE Referenzen aus dem Originaltext müssen übernommen werden\n\n**ZIELGRUPPE & KONTEXT:**\nSchreibe für Menschen, die:\n- Gesundheitsthemen aus Zeitschriften/TV kennen\n- Neugierig sind, aber keine medizinische Ausbildung haben\n- Komplexe Zusammenhänge verstehen wollen, aber in ihrer Sprache\n- Einen Glossar zur Verfügung haben für Fachbegriffe\n\n**VERSTÄNDLICHKEITS-PRINZIPIEN:**\n\n🧠 **COGNITIVE LOAD MANAGEMENT:**\n- Pro Absatz maximal 1-2 neue Konzepte einführen\n- Komplexe Ideen in verdaubare Häppchen aufteilen\n- Baue auf bereits erklärten Konzepten auf\n\n🔗 **STRATEGIC TERM USAGE:**\n- **Unvermeidliche Fachbegriffe:** Führe sie mit sofortiger Übersetzung ein\n  Format: \"Neuroinflammation - das ist der Fachbegriff für Entzündungen im Gehirn\"\n- **Wiederholung:** Nutze danach die einfache Version\n- **Glossar-Ready:** Markiere wichtige Begriffe für den Glossar\n\n🖼️ **ANALOGIE-DRIVEN EXPLANATION:**\n- Jeder komplexe Prozess braucht einen Alltagsvergleich\n- Nutze bekannte Systeme: Hausbau, Verkehr, Küche, Sport\n- Emotionale Verbindung: \"Stellen Sie sich vor...\"\n\n📖 **NARRATIVE STRUCTURE:**\n- Erzähle eine Geschichte, keine Faktenliste\n- Problem → Lösung → Hoffnung\n- Persönliche Relevanz: \"Was bedeutet das für Sie?\"\n\n**AUFGABE:**\nVerwandle das wissenschaftliche Paper in einen Artikel, der:\n- **Wissenschaftlich korrekt** bleibt (alle Originalreferenzen!)\n- **Emotional ansprechend** ist (Geschichten, Bilder)\n- **Kognitiv zugänglich** ist (schrittweise Erklärung)\n- **Praktisch relevant** ist (\"Was heißt das für mich?\")\n\n**ORIGINALTEXT:**\nTitel: {{ $json.metadata['dc:title'] }}\nSubstanz: {{ $('1. Get Rated Paper').item.json.substance }}\n\n{{ $json.text }}\n\n---\n\n🎯 **SUCCESS METRICS:**\n- Würde ein interessierter Laie bis zum Ende lesen?\n- Kann er danach das Konzept einem Freund erklären?\n- Sind alle wissenschaftlichen Claims referenziert?\n- Fühlt sich der Leser informiert UND inspiriert?\n",
+        "needsFallback": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        608,
+        -288
+      ],
+      "id": "a072d80e-f7f1-4939-8732-d5938098c254",
+      "name": "Fachanalyse"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        656,
+        -32
+      ],
+      "id": "0b6b2ed7-f910-4da2-9d0f-8cebca0a303f",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "1HL55XZtq3JLgfHk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=❤️ **EMPATHIE & QUALITÄT: Referenzen bewahren, Ton verbessern** ❤️\n\n🚨 **KRITISCHER FEHLER-SCHUTZ: ALLE (Autor et al., Jahr) REFERENZEN MÜSSEN EXAKT ÜBERNOMMEN WERDEN!** 🚨\n\n**DOPPEL-MISSION:**\n1. 🔍 **Qualitätskontrolle:** Verständlichkeit + wissenschaftliche Korrektheit\n2. ❤️ **Empathie-Optimierung:** Respektvolle, hoffnungsvolle Sprache\n\n**❌ DU DARFST NIEMALS:**\n- Referenzen entfernen, verkürzen oder \"zusammenfassen\"\n- Text komplett umschreiben\n- Wissenschaftliche Belege durch eigene Formulierungen ersetzen\n- Meta-Texte oder Analysen schreiben\n\n**✅ QUALITÄTSKONTROLLE & VERBESSERUNGEN:**\n\n🧠 **Verständlichkeits-Check:**\n- Würde ein Realschüler den Text verstehen?\n- Sind alle Fachbegriffe erklärt oder durch einfache Begriffe ersetzt?\n- Funktionieren die Alltagsvergleiche?\n- Ist der Lesefluss gut?\n\n📚 **Wissenschafts-Integrität:**\n- JEDE EINZELNE (Autor et al., Jahr) Referenz aus dem Input bewahren\n- Alle wichtigen Aussagen müssen referenziert bleiben\n- Keine wissenschaftlichen Claims ohne Beleg\n\n💬 **Empathische Sprach-Anpassungen:**\n- **Sanfter Ton:** \"könnte helfen\" statt \"hilft\"\n- **Vorsichtige Aussagen:** \"Studien deuten darauf hin\" statt \"beweist\"\n- **Hoffnungsvolle Perspektive:** \"vielversprechend\" statt \"revolutionär\"\n- **Ehrliche Grenzen:** \"Forscher arbeiten daran\" bei Limitationen\n- **Angstfreie Sprache:** Fokus auf Möglichkeiten, nicht Probleme\n\n🤝 **Vertrauensaufbau:**\n- Transparenz über Forschungsstand\n- Ehrlichkeit über noch offene Fragen\n- \"Was bedeutet das für Sie?\"-Perspektive\n- Empfehlung für professionelle Beratung bei medizinischen Fragen\n\n**EINGABETEXT VOM FACHANALYSE-AGENT:**\n{{ $('Fachanalyse').item.json.output }}\n\n**ORIGINAL-PAPER ZUR REFERENZ-VALIDIERUNG:**\n{{ $('Extract from File').item.json.text }}\n\n---\n\n⚠️ **PRE-FLIGHT CHECKLISTE (PFLICHT VOR ANTWORT!):**\n□ Sind ALLE (Autor et al., Jahr) aus dem Input übernommen?\n□ Ist der Text verständlicher geworden?\n□ Ist der Ton empathischer und hoffnungsvoller?\n□ Habe ich keine wissenschaftlichen Aussagen ohne Beleg gemacht?\n□ Antworte ich direkt mit dem Artikel (keine Meta-Beschreibung)?\n□ Würde sich ein Patient nach dem Lesen ermutigt fühlen?\n\n**ANTWORT-FORMAT:**\n# [Original-Überschrift beibehalten]\n\n[Optimierter Text mit allen Referenzen + empathische Formulierungen...]\n\n❌ **NIEMALS weglassen:** (Autor et al., Jahr) Referenzen\n✅ **IMMER:** Wissenschaft + Empathie + Verständlichkeit = Perfektion\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        896,
+        -288
+      ],
+      "id": "64f90958-3bc0-4b1e-9f26-2a1fe6672725",
+      "name": "Stil und Ethik"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=📚 **INTELLIGENTER LITERATURVERZEICHNIS-ERSTELLER** 📚\n\n🎯 **MISSION: Perfektes Literaturverzeichnis aus Go-Backend-extrahierten Referenzen**\n\n**EINGABEN:**\n1. **BLOG-ARTIKEL:** {{ $('SEO').item.json.output }}\n2. **EXTRAHIERTE REFERENZEN (GO-BACKEND):** {{ $('Literatur-Extraktor').item.json.output }}\n\n**INTELLIGENTE AUFGABE:**\n1. **Nimm den Blog-Artikel 1:1** (komplett, ohne Änderungen)\n2. **Verwende die Go-Backend extrahierten Referenzen:** Die vollständigen Referenzen wurden bereits präzise extrahiert\n3. **Erstelle perfektes Literaturverzeichnis:** Matched mit den In-Text-Zitierungen im Blog\n\n**PROZESS:**\n- Sammle alle (Autor et al., Jahr) aus dem Blog-Artikel\n- Nutze die bereits extrahierten vollständigen Referenzen vom Go-Backend\n- Füge sie alphabetisch sortiert am Ende hinzu\n\n**OUTPUT-FORMAT:**\n[KOMPLETTER BLOG-ARTIKEL]\n\n## Quellen\n\n[Alphabetisch sortierte, vollständige Referenzen vom Go-Backend]\n\n**WICHTIG:**\n- Kein Text abschneiden!\n- Verwende die präzise Go-Backend Extraktion (viel schneller & zuverlässiger als AI)\n- Nur die Referenzen aufführen, die auch im Blog-Text zitiert werden",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        1536,
+        -288
+      ],
+      "id": "1bec88b2-26a6-49f4-9b63-9504ff2d33df",
+      "name": "Zitation und Formatierung"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=🎯 **ELITE SCIENTIFIC SEO: Mehr Menschen für Wissenschaft begeistern** 🎯\n\n**MISSION:** Verständliche Wissenschaft für MEHR Menschen zugänglich machen - ohne den authentischen, laienfreundlichen Charakter zu zerstören.\n\n**CORE-PRINZIP:** SEO als Brücke zwischen Wissenschaft und Neugierigen, nicht als Marketing-Tool.\n\n🧠 **SUCHINTENTION-OPTIMIERUNG (Intent-First SEO):**\n\n**Was Menschen WIRKLICH suchen:**\n- \"Was ist [Substanz] und hilft das bei [Problem]?\"\n- \"[Substanz] Studien - was sagt die Wissenschaft?\"\n- \"Wie funktioniert [Substanz] im Körper?\"\n- \"[Substanz] Dosierung - was ist sicher?\"\n- \"[Substanz] Nebenwirkungen und Risiken\"\n\n**SEO-OPTIMIERUNGEN MIT CHARAKTER-SCHUTZ:**\n\n📊 **1. STRUCTURE FOR DISCOVERABILITY:**\n- H2 als Fragen: \"Wie wirkt Curcumin im Gehirn?\" (Natural Language Processing optimiert)\n- H3 für Details: \"Die Wissenschaft hinter der Wirkung\"\n- FAQ-Bereiche für Voice Search: \"Ist Curcumin sicher?\"\n- Tabellen für Featured Snippets: Studien-Übersicht, Dosierungen\n\n🔍 **2. SEMANTIC KEYWORD INTEGRATION (natürlich!):**\n- Primary Keywords: [Hauptsubstanz + Anwendung]\n- Semantic Cluster: Verwandte Begriffe die Menschen nutzen\n- Long-Tail: Spezifische Fragen die gestellt werden\n- ABER: Nur dort einbauen wo es NATÜRLICH klingt - niemals erzwingen!\n\n🎓 **3. TRUST & AUTHORITY SIGNALS:**\n- \"Basierend auf [X] wissenschaftlichen Studien\"\n- \"Aktuelle Forschung zeigt...\"\n- \"Peer-Review Studien belegen...\"\n- Publikationsjahre erwähnen: \"(2024-2025 Studien)\"\n\n💬 **4. ENGAGEMENT FÜR BILDUNG:**\n- Hooks: \"Stellen Sie sich vor...\" (erste 15 Wörter entscheidend)\n- Scannable Format: Kurze Absätze, klare Gliederung\n- Interne Links: \"Mehr über [verwandtes Thema] erfahren\"\n- CTA für Bildung: \"Entdecken Sie weitere Studien\" nicht \"Jetzt kaufen\"\n\n**ABSOLUTE NO-GOs (Charakter-Schutz):**\n❌ Marketing-Sprache (\"revolutionär\", \"Wundermittel\")\n❌ Keyword-Stuffing (unnatürliche Wiederholungen)\n❌ Health Claims ohne \"Studien deuten darauf hin...\"\n❌ Dramatisierung oder Angstmache\n❌ Produktwerbung oder Affiliate-Links\n\n**TECHNICAL SEO (unsichtbar aber wirksam):**\n- Title: Max 55 Zeichen, Primary Keyword natürlich platziert\n- Meta Description: Neugierig machend, 150 Zeichen, Mehrwert-fokussiert\n- Headers: Logische H1→H2→H3 Struktur\n- Schema Markup Empfehlungen: Article, MedicalScholarlyArticle, FAQ\n\n**QUALITÄTS-KONTROLLE:**\n✅ Klingt der Text immer noch wie \"Wissenschaft für normale Menschen\"?\n✅ Sind alle SEO-Anpassungen natürlich und hilfreich?\n✅ Behält der Artikel seinen empathischen, verständlichen Ton?\n✅ Würde ein Wissenschafts-Laie den Text genauso gerne lesen?\n\n**INPUT-TEXT VOM STIL-ETHIK AGENT:**\n{{ $('Stil und Ethik').item.json.output }}\n\n**OUTPUT-FORMAT:**\n[Optimierter Artikel - behält 100% des Charakters, aber wird von mehr Menschen gefunden]\n\n---\n**SEO-ANALYTICS (für interne Nutzung):**\n- Optimierte Title Tag: [Vorschlag]\n- Meta Description: [Vorschlag] \n- Primary Keywords verwendet: [Liste]\n- Long-Tail Opportunities: [Liste]\n- Internal Link Suggestions: [Liste]\n- Schema Markup Empfehlungen: [Liste]\n\n🎯 **ERFOLGS-METRIK:** Mehr Menschen lesen über Wissenschaft, ohne dass der Artikel \"SEO-ig\" wirkt!\n",
+        "needsFallback": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        1216,
+        -288
+      ],
+      "id": "f335311e-8814-40a1-88e2-c79d69487ce7",
+      "name": "SEO"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1264,
+        -64
+      ],
+      "id": "34778cd8-6bc9-426d-860a-8babe98c57fb",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "1HL55XZtq3JLgfHk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Du bist ein erfahrener KI-basierter Review-Agent für medizinische Laienblogs.\n\nBewerte den folgenden Text anhand dieser Kriterien:  \n- Inhaltliche Genauigkeit und Fachlichkeit  \n- Klarheit und Verständlichkeit für Laien  \n- Vertrauenswürdigkeit der Aussagen und Quellenangaben  \n- Ethische Sensibilität und angemessene Sprache  \n- Logische Struktur und Kohärenz  \n- Vollständigkeit hinsichtlich des Themas  \n\nGib eine Bewertung von 1 (sehr schlecht) bis 5 (sehr gut) für jede Kategorie ab.  \nFasse die Stärken zusammen, identifiziere Schwächen und mache konkrete Verbesserungsvorschläge.\n\nHier ist der zu bewertende Text:  \n {{ $json.output }}\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        1856,
+        -288
+      ],
+      "id": "f6c775a7-bcc3-4ae0-94ae-d8893dbbe848",
+      "name": "Reviewer"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8080/citations/extract-for-n8n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-API-KEY",
+              "value": "={{ $vars.API_SECRET_KEY || 'your-api-key' }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $('Extract from File').item.json.text }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000,
+          "retry": {
+            "enabled": true,
+            "maxRetries": 2
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        592,
+        -560
+      ],
+      "id": "4167b2b6-066d-4c48-9670-18672efc08b7",
+      "name": "Literatur-Extraktor",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "paper-hand-api-credentials",
+          "name": "Paper Hand API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1536,
+        -144
+      ],
+      "id": "a606f33f-747c-4661-8718-4045efbe5a26",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3cCxI0mg4H4cQ4RJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        1856,
+        -128
+      ],
+      "id": "96210609-775f-477d-b439-f4929c6b45bb",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "hVTSoZEFwzOn6mn1",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-opus-4-20250514",
+          "mode": "list",
+          "cachedResultName": "Claude Opus 4"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        608,
+        -144
+      ],
+      "id": "d5f0fac3-470e-4c2b-bdaf-353555109fe1",
+      "name": "Opus 4 - Literatur",
+      "credentials": {
+        "anthropicApi": {
+          "id": "MHN2Ln3RYoKNIoDn",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-opus-4-20250514",
+          "mode": "list",
+          "cachedResultName": "Claude Opus 4"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        896,
+        -144
+      ],
+      "id": "0811a9a0-194d-4715-92d2-739ca1e91f83",
+      "name": "Opus 4 - Ethik",
+      "credentials": {
+        "anthropicApi": {
+          "id": "MHN2Ln3RYoKNIoDn",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1216,
+        -160
+      ],
+      "id": "d3a1b25e-bdcc-4bdc-ad95-850e98310ac6",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3cCxI0mg4H4cQ4RJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Download a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download a file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Fachanalyse",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Literatur-Extraktor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "1. Get Rated Paper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "1. Get Rated Paper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Get Rated Paper": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fachanalyse": {
+      "main": [
+        [
+          {
+            "node": "Stil und Ethik",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Fachanalyse",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Stil und Ethik": {
+      "main": [
+        [
+          {
+            "node": "SEO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEO": {
+      "main": [
+        [
+          {
+            "node": "Zitation und Formatierung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zitation und Formatierung": {
+      "main": [
+        [
+          {
+            "node": "Reviewer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "SEO",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Literatur-Extraktor": {
+      "main": [
+        [
+          {
+            "node": "Zitation und Formatierung",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Zitation und Formatierung",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Reviewer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+
+    "Opus 4 - Literatur": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Fachanalyse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Opus 4 - Ethik": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Stil und Ethik",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "SEO",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0853ac88-e79a-4a07-8ccb-e8f33876f83f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e29847cb0d85386a381a01c77c5a370e3c3dcd4f4ebcacf20107c8e6e234123a"
+  },
+  "id": "pJgVGVvucGTnj6Af",
+  "tags": []
+}
