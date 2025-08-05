@@ -444,10 +444,21 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			query = query.Where("content_status = ?", req.ContentStatus)
 		}
 		if req.Processed != nil {
-			query = query.Where("processed = ?", *req.Processed)
+			if *req.Processed {
+				query = query.Where("processed = ?", true)
+			} else {
+				query = query.Where("processed = ? OR processed IS NULL)", false)
+			}
+
 		}
 		if req.AddedRag != nil {
-			query = query.Where("added_rag = ?", *req.AddedRag)
+			if *req.AddedRag {
+				// nur TRUE zulassen
+				query = query.Where("added_rag = ?", true)
+			} else {
+				// FALSE oder NULL zulassen
+				query = query.Where("(added_rag = ? OR added_rag IS NULL)", false)
+			}
 		}
 
 		if req.Limit > 0 {
