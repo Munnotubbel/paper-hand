@@ -349,7 +349,7 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 		updateColumns := []string{
 			"s3_link", "rating", "confidence_score", "category", "ai_summary",
 			"key_findings", "study_strengths", "study_limitations",
-			"content_idea", "content_status", "content_url", "processed",
+			"content_idea", "content_status", "content_url", "processed", "added_rag",
 		}
 
 		err := ratedDB.Clauses(clause.OnConflict{
@@ -412,6 +412,7 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			CategoryKeywords []string `json:"category_keywords"` // OR-Suche in Category-Feld
 			ContentStatus    string   `json:"content_status"`
 			Processed        *bool    `json:"processed"`
+			AddedRag         *bool    `json:"added_rag"`
 			Limit            int      `json:"limit"`
 		}
 
@@ -445,6 +446,10 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 		if req.Processed != nil {
 			query = query.Where("processed = ?", *req.Processed)
 		}
+		if req.AddedRag != nil {
+			query = query.Where("added_rag = ?", *req.AddedRag)
+		}
+
 		if req.Limit > 0 {
 			query = query.Limit(req.Limit)
 		}

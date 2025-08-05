@@ -136,16 +136,37 @@ services:
       sh -c "echo \"$CRON_SCHEDULE /backup-tool >> /var/log/cron.log 2>&1\" > /etc/crontabs/root && crond -f -L /var/log/cron.log"
     depends_on:
       - postgres_meta
-  qdrant:
-    image: qdrant/qdrant:latest
-    restart: always
+
+  anythingllm:
+    image: mintplexlabs/anythingllm
+    container_name: anythingllm
     ports:
-      - "${QDRANT_HTTP_PORT:-6333}:6333"
-      - "${QDRANT_GRPC_PORT:-6334}:6334"
-    environment:
-      - QDRANT__SERVICE__API_KEY=${QDRANT_API_KEY}
+      - "3001:3001"
+    cap_add:
+      - SYS_ADMIN
     volumes:
-      - qdrant_data:/qdrant/storage
+      - ${HOME}/any.clapclap.cc:/app/server/storage
+      - ${HOME}/any.clapclap.cc/.env:/app/server/.env
+    environment:
+      - STORAGE_DIR=/app/server/storage
+    restart: unless-stopped
+
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.32.1
+    ports:
+      - "${WEAVIATE_PORT}:8080"
+      - "${WEAVIATE_GRPC_PORT}:50051"
+    restart: on-failure:0
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "${AUTH_ANONYMOUS_ACCESS}"
+      PERSISTENCE_DATA_PATH: /var/lib/weaviate
+      DEFAULT_VECTORIZER_MODULE: "${DEFAULT_VECTORIZER_MODULE}"
+      ENABLE_MODULES: "${ENABLE_MODULES}"
+      CLUSTER_HOSTNAME: node1
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+
 
   rated-papers-db-backup:
     image: ghcr.io/munnotubbel/paper-hand-backup:main

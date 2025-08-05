@@ -28,6 +28,7 @@ type RatedPaper struct {
 
 	// Status
 	Processed bool `json:"processed" gorm:"default:false"`
+	AddedRag  bool `json:"added_rag" gorm:" default:false"`
 }
 
 // TableName gibt explizit den Tabellennamen an.
