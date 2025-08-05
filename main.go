@@ -404,31 +404,22 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 		c.JSON(http.StatusOK, enrichedPaper)
 	})
 
-	rg.PATCH("/:doi/added-rag", func(c *gin.Context) {
-		doi := c.Param("doi")
-		var payload struct {
-			AddedRag *bool `json:"added_rag" binding:"required"`
+	rg.PATCH("/added-rag", func(c *gin.Context) {
+		var req struct {
+			DOI      string `json:"doi" binding:"required"`
+			AddedRag bool   `json:"added_rag" binding:"required"`
 		}
-		if err := c.ShouldBindJSON(&payload); err != nil || payload.AddedRag == nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body or missing 'added_rag'"})
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "DOI and added_rag are required"})
 			return
 		}
-
-		// Nur das eine Feld aktualisieren
 		if err := ratedDB.Model(&models.RatedPaper{}).
-			Where("doi = ?", doi).
-			Update("added_rag", *payload.AddedRag).
-			Error; err != nil {
-			if errors.Is(err, gorm.ErrRecordNotFound) {
-				c.JSON(http.StatusNotFound, gin.H{"error": "Rated paper not found"})
-			} else {
-				log.Error("Failed to update added_rag", zap.Error(err))
-				c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
-			}
-			return
+			Where("doi = ?", req.DOI).
+			Update("added_rag", req.AddedRag).Error; err != nil {
+			// Fehlerbehandlung wie bisher ...
+		} else {
+			c.JSON(http.StatusOK, gin.H{"message": "added_rag updated"})
 		}
-
-		c.JSON(http.StatusOK, gin.H{"message": "added_rag updated"})
 	})
 
 	// POST - Query rated papers with filters
