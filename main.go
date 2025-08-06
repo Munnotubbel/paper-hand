@@ -363,6 +363,60 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 		}
 		c.JSON(http.StatusOK, ratedPaper)
 	})
+	// NEU: General Update Endpoint
+	rg.PATCH("/", func(c *gin.Context) {
+		// Payload mit allen optionalen Feldern
+		var payload struct {
+			DOI           string  `json:"doi" binding:"required"`
+			ContentStatus *string `json:"content_status"`
+			ContentURL    *string `json:"content_url"`
+			Processed     *bool   `json:"processed"`
+			AddedRag      *bool   `json:"added_rag"`
+		}
+		if err := c.ShouldBindJSON(&payload); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing or invalid fields (doi required)"})
+			return
+		}
+
+		// Map nur mit den mitgesendeten Feldern befüllen
+		updates := map[string]interface{}{}
+		if payload.ContentStatus != nil {
+			updates["content_status"] = *payload.ContentStatus
+		}
+		if payload.ContentURL != nil {
+			updates["content_url"] = *payload.ContentURL
+		}
+		if payload.Processed != nil {
+			updates["processed"] = *payload.Processed
+		}
+		if payload.AddedRag != nil {
+			updates["added_rag"] = *payload.AddedRag
+		}
+
+		if len(updates) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "No updatable fields provided"})
+			return
+		}
+
+		if err := ratedDB.
+			Model(&models.RatedPaper{}).
+			Where("doi = ?", payload.DOI).
+			Updates(updates).
+			Error; err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				c.JSON(http.StatusNotFound, gin.H{"error": "Rated paper not found"})
+			} else {
+				log.Error("Failed to update rated paper", zap.Error(err))
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
+			}
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"message": "updated fields",
+			"updates": updates,
+		})
+	})
 	rg.GET("/:doi", func(c *gin.Context) {
 		doi := c.Param("doi")
 		var ratedPaper models.RatedPaper
