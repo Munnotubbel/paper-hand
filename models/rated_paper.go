@@ -23,6 +23,8 @@ type RatedPaper struct {
 
 	// Content-Workflow
 	Outline       string `json:"outline"`
+	Citations     string `json:"citations"`
+	DeepResearch  string `json:"deep_research"`
 	ContentIdea   string `json:"content_idea,omitempty" gorm:"type:text"`
 	ContentStatus string `json:"content_status,omitempty" gorm:"index"`
 	ContentURL    string `json:"content_url,omitempty"`
