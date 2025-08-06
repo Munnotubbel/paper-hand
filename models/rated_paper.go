@@ -22,6 +22,7 @@ type RatedPaper struct {
 	StudyLimitations string `json:"study_limitations,omitempty" gorm:"type:text"`
 
 	// Content-Workflow
+	Outline       string `json:"outline"`
 	ContentIdea   string `json:"content_idea,omitempty" gorm:"type:text"`
 	ContentStatus string `json:"content_status,omitempty" gorm:"index"`
 	ContentURL    string `json:"content_url,omitempty"`

@@ -372,6 +372,7 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			ContentURL    *string `json:"content_url"`
 			Processed     *bool   `json:"processed"`
 			AddedRag      *bool   `json:"added_rag"`
+			Outline       string  `json:"outline"`
 		}
 		if err := c.ShouldBindJSON(&payload); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing or invalid fields (doi required)"})
