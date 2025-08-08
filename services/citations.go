@@ -119,6 +119,29 @@ func (ce *CitationExtractor) extractInTextCitations(text string, result *Citatio
 	sort.Strings(result.InTextCitations)
 }
 
+// ContainsCitation prüft, ob ein Text bekannte Zitiermuster enthält (zentral für Schutz im Normalizer)
+func ContainsCitation(text string) bool {
+	t := strings.TrimSpace(text)
+	if t == "" {
+		return false
+	}
+	patterns := []string{
+		`\([A-Z][a-zA-Z\s&,]+\s+et\s+al\.?\,?\s*\d{4}[a-z]?\)`,
+		`\([A-Z][a-zA-Z\s&,]+,?\s*\d{4}[a-z]?\)`,
+		`\[\d+(?:[-–,\s]*\d+)*\]`,
+		`\(\d+(?:[-–,\s]*\d+)*\)`,
+		`doi:\s*10\.\d+[^\s]*`,
+		`[¹²³⁴⁵⁶⁷⁸⁹⁰]+`,
+		`<sup>[\d,\s-]+</sup>`,
+	}
+	for _, p := range patterns {
+		if regexp.MustCompile(p).MatchString(t) {
+			return true
+		}
+	}
+	return false
+}
+
 // extractFullReferences extrahiert vollständige Referenzen aus dem Text
 func (ce *CitationExtractor) extractFullReferences(text string, result *CitationResult) {
 	// Verschiedene Abschnittsnamen für Literaturverzeichnis

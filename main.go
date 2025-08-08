@@ -91,7 +91,7 @@ func main() {
 		ratedDB.Migrator().DropTable(&models.RatedPaper{}, &models.ContentArticle{})
 	}
 	logging.Info("Running database auto-migration...")
-	rawDB.AutoMigrate(&models.Paper{}, &models.Substance{}, &models.SearchFilter{})
+	rawDB.AutoMigrate(&models.Paper{}, &models.Substance{}, &models.SearchFilter{}, &models.PaperLink{})
 	ratedDB.AutoMigrate(&models.RatedPaper{}, &models.ContentArticle{})
 
 	// Seeding
@@ -138,6 +138,8 @@ func main() {
 	setupRatedPaperRoutes(router, ratedDB, rawDB, logging)
 	setupContentArticleRoutes(router, ratedDB, logging)
 	setupCitationRoutes(router, logging)
+	setupTextRoutes(router, logging)
+	setupGraphRoutes(router, rawDB, logging)
 
 	// Setup Cron
 	cronScheduler := cron.New()
@@ -336,6 +338,134 @@ func setupSearchRoutes(router *gin.Engine, fetchService *services.FetchService) 
 	})
 }
 
+// setupGraphRoutes konfiguriert Paper-Graph-Endpoints
+func setupGraphRoutes(router *gin.Engine, rawDB *gorm.DB, log *zap.Logger) {
+	rg := router.Group("/graph/paper-links")
+
+	// DOI/PMID Normalisierung (einfach; optional: robustere Varianten)
+	doiNorm := func(s string) string {
+		s = strings.TrimSpace(strings.ToLower(s))
+		// Entferne URL-Präfixe
+		s = strings.TrimPrefix(s, "https://doi.org/")
+		s = strings.TrimPrefix(s, "http://doi.org/")
+		s = strings.TrimPrefix(s, "doi:")
+		return strings.TrimSpace(s)
+	}
+	pmidNorm := func(s string) string {
+		s = strings.TrimSpace(s)
+		// nur Ziffern extrahieren
+		var out strings.Builder
+		for _, r := range s {
+			if r >= '0' && r <= '9' {
+				out.WriteRune(r)
+			}
+		}
+		return out.String()
+	}
+
+	type LinkInput struct {
+		Source struct {
+			DOI  string `json:"doi"`
+			PMID string `json:"pmid"`
+		} `json:"source"`
+		Citations []struct {
+			DOI         string         `json:"doi"`
+			PMID        string         `json:"pmid"`
+			Evidence    map[string]any `json:"evidence"`
+			TargetTable string         `json:"target_table"`
+		} `json:"citations"`
+		SourceTable string `json:"source_table"`
+	}
+
+	// POST - Upsert links
+	rg.POST("/upsert", func(c *gin.Context) {
+		var req LinkInput
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			return
+		}
+		srcDOI, srcPMID := doiNorm(req.Source.DOI), pmidNorm(req.Source.PMID)
+		if srcDOI == "" && srcPMID == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "source doi or pmid required"})
+			return
+		}
+		type upResult struct {
+			Inserted int
+			Updated  int
+		}
+		res := upResult{}
+		for _, cit := range req.Citations {
+			tgtDOI, tgtPMID := doiNorm(cit.DOI), pmidNorm(cit.PMID)
+			if tgtDOI == "" && tgtPMID == "" {
+				continue
+			}
+
+			link := models.PaperLink{
+				SourceDOINorm: srcDOI, SourcePMIDNorm: srcPMID,
+				TargetDOINorm: tgtDOI, TargetPMIDNorm: tgtPMID,
+				SourceDOI: req.Source.DOI, SourcePMID: req.Source.PMID,
+				TargetDOI: cit.DOI, TargetPMID: cit.PMID,
+				SourceTable: req.SourceTable, TargetTable: cit.TargetTable,
+			}
+			// Evidence mergen (bestehende JSON ergänzen)
+			if len(cit.Evidence) > 0 {
+				b, _ := json.Marshal(cit.Evidence)
+				link.Evidence = b
+			}
+			// Upsert auf Unique-Edge
+			if err := rawDB.Clauses(clause.OnConflict{
+				Columns: []clause.Column{{Name: "source_doi_norm"}, {Name: "source_pmid_norm"}, {Name: "target_doi_norm"}, {Name: "target_pmid_norm"}},
+				DoUpdates: clause.Assignments(map[string]any{
+					"source_doi":   link.SourceDOI,
+					"source_pmid":  link.SourcePMID,
+					"target_doi":   link.TargetDOI,
+					"target_pmid":  link.TargetPMID,
+					"source_table": link.SourceTable,
+					"target_table": link.TargetTable,
+					"evidence":     link.Evidence,
+					"updated_at":   gorm.Expr("NOW()"),
+				}),
+			}).Create(&link).Error; err != nil {
+				log.Error("Failed to upsert paper link", zap.Error(err))
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
+				return
+			}
+			// GORM liefert RowsAffected in db-Objekt, hier approximieren wir Insert/Update nicht fein-granular
+			res.Updated++
+		}
+		c.JSON(http.StatusOK, gin.H{"success": true, "updated": res.Updated, "inserted": res.Inserted})
+	})
+
+	// GET by DOI
+	rg.GET("/by-doi/:doi", func(c *gin.Context) {
+		doi := doiNorm(c.Param("doi"))
+		if doi == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid doi"})
+			return
+		}
+		var links []models.PaperLink
+		if err := rawDB.Where("source_doi_norm = ? OR target_doi_norm = ?", doi, doi).Find(&links).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
+			return
+		}
+		c.JSON(http.StatusOK, links)
+	})
+	// GET by PMID
+	rg.GET("/by-pmid/:pmid", func(c *gin.Context) {
+		pmid := pmidNorm(c.Param("pmid"))
+		if pmid == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid pmid"})
+			return
+		}
+		var links []models.PaperLink
+		if err := rawDB.Where("source_pmid_norm = ? OR target_pmid_norm = ?", pmid, pmid).Find(&links).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
+			return
+		}
+		c.JSON(http.StatusOK, links)
+	})
+}
+
 func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB, log *zap.Logger) {
 	rg := router.Group("/rated-papers")
 	rg.POST("/", func(c *gin.Context) {
@@ -373,8 +503,8 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			Processed     *bool   `json:"processed"`
 			AddedRag      *bool   `json:"added_rag"`
 			Outline       string  `json:"outline"`
-			Citations     string  `json: "citations"`
-			DeepResearch  string  `json: "deep_research"`
+			Citations     string  `json:"citations"`
+			DeepResearch  string  `json:"deep_research"`
 		}
 		if err := c.ShouldBindJSON(&payload); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing or invalid fields (doi required)"})
@@ -463,20 +593,45 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 
 	rg.PATCH("/added-rag", func(c *gin.Context) {
 		var req struct {
-			DOI      string `json:"doi" binding:"required"`
-			AddedRag bool   `json:"added_rag" binding:"required"`
+			DOI            string `json:"doi" binding:"required"`
+			AddedRag       *bool  `json:"added_rag"`
+			Processed      *bool  `json:"processed"`
+			LightRAGDocID  string `json:"lightrag_doc_id"`
+			ReferencesJSON string `json:"references_json"`
 		}
 		if err := c.ShouldBindJSON(&req); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "DOI and added_rag are required"})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid body: doi required"})
+			return
+		}
+		if req.DOI == "" || !strings.Contains(req.DOI, "/") {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid DOI format"})
+			return
+		}
+		updates := map[string]any{}
+		if req.AddedRag != nil {
+			updates["added_rag"] = *req.AddedRag
+		}
+		if req.Processed != nil {
+			updates["processed"] = *req.Processed
+		}
+		if req.LightRAGDocID != "" {
+			updates["lightrag_doc_id"] = req.LightRAGDocID
+		}
+		if req.ReferencesJSON != "" {
+			updates["references_json"] = req.ReferencesJSON
+		}
+		if len(updates) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "No updatable fields provided"})
 			return
 		}
 		if err := ratedDB.Model(&models.RatedPaper{}).
 			Where("doi = ?", req.DOI).
-			Update("added_rag", req.AddedRag).Error; err != nil {
-			// Fehlerbehandlung wie bisher ...
-		} else {
-			c.JSON(http.StatusOK, gin.H{"message": "added_rag updated"})
+			Updates(updates).Error; err != nil {
+			log.Error("Failed to update rated paper (added-rag)", zap.String("doi", req.DOI), zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
+			return
 		}
+		c.JSON(http.StatusOK, gin.H{"message": "updated", "updates": updates})
 	})
 
 	// POST - Query rated papers with filters
@@ -717,6 +872,96 @@ func setupContentArticleRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger)
 
 		c.JSON(http.StatusOK, articles)
 	})
+}
+
+// setupTextRoutes konfiguriert Text-bezogene API-Routen (z. B. Normalisierung)
+func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
+	normalizer := services.NewTextNormalizer(log)
+	rg := router.Group("/text")
+
+	// POST - Normalize heterogeneous PDF extract into unified full_text
+	rg.POST("/normalize-for-n8n", func(c *gin.Context) {
+		type normalizeOptionsReq struct {
+			NormalizeUnicode      *bool    `json:"normalize_unicode"`
+			FixHyphenation        *bool    `json:"fix_hyphenation"`
+			CollapseWhitespace    *bool    `json:"collapse_whitespace"`
+			HeaderFooterDetection *bool    `json:"header_footer_detection"`
+			HeaderFooterThreshold *float64 `json:"header_footer_threshold"`
+			MinArtifactLineLen    *int     `json:"min_artifact_line_len"`
+			KeepPageBreaks        *bool    `json:"keep_page_breaks"`
+			LanguageHint          *string  `json:"language_hint"`
+		}
+
+		var request struct {
+			PDFExtract any                  `json:"pdf_extract" binding:"required"`
+			Options    *normalizeOptionsReq `json:"options"`
+		}
+
+		if err := c.ShouldBindJSON(&request); err != nil {
+			log.Error("Invalid request body for text normalization", zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'pdf_extract' field is required."})
+			return
+		}
+
+		// Default options
+		opts := services.NormalizeOptions{
+			NormalizeUnicode:      true,
+			FixHyphenation:        true,
+			CollapseWhitespace:    true,
+			HeaderFooterDetection: true,
+			HeaderFooterThreshold: 0.6,
+			MinArtifactLineLen:    0,
+			KeepPageBreaks:        false,
+			LanguageHint:          "",
+		}
+		// Override with provided options if set
+		if request.Options != nil {
+			if request.Options.NormalizeUnicode != nil {
+				opts.NormalizeUnicode = *request.Options.NormalizeUnicode
+			}
+			if request.Options.FixHyphenation != nil {
+				opts.FixHyphenation = *request.Options.FixHyphenation
+			}
+			if request.Options.CollapseWhitespace != nil {
+				opts.CollapseWhitespace = *request.Options.CollapseWhitespace
+			}
+			if request.Options.HeaderFooterDetection != nil {
+				opts.HeaderFooterDetection = *request.Options.HeaderFooterDetection
+			}
+			if request.Options.HeaderFooterThreshold != nil {
+				opts.HeaderFooterThreshold = *request.Options.HeaderFooterThreshold
+			}
+			if request.Options.MinArtifactLineLen != nil {
+				opts.MinArtifactLineLen = *request.Options.MinArtifactLineLen
+			}
+			if request.Options.KeepPageBreaks != nil {
+				opts.KeepPageBreaks = *request.Options.KeepPageBreaks
+			}
+			if request.Options.LanguageHint != nil {
+				opts.LanguageHint = *request.Options.LanguageHint
+			}
+		}
+
+		log.Info("Starting text normalization for n8n")
+
+		result, err := normalizer.NormalizeExtract(c.Request.Context(), request.PDFExtract, opts)
+		if err != nil {
+			if err.Error() == "no text extracted" {
+				c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "No extractable text found"})
+				return
+			}
+			log.Error("Failed to normalize extract", zap.Error(err))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to normalize extract"})
+			return
+		}
+
+		c.JSON(http.StatusOK, result)
+	})
+
+	log.Info("Text routes configured successfully",
+		zap.String("base_path", "/text"),
+		zap.Strings("endpoints", []string{"/normalize-for-n8n"}),
+	)
 }
 
 func seedDefaultSubstances(db *gorm.DB, logger *zap.Logger) {

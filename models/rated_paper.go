@@ -32,6 +32,9 @@ type RatedPaper struct {
 	// Status
 	Processed bool `json:"processed" gorm:"default:false"`
 	AddedRag  bool `json:"added_rag" gorm:" default:false"`
+	// LightRAG integration
+	LightRAGDocID  string `json:"lightrag_doc_id" gorm:"index"`
+	ReferencesJSON string `json:"references_json" gorm:"type:jsonb"`
 }
 
 // TableName gibt explizit den Tabellennamen an.
