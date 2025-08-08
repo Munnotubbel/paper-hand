@@ -305,7 +305,8 @@ func fixHyphenation(s string) (string, int) {
 
 func collapseWhitespace(s string) string {
 	// Mehrfache Spaces zu einem Space; mehr als zwei aufeinanderfolgende Zeilenumbrüche auf zwei begrenzen
-	spaceRE := regexp.MustCompile(`[\t\f\v\u00A0]+`)
+    // Use a normal string literal so \u00A0 is interpreted as NBSP before reaching the regex engine
+    spaceRE := regexp.MustCompile("[\t\f\v\u00A0]+")
 	s = spaceRE.ReplaceAllString(s, " ")
 	multiSpace := regexp.MustCompile(` {2,}`)
 	s = multiSpace.ReplaceAllString(s, " ")
