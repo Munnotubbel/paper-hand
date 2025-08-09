@@ -1,33 +1,34 @@
 package main
 
 import (
-	"context"
-	"encoding/json"
-	"errors"
-	"fmt"
-	"log"
-	"net/http"
-	"paper-hand/config"
-	"paper-hand/models"
-	"paper-hand/providers"
-	"paper-hand/providers/europepmc"
-	"paper-hand/providers/pubmed"
-	"paper-hand/providers/unpaywall"
-	"paper-hand/services"
-	"paper-hand/storage"
-	"strconv"
-	"strings"
+    "context"
+    "encoding/json"
+    "errors"
+    "fmt"
+    "log"
+    "net/http"
+    "time"
+    "paper-hand/config"
+    "paper-hand/models"
+    "paper-hand/providers"
+    "paper-hand/providers/europepmc"
+    "paper-hand/providers/pubmed"
+    "paper-hand/providers/unpaywall"
+    "paper-hand/services"
+    "paper-hand/storage"
+    "strconv"
+    "strings"
 
-	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/robfig/cron/v3"
-	"go.uber.org/zap"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
-	"gorm.io/gorm/logger"
+    "github.com/gin-gonic/gin"
+    "github.com/gin-gonic/gin/binding"
+    "github.com/prometheus/client_golang/prometheus"
+    "github.com/prometheus/client_golang/prometheus/promhttp"
+    "github.com/robfig/cron/v3"
+    "go.uber.org/zap"
+    "gorm.io/driver/postgres"
+    "gorm.io/gorm"
+    "gorm.io/gorm/clause"
+    "gorm.io/gorm/logger"
 )
 
 var newPapersCounter prometheus.Counter
@@ -157,10 +158,18 @@ func main() {
 	})
 	cronScheduler.Start()
 
-	logging.Info("Starting server", zap.String("port", cfg.HTTPPort))
-	if err := router.Run(":" + cfg.HTTPPort); err != nil {
-		logging.Fatal("Failed to run server", zap.Error(err))
-	}
+    logging.Info("Starting server", zap.String("port", cfg.HTTPPort))
+    srv := &http.Server{
+        Addr:           ":" + cfg.HTTPPort,
+        Handler:        router,
+        ReadTimeout:    30 * time.Second,
+        ReadHeaderTimeout: 15 * time.Second,
+        WriteTimeout:   60 * time.Second,
+        IdleTimeout:    120 * time.Second,
+    }
+    if err := srv.ListenAndServe(); err != nil {
+        logging.Fatal("Failed to run server", zap.Error(err))
+    }
 }
 
 func setupPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
@@ -946,27 +955,27 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 			}
 		}
 
-        // pdf_extract holen (robust: akzeptiere auch pdf_extract_json (string) oder pdf_text (string))
-        pdfExtract, ok := raw["pdf_extract"]
-        if !ok || pdfExtract == nil {
-            // Versuch: pdf_extract_json als String mit JSON
-            if v, ok2 := raw["pdf_extract_json"].(string); ok2 && strings.TrimSpace(v) != "" {
-                var tmp any
-                if err := json.Unmarshal([]byte(v), &tmp); err == nil {
-                    pdfExtract = tmp
-                }
-            }
-        }
-        if pdfExtract == nil {
-            // letzter Fallback: pdf_text (nur Text)
-            if v, ok2 := raw["pdf_text"].(string); ok2 && strings.TrimSpace(v) != "" {
-                pdfExtract = v
-            }
-        }
-        if pdfExtract == nil {
-            c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'pdf_extract' (or 'pdf_extract_json'/'pdf_text') field is required."})
-            return
-        }
+		// pdf_extract holen (robust: akzeptiere auch pdf_extract_json (string) oder pdf_text (string))
+		pdfExtract, ok := raw["pdf_extract"]
+		if !ok || pdfExtract == nil {
+			// Versuch: pdf_extract_json als String mit JSON
+			if v, ok2 := raw["pdf_extract_json"].(string); ok2 && strings.TrimSpace(v) != "" {
+				var tmp any
+				if err := json.Unmarshal([]byte(v), &tmp); err == nil {
+					pdfExtract = tmp
+				}
+			}
+		}
+		if pdfExtract == nil {
+			// letzter Fallback: pdf_text (nur Text)
+			if v, ok2 := raw["pdf_text"].(string); ok2 && strings.TrimSpace(v) != "" {
+				pdfExtract = v
+			}
+		}
+		if pdfExtract == nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'pdf_extract' (or 'pdf_extract_json'/'pdf_text') field is required."})
+			return
+		}
 
 		// Default options
 		opts := services.NormalizeOptions{
@@ -978,6 +987,12 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 			MinArtifactLineLen:    0,
 			KeepPageBreaks:        false,
 			LanguageHint:          "",
+			// advanced defaults
+			StripPublisherBoilerplate: false,
+			StripFiguresAndTables:     true,
+			StripFrontMatter:          false,
+			StripCorrespondenceEmails: true,
+			PublisherHint:             "",
 		}
 		// Override: Top-Level Keys
 		if v, ok := raw["normalize_unicode"]; ok {
@@ -1018,6 +1033,31 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 		if v, ok := raw["language_hint"]; ok {
 			if s, ok2 := v.(string); ok2 {
 				opts.LanguageHint = s
+			}
+		}
+		if v, ok := raw["strip_publisher_boilerplate"]; ok {
+			if b, ok2 := coerceBool(v); ok2 {
+				opts.StripPublisherBoilerplate = b
+			}
+		}
+		if v, ok := raw["strip_figures_and_tables"]; ok {
+			if b, ok2 := coerceBool(v); ok2 {
+				opts.StripFiguresAndTables = b
+			}
+		}
+		if v, ok := raw["strip_front_matter"]; ok {
+			if b, ok2 := coerceBool(v); ok2 {
+				opts.StripFrontMatter = b
+			}
+		}
+		if v, ok := raw["strip_correspondence_emails"]; ok {
+			if b, ok2 := coerceBool(v); ok2 {
+				opts.StripCorrespondenceEmails = b
+			}
+		}
+		if v, ok := raw["publisher_hint"]; ok {
+			if s, ok2 := v.(string); ok2 {
+				opts.PublisherHint = s
 			}
 		}
 
@@ -1062,6 +1102,21 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 				if s, ok2 := v.(string); ok2 {
 					opts.LanguageHint = s
 				}
+			}
+			if v, ok := optRaw["strip_publisher_boilerplate"]; ok {
+				if b, ok2 := coerceBool(v); ok2 { opts.StripPublisherBoilerplate = b }
+			}
+			if v, ok := optRaw["strip_figures_and_tables"]; ok {
+				if b, ok2 := coerceBool(v); ok2 { opts.StripFiguresAndTables = b }
+			}
+			if v, ok := optRaw["strip_front_matter"]; ok {
+				if b, ok2 := coerceBool(v); ok2 { opts.StripFrontMatter = b }
+			}
+			if v, ok := optRaw["strip_correspondence_emails"]; ok {
+				if b, ok2 := coerceBool(v); ok2 { opts.StripCorrespondenceEmails = b }
+			}
+			if v, ok := optRaw["publisher_hint"]; ok {
+				if s, ok2 := v.(string); ok2 { opts.PublisherHint = s }
 			}
 		}
 
