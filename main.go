@@ -16,6 +16,7 @@ import (
 	"paper-hand/services"
 	"paper-hand/storage"
 	"strings"
+    "strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -882,50 +883,68 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 
 	// POST - Normalize heterogeneous PDF extract into unified full_text
 	rg.POST("/normalize-for-n8n", func(c *gin.Context) {
-		type normalizeOptionsReq struct {
-			NormalizeUnicode      *bool    `json:"normalize_unicode"`
-			FixHyphenation        *bool    `json:"fix_hyphenation"`
-			CollapseWhitespace    *bool    `json:"collapse_whitespace"`
-			HeaderFooterDetection *bool    `json:"header_footer_detection"`
-			HeaderFooterThreshold *float64 `json:"header_footer_threshold"`
-			MinArtifactLineLen    *int     `json:"min_artifact_line_len"`
-			KeepPageBreaks        *bool    `json:"keep_page_breaks"`
-			LanguageHint          *string  `json:"language_hint"`
-		}
+        // Body generisch lesen, um n8n-String-Optionen ("true") robust zu akzeptieren
+        raw := map[string]any{}
+        if err := c.ShouldBindBodyWith(&raw, binding.JSON); err != nil {
+            log.Error("Invalid request body for text normalization", zap.Error(err))
+            c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'pdf_extract' field is required."})
+            return
+        }
 
-        var request struct {
-            PDFExtract any `json:"pdf_extract"`
-			// Top-level options (preferred)
-			NormalizeUnicode      *bool    `json:"normalize_unicode"`
-			FixHyphenation        *bool    `json:"fix_hyphenation"`
-			CollapseWhitespace    *bool    `json:"collapse_whitespace"`
-			HeaderFooterDetection *bool    `json:"header_footer_detection"`
-			HeaderFooterThreshold *float64 `json:"header_footer_threshold"`
-			MinArtifactLineLen    *int     `json:"min_artifact_line_len"`
-			KeepPageBreaks        *bool    `json:"keep_page_breaks"`
-			LanguageHint          *string  `json:"language_hint"`
-			// Backward-compat nested options
-			Options *normalizeOptionsReq `json:"options"`
-		}
-
-        if err := c.ShouldBindBodyWith(&request, binding.JSON); err != nil {
-			log.Error("Invalid request body for text normalization", zap.Error(err))
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'pdf_extract' field is required."})
-			return
-		}
-
-        if request.PDFExtract == nil {
-            // Manche n8n-Versionen senden Body als Text/plain bei Formular-Body Params.
-            // Versuche Fallback: gesamten Body als String lesen
-            var raw map[string]any
-            if err := c.ShouldBindBodyWith(&raw, binding.JSON); err == nil {
-                if v, ok := raw["pdf_extract"]; ok {
-                    request.PDFExtract = v
+        // Helper: Coercion
+        coerceBool := func(v any) (bool, bool) {
+            switch t := v.(type) {
+            case bool:
+                return t, true
+            case string:
+                s := strings.TrimSpace(strings.ToLower(t))
+                if s == "true" || s == "1" || s == "yes" || s == "on" {
+                    return true, true
                 }
+                if s == "false" || s == "0" || s == "no" || s == "off" {
+                    return false, true
+                }
+                return false, false
+            case float64:
+                return t != 0, true
+            case int:
+                return t != 0, true
+            default:
+                return false, false
+            }
+        }
+        coerceFloat := func(v any) (float64, bool) {
+            switch t := v.(type) {
+            case float64:
+                return t, true
+            case string:
+                f, err := strconv.ParseFloat(strings.TrimSpace(t), 64)
+                if err == nil { return f, true }
+                return 0, false
+            case int:
+                return float64(t), true
+            default:
+                return 0, false
+            }
+        }
+        coerceInt := func(v any) (int, bool) {
+            switch t := v.(type) {
+            case float64:
+                return int(t), true
+            case int:
+                return t, true
+            case string:
+                i, err := strconv.Atoi(strings.TrimSpace(t))
+                if err == nil { return i, true }
+                return 0, false
+            default:
+                return 0, false
             }
         }
 
-        if request.PDFExtract == nil {
+        // pdf_extract holen
+        pdfExtract, ok := raw["pdf_extract"]
+        if !ok || pdfExtract == nil {
             c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'pdf_extract' field is required."})
             return
         }
@@ -941,51 +960,35 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 			KeepPageBreaks:        false,
 			LanguageHint:          "",
 		}
-		// Override: top-level first, then optional nested options
-		if request.NormalizeUnicode != nil {
-			opts.NormalizeUnicode = *request.NormalizeUnicode
-		} else if request.Options != nil && request.Options.NormalizeUnicode != nil {
-			opts.NormalizeUnicode = *request.Options.NormalizeUnicode
-		}
-		if request.FixHyphenation != nil {
-			opts.FixHyphenation = *request.FixHyphenation
-		} else if request.Options != nil && request.Options.FixHyphenation != nil {
-			opts.FixHyphenation = *request.Options.FixHyphenation
-		}
-		if request.CollapseWhitespace != nil {
-			opts.CollapseWhitespace = *request.CollapseWhitespace
-		} else if request.Options != nil && request.Options.CollapseWhitespace != nil {
-			opts.CollapseWhitespace = *request.Options.CollapseWhitespace
-		}
-		if request.HeaderFooterDetection != nil {
-			opts.HeaderFooterDetection = *request.HeaderFooterDetection
-		} else if request.Options != nil && request.Options.HeaderFooterDetection != nil {
-			opts.HeaderFooterDetection = *request.Options.HeaderFooterDetection
-		}
-		if request.HeaderFooterThreshold != nil {
-			opts.HeaderFooterThreshold = *request.HeaderFooterThreshold
-		} else if request.Options != nil && request.Options.HeaderFooterThreshold != nil {
-			opts.HeaderFooterThreshold = *request.Options.HeaderFooterThreshold
-		}
-		if request.MinArtifactLineLen != nil {
-			opts.MinArtifactLineLen = *request.MinArtifactLineLen
-		} else if request.Options != nil && request.Options.MinArtifactLineLen != nil {
-			opts.MinArtifactLineLen = *request.Options.MinArtifactLineLen
-		}
-		if request.KeepPageBreaks != nil {
-			opts.KeepPageBreaks = *request.KeepPageBreaks
-		} else if request.Options != nil && request.Options.KeepPageBreaks != nil {
-			opts.KeepPageBreaks = *request.Options.KeepPageBreaks
-		}
-		if request.LanguageHint != nil {
-			opts.LanguageHint = *request.LanguageHint
-		} else if request.Options != nil && request.Options.LanguageHint != nil {
-			opts.LanguageHint = *request.Options.LanguageHint
-		}
+        // Override: Top-Level Keys
+        if v, ok := raw["normalize_unicode"]; ok { if b, ok2 := coerceBool(v); ok2 { opts.NormalizeUnicode = b } }
+        if v, ok := raw["fix_hyphenation"]; ok { if b, ok2 := coerceBool(v); ok2 { opts.FixHyphenation = b } }
+        if v, ok := raw["collapse_whitespace"]; ok { if b, ok2 := coerceBool(v); ok2 { opts.CollapseWhitespace = b } }
+        if v, ok := raw["header_footer_detection"]; ok { if b, ok2 := coerceBool(v); ok2 { opts.HeaderFooterDetection = b } }
+        if v, ok := raw["header_footer_threshold"]; ok { if f, ok2 := coerceFloat(v); ok2 { opts.HeaderFooterThreshold = f } }
+        if v, ok := raw["min_artifact_line_len"]; ok { if i, ok2 := coerceInt(v); ok2 { opts.MinArtifactLineLen = i } }
+        if v, ok := raw["keep_page_breaks"]; ok { if b, ok2 := coerceBool(v); ok2 { opts.KeepPageBreaks = b } }
+        if v, ok := raw["language_hint"]; ok {
+            if s, ok2 := v.(string); ok2 { opts.LanguageHint = s }
+        }
+
+        // Backward-compat: nested options
+        if optRaw, ok := raw["options"].(map[string]any); ok {
+            if v, ok := optRaw["normalize_unicode"]; ok { if b, ok2 := coerceBool(v); ok2 { opts.NormalizeUnicode = b } }
+            if v, ok := optRaw["fix_hyphenation"]; ok { if b, ok2 := coerceBool(v); ok2 { opts.FixHyphenation = b } }
+            if v, ok := optRaw["collapse_whitespace"]; ok { if b, ok2 := coerceBool(v); ok2 { opts.CollapseWhitespace = b } }
+            if v, ok := optRaw["header_footer_detection"]; ok { if b, ok2 := coerceBool(v); ok2 { opts.HeaderFooterDetection = b } }
+            if v, ok := optRaw["header_footer_threshold"]; ok { if f, ok2 := coerceFloat(v); ok2 { opts.HeaderFooterThreshold = f } }
+            if v, ok := optRaw["min_artifact_line_len"]; ok { if i, ok2 := coerceInt(v); ok2 { opts.MinArtifactLineLen = i } }
+            if v, ok := optRaw["keep_page_breaks"]; ok { if b, ok2 := coerceBool(v); ok2 { opts.KeepPageBreaks = b } }
+            if v, ok := optRaw["language_hint"]; ok {
+                if s, ok2 := v.(string); ok2 { opts.LanguageHint = s }
+            }
+        }
 
 		log.Info("Starting text normalization for n8n")
 
-		result, err := normalizer.NormalizeExtract(c.Request.Context(), request.PDFExtract, opts)
+        result, err := normalizer.NormalizeExtract(c.Request.Context(), pdfExtract, opts)
 		if err != nil {
 			if err.Error() == "no text extracted" {
 				c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "No extractable text found"})
