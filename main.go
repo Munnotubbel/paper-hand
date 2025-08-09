@@ -18,6 +18,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/robfig/cron/v3"
@@ -881,37 +882,53 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 
 	// POST - Normalize heterogeneous PDF extract into unified full_text
 	rg.POST("/normalize-for-n8n", func(c *gin.Context) {
-        type normalizeOptionsReq struct {
-            NormalizeUnicode      *bool    `json:"normalize_unicode"`
-            FixHyphenation        *bool    `json:"fix_hyphenation"`
-            CollapseWhitespace    *bool    `json:"collapse_whitespace"`
-            HeaderFooterDetection *bool    `json:"header_footer_detection"`
-            HeaderFooterThreshold *float64 `json:"header_footer_threshold"`
-            MinArtifactLineLen    *int     `json:"min_artifact_line_len"`
-            KeepPageBreaks        *bool    `json:"keep_page_breaks"`
-            LanguageHint          *string  `json:"language_hint"`
-        }
+		type normalizeOptionsReq struct {
+			NormalizeUnicode      *bool    `json:"normalize_unicode"`
+			FixHyphenation        *bool    `json:"fix_hyphenation"`
+			CollapseWhitespace    *bool    `json:"collapse_whitespace"`
+			HeaderFooterDetection *bool    `json:"header_footer_detection"`
+			HeaderFooterThreshold *float64 `json:"header_footer_threshold"`
+			MinArtifactLineLen    *int     `json:"min_artifact_line_len"`
+			KeepPageBreaks        *bool    `json:"keep_page_breaks"`
+			LanguageHint          *string  `json:"language_hint"`
+		}
 
         var request struct {
-            PDFExtract any `json:"pdf_extract" binding:"required"`
-            // Top-level options (preferred)
-            NormalizeUnicode      *bool    `json:"normalize_unicode"`
-            FixHyphenation        *bool    `json:"fix_hyphenation"`
-            CollapseWhitespace    *bool    `json:"collapse_whitespace"`
-            HeaderFooterDetection *bool    `json:"header_footer_detection"`
-            HeaderFooterThreshold *float64 `json:"header_footer_threshold"`
-            MinArtifactLineLen    *int     `json:"min_artifact_line_len"`
-            KeepPageBreaks        *bool    `json:"keep_page_breaks"`
-            LanguageHint          *string  `json:"language_hint"`
-            // Backward-compat nested options
-            Options *normalizeOptionsReq `json:"options"`
-        }
+            PDFExtract any `json:"pdf_extract"`
+			// Top-level options (preferred)
+			NormalizeUnicode      *bool    `json:"normalize_unicode"`
+			FixHyphenation        *bool    `json:"fix_hyphenation"`
+			CollapseWhitespace    *bool    `json:"collapse_whitespace"`
+			HeaderFooterDetection *bool    `json:"header_footer_detection"`
+			HeaderFooterThreshold *float64 `json:"header_footer_threshold"`
+			MinArtifactLineLen    *int     `json:"min_artifact_line_len"`
+			KeepPageBreaks        *bool    `json:"keep_page_breaks"`
+			LanguageHint          *string  `json:"language_hint"`
+			// Backward-compat nested options
+			Options *normalizeOptionsReq `json:"options"`
+		}
 
-		if err := c.ShouldBindJSON(&request); err != nil {
+        if err := c.ShouldBindBodyWith(&request, binding.JSON); err != nil {
 			log.Error("Invalid request body for text normalization", zap.Error(err))
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'pdf_extract' field is required."})
 			return
 		}
+
+        if request.PDFExtract == nil {
+            // Manche n8n-Versionen senden Body als Text/plain bei Formular-Body Params.
+            // Versuche Fallback: gesamten Body als String lesen
+            var raw map[string]any
+            if err := c.ShouldBindBodyWith(&raw, binding.JSON); err == nil {
+                if v, ok := raw["pdf_extract"]; ok {
+                    request.PDFExtract = v
+                }
+            }
+        }
+
+        if request.PDFExtract == nil {
+            c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body. 'pdf_extract' field is required."})
+            return
+        }
 
 		// Default options
 		opts := services.NormalizeOptions{
@@ -924,47 +941,47 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 			KeepPageBreaks:        false,
 			LanguageHint:          "",
 		}
-        // Override: top-level first, then optional nested options
-        if request.NormalizeUnicode != nil {
-            opts.NormalizeUnicode = *request.NormalizeUnicode
-        } else if request.Options != nil && request.Options.NormalizeUnicode != nil {
-            opts.NormalizeUnicode = *request.Options.NormalizeUnicode
-        }
-        if request.FixHyphenation != nil {
-            opts.FixHyphenation = *request.FixHyphenation
-        } else if request.Options != nil && request.Options.FixHyphenation != nil {
-            opts.FixHyphenation = *request.Options.FixHyphenation
-        }
-        if request.CollapseWhitespace != nil {
-            opts.CollapseWhitespace = *request.CollapseWhitespace
-        } else if request.Options != nil && request.Options.CollapseWhitespace != nil {
-            opts.CollapseWhitespace = *request.Options.CollapseWhitespace
-        }
-        if request.HeaderFooterDetection != nil {
-            opts.HeaderFooterDetection = *request.HeaderFooterDetection
-        } else if request.Options != nil && request.Options.HeaderFooterDetection != nil {
-            opts.HeaderFooterDetection = *request.Options.HeaderFooterDetection
-        }
-        if request.HeaderFooterThreshold != nil {
-            opts.HeaderFooterThreshold = *request.HeaderFooterThreshold
-        } else if request.Options != nil && request.Options.HeaderFooterThreshold != nil {
-            opts.HeaderFooterThreshold = *request.Options.HeaderFooterThreshold
-        }
-        if request.MinArtifactLineLen != nil {
-            opts.MinArtifactLineLen = *request.MinArtifactLineLen
-        } else if request.Options != nil && request.Options.MinArtifactLineLen != nil {
-            opts.MinArtifactLineLen = *request.Options.MinArtifactLineLen
-        }
-        if request.KeepPageBreaks != nil {
-            opts.KeepPageBreaks = *request.KeepPageBreaks
-        } else if request.Options != nil && request.Options.KeepPageBreaks != nil {
-            opts.KeepPageBreaks = *request.Options.KeepPageBreaks
-        }
-        if request.LanguageHint != nil {
-            opts.LanguageHint = *request.LanguageHint
-        } else if request.Options != nil && request.Options.LanguageHint != nil {
-            opts.LanguageHint = *request.Options.LanguageHint
-        }
+		// Override: top-level first, then optional nested options
+		if request.NormalizeUnicode != nil {
+			opts.NormalizeUnicode = *request.NormalizeUnicode
+		} else if request.Options != nil && request.Options.NormalizeUnicode != nil {
+			opts.NormalizeUnicode = *request.Options.NormalizeUnicode
+		}
+		if request.FixHyphenation != nil {
+			opts.FixHyphenation = *request.FixHyphenation
+		} else if request.Options != nil && request.Options.FixHyphenation != nil {
+			opts.FixHyphenation = *request.Options.FixHyphenation
+		}
+		if request.CollapseWhitespace != nil {
+			opts.CollapseWhitespace = *request.CollapseWhitespace
+		} else if request.Options != nil && request.Options.CollapseWhitespace != nil {
+			opts.CollapseWhitespace = *request.Options.CollapseWhitespace
+		}
+		if request.HeaderFooterDetection != nil {
+			opts.HeaderFooterDetection = *request.HeaderFooterDetection
+		} else if request.Options != nil && request.Options.HeaderFooterDetection != nil {
+			opts.HeaderFooterDetection = *request.Options.HeaderFooterDetection
+		}
+		if request.HeaderFooterThreshold != nil {
+			opts.HeaderFooterThreshold = *request.HeaderFooterThreshold
+		} else if request.Options != nil && request.Options.HeaderFooterThreshold != nil {
+			opts.HeaderFooterThreshold = *request.Options.HeaderFooterThreshold
+		}
+		if request.MinArtifactLineLen != nil {
+			opts.MinArtifactLineLen = *request.MinArtifactLineLen
+		} else if request.Options != nil && request.Options.MinArtifactLineLen != nil {
+			opts.MinArtifactLineLen = *request.Options.MinArtifactLineLen
+		}
+		if request.KeepPageBreaks != nil {
+			opts.KeepPageBreaks = *request.KeepPageBreaks
+		} else if request.Options != nil && request.Options.KeepPageBreaks != nil {
+			opts.KeepPageBreaks = *request.Options.KeepPageBreaks
+		}
+		if request.LanguageHint != nil {
+			opts.LanguageHint = *request.LanguageHint
+		} else if request.Options != nil && request.Options.LanguageHint != nil {
+			opts.LanguageHint = *request.Options.LanguageHint
+		}
 
 		log.Info("Starting text normalization for n8n")
 
