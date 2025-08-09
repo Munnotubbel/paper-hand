@@ -1,34 +1,34 @@
 package main
 
 import (
-    "context"
-    "encoding/json"
-    "errors"
-    "fmt"
-    "log"
-    "net/http"
-    "time"
-    "paper-hand/config"
-    "paper-hand/models"
-    "paper-hand/providers"
-    "paper-hand/providers/europepmc"
-    "paper-hand/providers/pubmed"
-    "paper-hand/providers/unpaywall"
-    "paper-hand/services"
-    "paper-hand/storage"
-    "strconv"
-    "strings"
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"log"
+	"net/http"
+	"paper-hand/config"
+	"paper-hand/models"
+	"paper-hand/providers"
+	"paper-hand/providers/europepmc"
+	"paper-hand/providers/pubmed"
+	"paper-hand/providers/unpaywall"
+	"paper-hand/services"
+	"paper-hand/storage"
+	"strconv"
+	"strings"
+	"time"
 
-    "github.com/gin-gonic/gin"
-    "github.com/gin-gonic/gin/binding"
-    "github.com/prometheus/client_golang/prometheus"
-    "github.com/prometheus/client_golang/prometheus/promhttp"
-    "github.com/robfig/cron/v3"
-    "go.uber.org/zap"
-    "gorm.io/driver/postgres"
-    "gorm.io/gorm"
-    "gorm.io/gorm/clause"
-    "gorm.io/gorm/logger"
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/robfig/cron/v3"
+	"go.uber.org/zap"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
+	"gorm.io/gorm/logger"
 )
 
 var newPapersCounter prometheus.Counter
@@ -142,7 +142,8 @@ func main() {
 	setupContentArticleRoutes(router, ratedDB, logging)
 	setupCitationRoutes(router, logging)
 	setupTextRoutes(router, logging)
-	setupGraphRoutes(router, rawDB, logging)
+    setupGraphRoutes(router, rawDB, logging)
+    setupAnswerRoutes(router, logging)
 
 	// Setup Cron
 	cronScheduler := cron.New()
@@ -158,18 +159,18 @@ func main() {
 	})
 	cronScheduler.Start()
 
-    logging.Info("Starting server", zap.String("port", cfg.HTTPPort))
-    srv := &http.Server{
-        Addr:           ":" + cfg.HTTPPort,
-        Handler:        router,
-        ReadTimeout:    30 * time.Second,
-        ReadHeaderTimeout: 15 * time.Second,
-        WriteTimeout:   60 * time.Second,
-        IdleTimeout:    120 * time.Second,
-    }
-    if err := srv.ListenAndServe(); err != nil {
-        logging.Fatal("Failed to run server", zap.Error(err))
-    }
+	logging.Info("Starting server", zap.String("port", cfg.HTTPPort))
+	srv := &http.Server{
+		Addr:              ":" + cfg.HTTPPort,
+		Handler:           router,
+		ReadTimeout:       30 * time.Second,
+		ReadHeaderTimeout: 15 * time.Second,
+		WriteTimeout:      60 * time.Second,
+		IdleTimeout:       120 * time.Second,
+	}
+	if err := srv.ListenAndServe(); err != nil {
+		logging.Fatal("Failed to run server", zap.Error(err))
+	}
 }
 
 func setupPaperRoutes(router *gin.Engine, db *gorm.DB, log *zap.Logger) {
@@ -1104,19 +1105,29 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 				}
 			}
 			if v, ok := optRaw["strip_publisher_boilerplate"]; ok {
-				if b, ok2 := coerceBool(v); ok2 { opts.StripPublisherBoilerplate = b }
+				if b, ok2 := coerceBool(v); ok2 {
+					opts.StripPublisherBoilerplate = b
+				}
 			}
 			if v, ok := optRaw["strip_figures_and_tables"]; ok {
-				if b, ok2 := coerceBool(v); ok2 { opts.StripFiguresAndTables = b }
+				if b, ok2 := coerceBool(v); ok2 {
+					opts.StripFiguresAndTables = b
+				}
 			}
 			if v, ok := optRaw["strip_front_matter"]; ok {
-				if b, ok2 := coerceBool(v); ok2 { opts.StripFrontMatter = b }
+				if b, ok2 := coerceBool(v); ok2 {
+					opts.StripFrontMatter = b
+				}
 			}
 			if v, ok := optRaw["strip_correspondence_emails"]; ok {
-				if b, ok2 := coerceBool(v); ok2 { opts.StripCorrespondenceEmails = b }
+				if b, ok2 := coerceBool(v); ok2 {
+					opts.StripCorrespondenceEmails = b
+				}
 			}
 			if v, ok := optRaw["publisher_hint"]; ok {
-				if s, ok2 := v.(string); ok2 { opts.PublisherHint = s }
+				if s, ok2 := v.(string); ok2 {
+					opts.PublisherHint = s
+				}
 			}
 		}
 
@@ -1140,6 +1151,36 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 		zap.String("base_path", "/text"),
 		zap.Strings("endpoints", []string{"/normalize-for-n8n"}),
 	)
+}
+
+// setupAnswerRoutes provides helper endpoints to ensure numbered citations [n] map to a deterministic bibliography
+func setupAnswerRoutes(router *gin.Engine, log *zap.Logger) {
+    rg := router.Group("/answers")
+    // POST /answers/format-bibliography
+    // Body: { answer_text: string, sources: [ {number, doi, pmid, title, year, journal, authors[], doc_id} ] }
+    rg.POST("/format-bibliography", func(c *gin.Context) {
+        var req struct {
+            AnswerText string                   `json:"answer_text"`
+            Sources    []services.SourceItem    `json:"sources"`
+        }
+        if err := c.ShouldBindJSON(&req); err != nil {
+            c.JSON(http.StatusBadRequest, gin.H{"error": "invalid body"})
+            return
+        }
+        ordered, warnings := services.BuildBibliography(req.AnswerText, req.Sources)
+        // Render formatted references
+        formatted := make([]string, 0, len(ordered))
+        for i, s := range ordered {
+            // force sequential numbering in output position
+            _ = i
+            formatted = append(formatted, services.FormatReference(s))
+        }
+        c.JSON(http.StatusOK, gin.H{
+            "ordered_sources": ordered,
+            "formatted":       formatted,
+            "warnings":        warnings,
+        })
+    })
 }
 
 func seedDefaultSubstances(db *gorm.DB, logger *zap.Logger) {
