@@ -26,12 +26,12 @@ type NormalizeOptions struct {
 	KeepPageBreaks        bool    `json:"keep_page_breaks"`
 	LanguageHint          string  `json:"language_hint"`
 
-    // Advanced stripping options for higher-quality LightRAG text
-    StripPublisherBoilerplate   bool   `json:"strip_publisher_boilerplate"`
-    StripFiguresAndTables       bool   `json:"strip_figures_and_tables"`
-    StripFrontMatter            bool   `json:"strip_front_matter"`
-    StripCorrespondenceEmails   bool   `json:"strip_correspondence_emails"`
-    PublisherHint               string `json:"publisher_hint"`
+	// Advanced stripping options for higher-quality LightRAG text
+	StripPublisherBoilerplate bool   `json:"strip_publisher_boilerplate"`
+	StripFiguresAndTables     bool   `json:"strip_figures_and_tables"`
+	StripFrontMatter          bool   `json:"strip_front_matter"`
+	StripCorrespondenceEmails bool   `json:"strip_correspondence_emails"`
+	PublisherHint             string `json:"publisher_hint"`
 }
 
 // Page repräsentiert normalisierten Seitentext
@@ -42,15 +42,15 @@ type Page struct {
 
 // Stats enthält Kennzahlen zur Normalisierung
 type Stats struct {
-	NumPages       int `json:"num_pages,omitempty"`
-	NumWords       int `json:"num_words"`
-	NumChars       int `json:"num_chars"`
-	HyphenFixes    int `json:"hyphen_fixes"`
-	HeadersRemoved int `json:"headers_removed"`
-	FootersRemoved int `json:"footers_removed"`
-	DroppedLines   int `json:"dropped_lines"`
-    RemovedBoiler  int `json:"removed_boilerplate"`
-    RemovedCaptions int `json:"removed_captions"`
+	NumPages        int `json:"num_pages,omitempty"`
+	NumWords        int `json:"num_words"`
+	NumChars        int `json:"num_chars"`
+	HyphenFixes     int `json:"hyphen_fixes"`
+	HeadersRemoved  int `json:"headers_removed"`
+	FootersRemoved  int `json:"footers_removed"`
+	DroppedLines    int `json:"dropped_lines"`
+	RemovedBoiler   int `json:"removed_boilerplate"`
+	RemovedCaptions int `json:"removed_captions"`
 }
 
 // NormalizedText bündelt Ergebnis der Normalisierung
@@ -79,8 +79,8 @@ func (tn *TextNormalizer) NormalizeExtract(ctx context.Context, extract any, opt
 	// Rekursiv Strings einsammeln; wenn pages existieren, pro Seite aggregieren
 	pageTexts, hasPages := tn.collectPerPageTexts(extract)
 
-    var hyphenFixes, headersRemoved, footersRemoved, droppedLines int
-    var removedBoiler, removedCaptions int
+	var hyphenFixes, headersRemoved, footersRemoved, droppedLines int
+	var removedBoiler, removedCaptions int
 	warnings := []string{}
 
 	var pages []Page
@@ -143,33 +143,33 @@ func (tn *TextNormalizer) NormalizeExtract(ctx context.Context, extract any, opt
 			}
 			processed = strings.Join(kept, "\n")
 
-            if opts.MinArtifactLineLen > 0 {
+			if opts.MinArtifactLineLen > 0 {
 				var count int
 				processed, count = dropArtifactLinesProtectingCitations(processed, opts.MinArtifactLineLen)
 				droppedLines += count
 			}
 
-            // Additional stripping for higher-quality text
-            if opts.StripPublisherBoilerplate {
-                var count int
-                processed, count = stripPublisherBoilerplate(processed, opts.PublisherHint)
-                removedBoiler += count
-            }
-            if opts.StripFrontMatter {
-                var count int
-                processed, count = stripFrontMatter(processed)
-                removedBoiler += count
-            }
-            if opts.StripCorrespondenceEmails {
-                var count int
-                processed, count = stripCorrespondenceEmails(processed)
-                removedBoiler += count
-            }
-            if opts.StripFiguresAndTables {
-                var count int
-                processed, count = stripFiguresAndTables(processed)
-                removedCaptions += count
-            }
+			// Additional stripping for higher-quality text
+			if opts.StripPublisherBoilerplate {
+				var count int
+				processed, count = stripPublisherBoilerplate(processed, opts.PublisherHint)
+				removedBoiler += count
+			}
+			if opts.StripFrontMatter {
+				var count int
+				processed, count = stripFrontMatter(processed)
+				removedBoiler += count
+			}
+			if opts.StripCorrespondenceEmails {
+				var count int
+				processed, count = stripCorrespondenceEmails(processed)
+				removedBoiler += count
+			}
+			if opts.StripFiguresAndTables {
+				var count int
+				processed, count = stripFiguresAndTables(processed)
+				removedCaptions += count
+			}
 
 			if opts.CollapseWhitespace {
 				processed = collapseWhitespace(processed)
@@ -197,7 +197,7 @@ func (tn *TextNormalizer) NormalizeExtract(ctx context.Context, extract any, opt
 			fullText = strings.TrimSpace(strings.Join(joined, "\n\n"))
 			fullText = strings.ReplaceAll(fullText, "\n\n", "\n\n")
 		}
-    } else {
+	} else {
 		allStrings := collectAllStrings(extract)
 		// Sortieren, um deterministische Reihenfolge zu fördern (Objekt-Iteration ist zufällig)
 		sort.Strings(allStrings)
@@ -210,54 +210,54 @@ func (tn *TextNormalizer) NormalizeExtract(ctx context.Context, extract any, opt
 			fullText, count = fixHyphenation(fullText)
 			hyphenFixes += count
 		}
-        // Fallback Header/Footer-Erkennung ohne pages[]: entferne häufig wiederholte kurze Zeilen
-        if opts.HeaderFooterDetection {
-            var count int
-            fullText, count = dropRepeatedLinesProtectingCitations(fullText, 3)
-            // Wir können nicht sicher zwischen Header/Footern unterscheiden – als boilerplate zählen
-            removedBoiler += count
-        }
+		// Fallback Header/Footer-Erkennung ohne pages[]: entferne häufig wiederholte kurze Zeilen
+		if opts.HeaderFooterDetection {
+			var count int
+			fullText, count = dropRepeatedLinesProtectingCitations(fullText, 3)
+			// Wir können nicht sicher zwischen Header/Footern unterscheiden – als boilerplate zählen
+			removedBoiler += count
+		}
 		if opts.MinArtifactLineLen > 0 {
 			var count int
 			fullText, count = dropArtifactLines(fullText, opts.MinArtifactLineLen)
 			droppedLines += count
 		}
-        if opts.StripPublisherBoilerplate {
-            var count int
-            fullText, count = stripPublisherBoilerplate(fullText, opts.PublisherHint)
-            removedBoiler += count
-        }
-        if opts.StripFrontMatter {
-            var count int
-            fullText, count = stripFrontMatter(fullText)
-            removedBoiler += count
-        }
-        if opts.StripCorrespondenceEmails {
-            var count int
-            fullText, count = stripCorrespondenceEmails(fullText)
-            removedBoiler += count
-        }
-        if opts.StripFiguresAndTables {
-            var count int
-            fullText, count = stripFiguresAndTables(fullText)
-            removedCaptions += count
-        }
+		if opts.StripPublisherBoilerplate {
+			var count int
+			fullText, count = stripPublisherBoilerplate(fullText, opts.PublisherHint)
+			removedBoiler += count
+		}
+		if opts.StripFrontMatter {
+			var count int
+			fullText, count = stripFrontMatter(fullText)
+			removedBoiler += count
+		}
+		if opts.StripCorrespondenceEmails {
+			var count int
+			fullText, count = stripCorrespondenceEmails(fullText)
+			removedBoiler += count
+		}
+		if opts.StripFiguresAndTables {
+			var count int
+			fullText, count = stripFiguresAndTables(fullText)
+			removedCaptions += count
+		}
 		if opts.CollapseWhitespace {
 			fullText = collapseWhitespace(fullText)
 		}
 	}
 
 	numWords := wordCount(fullText)
-    stats := Stats{
-		NumPages:       len(pages),
-		NumWords:       numWords,
-		NumChars:       len([]rune(fullText)),
-		HyphenFixes:    hyphenFixes,
-		HeadersRemoved: headersRemoved,
-		FootersRemoved: footersRemoved,
-        DroppedLines:   droppedLines,
-        RemovedBoiler:  removedBoiler,
-        RemovedCaptions: removedCaptions,
+	stats := Stats{
+		NumPages:        len(pages),
+		NumWords:        numWords,
+		NumChars:        len([]rune(fullText)),
+		HyphenFixes:     hyphenFixes,
+		HeadersRemoved:  headersRemoved,
+		FootersRemoved:  footersRemoved,
+		DroppedLines:    droppedLines,
+		RemovedBoiler:   removedBoiler,
+		RemovedCaptions: removedCaptions,
 	}
 
 	if len(strings.TrimSpace(fullText)) == 0 {
@@ -405,49 +405,49 @@ func dropArtifactLines(s string, minLen int) (string, int) {
 // dropRepeatedLinesProtectingCitations entfernt Zeilen, die im Text repetitiv auftreten (>= threshold)
 // Dies dient als Fallback für Header/Footer-Erkennung, wenn keine pages[] vorhanden sind.
 func dropRepeatedLinesProtectingCitations(s string, threshold int) (string, int) {
-    lines := splitLines(s)
-    counts := map[string]int{}
-    order := []string{}
-    for _, l := range lines {
-        t := strings.TrimSpace(l)
-        if t == "" {
-            continue
-        }
-        // Nur relativ kurze Zeilen betrachten (vermeidet Absätze)
-        if len([]rune(t)) > 120 {
-            continue
-        }
-        if ContainsCitation(t) {
-            continue
-        }
-        if _, ok := counts[t]; !ok {
-            order = append(order, t)
-        }
-        counts[t]++
-    }
+	lines := splitLines(s)
+	counts := map[string]int{}
+	order := []string{}
+	for _, l := range lines {
+		t := strings.TrimSpace(l)
+		if t == "" {
+			continue
+		}
+		// Nur relativ kurze Zeilen betrachten (vermeidet Absätze)
+		if len([]rune(t)) > 120 {
+			continue
+		}
+		if ContainsCitation(t) {
+			continue
+		}
+		if _, ok := counts[t]; !ok {
+			order = append(order, t)
+		}
+		counts[t]++
+	}
 
-    repetitive := map[string]bool{}
-    for _, t := range order {
-        if counts[t] >= threshold {
-            repetitive[t] = true
-        }
-    }
+	repetitive := map[string]bool{}
+	for _, t := range order {
+		if counts[t] >= threshold {
+			repetitive[t] = true
+		}
+	}
 
-    if len(repetitive) == 0 {
-        return s, 0
-    }
+	if len(repetitive) == 0 {
+		return s, 0
+	}
 
-    kept := make([]string, 0, len(lines))
-    removed := 0
-    for _, l := range lines {
-        t := strings.TrimSpace(l)
-        if t != "" && repetitive[t] {
-            removed++
-            continue
-        }
-        kept = append(kept, l)
-    }
-    return strings.Join(kept, "\n"), removed
+	kept := make([]string, 0, len(lines))
+	removed := 0
+	for _, l := range lines {
+		t := strings.TrimSpace(l)
+		if t != "" && repetitive[t] {
+			removed++
+			continue
+		}
+		kept = append(kept, l)
+	}
+	return strings.Join(kept, "\n"), removed
 }
 
 // dropArtifactLinesProtectingCitations verwirft kurze Artefaktzeilen, schützt aber erkannte Zitierungen
@@ -510,140 +510,165 @@ func splitLines(s string) []string {
 
 // stripPublisherBoilerplate entfernt Verlags-/Rechte-Hinweise und ähnliche Boilerplate (schützt Zitierungen)
 func stripPublisherBoilerplate(s string, hint string) (string, int) {
-    patterns := []*regexp.Regexp{
-        regexp.MustCompile(`(?i)^(?:©|copyright|all rights reserved)`),
+	patterns := []*regexp.Regexp{
+		regexp.MustCompile(`(?i)^(?:©|copyright|all rights reserved)`),
         regexp.MustCompile(`(?i)^this (?:article|manuscript) (?:is|was) (?:an open access|distributed|published)`),
-        regexp.MustCompile(`(?i)^(?:creative commons|cc-?by)`),
-        regexp.MustCompile(`(?i)^permission to reproduce`),
-        regexp.MustCompile(`(?i)^rights? and permissions`),
-    }
-    // Publisher-Hinweis: füge grobe Patterns hinzu
-    if strings.TrimSpace(hint) != "" {
-        h := strings.ToLower(strings.TrimSpace(hint))
-        switch h {
+		regexp.MustCompile(`(?i)^(?:creative commons|cc-?by)`),
+		regexp.MustCompile(`(?i)^permission to reproduce`),
+		regexp.MustCompile(`(?i)^rights? and permissions`),
+        // common PDF tool artifacts
+        regexp.MustCompile(`(?i)^(?:dvips|miktex|ghostscript)`),
+        regexp.MustCompile(`(?i)acrobat\s+distiller`),
+        regexp.MustCompile(`(?i)arbortext\s+advanced\s+print\s+publisher`),
+        // journal portal and boiler lines
+        regexp.MustCompile(`(?i)\bfrontiersin\.org\b`),
+        regexp.MustCompile(`(?i)^frontiers\b`),
+        regexp.MustCompile(`(?i)^open\s+access\b`),
+        regexp.MustCompile(`(?i)^edited\s+by\b`),
+        regexp.MustCompile(`(?i)^reviewed\s+by\b`),
+        regexp.MustCompile(`(?i)^publisher'?s\s+note\b`),
+	}
+	// Publisher-Hinweis: füge grobe Patterns hinzu
+	if strings.TrimSpace(hint) != "" {
+		h := strings.ToLower(strings.TrimSpace(hint))
+		switch h {
         case "springer":
-            patterns = append(patterns, regexp.MustCompile(`(?i)^springer`))
-        case "elsevier":
-            patterns = append(patterns, regexp.MustCompile(`(?i)^elsevier`))
-        case "wiley":
-            patterns = append(patterns, regexp.MustCompile(`(?i)^wiley`))
-        case "nature":
-            patterns = append(patterns, regexp.MustCompile(`(?i)^nature (?:research|publishing)`))
-        }
-    }
-    return stripLinesByPatternsProtectingCitations(s, patterns)
+			patterns = append(patterns, regexp.MustCompile(`(?i)^springer`))
+		case "elsevier":
+			patterns = append(patterns, regexp.MustCompile(`(?i)^elsevier`))
+		case "wiley":
+			patterns = append(patterns, regexp.MustCompile(`(?i)^wiley`))
+		case "nature":
+			patterns = append(patterns, regexp.MustCompile(`(?i)^nature (?:research|publishing)`))
+        case "frontiers":
+            patterns = append(patterns,
+                regexp.MustCompile(`(?i)^frontiers`),
+                regexp.MustCompile(`(?i)\bfrontiersin\.org\b`),
+                regexp.MustCompile(`(?i)^type\s+review\b`),
+                regexp.MustCompile(`(?i)^citation\b`),
+            )
+		}
+	}
+	return stripLinesByPatternsProtectingCitations(s, patterns)
 }
 
 // stripFrontMatter entfernt Zeilen wie Keywords/Abbreviations/Received/Accepted vor "Introduction"
 func stripFrontMatter(s string) (string, int) {
-    lines := splitLines(s)
-    introIdx := -1
-    introRe := regexp.MustCompile(`(?i)^\s*(?:\d+\s+)?introduction\s*$`)
-    for i, l := range lines {
-        if introRe.MatchString(strings.TrimSpace(l)) {
-            introIdx = i
-            break
-        }
-    }
+	lines := splitLines(s)
+	introIdx := -1
+	introRe := regexp.MustCompile(`(?i)^\s*(?:\d+\s+)?introduction\s*$`)
+	for i, l := range lines {
+		if introRe.MatchString(strings.TrimSpace(l)) {
+			introIdx = i
+			break
+		}
+	}
     patterns := []*regexp.Regexp{
-        regexp.MustCompile(`(?i)^keywords?\s*:`),
-        regexp.MustCompile(`(?i)^abbreviations?\s*:`),
-        regexp.MustCompile(`(?i)^received\s*:`),
-        regexp.MustCompile(`(?i)^accepted\s*:`),
-        regexp.MustCompile(`(?i)^published\s*:`),
-        regexp.MustCompile(`(?i)^author\s+contributions?\s*:`),
-        regexp.MustCompile(`(?i)^funding\s*:`),
-        regexp.MustCompile(`(?i)^conflicts? of interest\s*:`),
-    }
-    kept := []string{}
-    removed := 0
-    for i, l := range lines {
-        t := strings.TrimSpace(l)
-        if t == "" {
-            kept = append(kept, l)
-            continue
-        }
-        if introIdx >= 0 && i >= introIdx {
-            kept = append(kept, l)
-            continue
-        }
-        dropped := false
-        if !ContainsCitation(t) {
-            for _, re := range patterns {
-                if re.MatchString(t) {
-                    dropped = true
-                    break
-                }
-            }
-        }
-        if dropped {
-            removed++
-            continue
-        }
-        kept = append(kept, l)
-    }
-    return strings.Join(kept, "\n"), removed
+		regexp.MustCompile(`(?i)^keywords?\s*:`),
+		regexp.MustCompile(`(?i)^abbreviations?\s*:`),
+		regexp.MustCompile(`(?i)^received\s*:`),
+		regexp.MustCompile(`(?i)^accepted\s*:`),
+		regexp.MustCompile(`(?i)^published\s*:`),
+		regexp.MustCompile(`(?i)^author\s+contributions?\s*:`),
+		regexp.MustCompile(`(?i)^funding\s*:`),
+		regexp.MustCompile(`(?i)^conflicts? of interest\s*:`),
+        // journal boiler lines typically in front matter
+        regexp.MustCompile(`(?i)^open\s+access\b`),
+        regexp.MustCompile(`(?i)^edited\s+by\b`),
+        regexp.MustCompile(`(?i)^reviewed\s+by\b`),
+        regexp.MustCompile(`(?i)^type\s+review\b`),
+        regexp.MustCompile(`(?i)^publisher'?s\s+note\b`),
+	}
+	kept := []string{}
+	removed := 0
+	for i, l := range lines {
+		t := strings.TrimSpace(l)
+		if t == "" {
+			kept = append(kept, l)
+			continue
+		}
+		if introIdx >= 0 && i >= introIdx {
+			kept = append(kept, l)
+			continue
+		}
+		dropped := false
+		if !ContainsCitation(t) {
+			for _, re := range patterns {
+				if re.MatchString(t) {
+					dropped = true
+					break
+				}
+			}
+		}
+		if dropped {
+			removed++
+			continue
+		}
+		kept = append(kept, l)
+	}
+	return strings.Join(kept, "\n"), removed
 }
 
 // stripCorrespondenceEmails entfernt Korrespondenz/Email-Zeilen (schützt Zitierungen)
 func stripCorrespondenceEmails(s string) (string, int) {
-    emailRe := regexp.MustCompile(`(?i)\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b`)
-    leadRe := regexp.MustCompile(`(?i)^(correspondence|corresponding author|contact)\b`)
-    kept := []string{}
-    removed := 0
-    for _, l := range splitLines(s) {
-        t := strings.TrimSpace(l)
-        if t == "" || ContainsCitation(t) {
-            kept = append(kept, l)
-            continue
-        }
-        if emailRe.MatchString(t) || leadRe.MatchString(t) {
-            removed++
-            continue
-        }
-        kept = append(kept, l)
-    }
-    return strings.Join(kept, "\n"), removed
+	emailRe := regexp.MustCompile(`(?i)\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b`)
+	leadRe := regexp.MustCompile(`(?i)^(correspondence|corresponding author|contact)\b`)
+	kept := []string{}
+	removed := 0
+	for _, l := range splitLines(s) {
+		t := strings.TrimSpace(l)
+		if t == "" || ContainsCitation(t) {
+			kept = append(kept, l)
+			continue
+		}
+		if emailRe.MatchString(t) || leadRe.MatchString(t) {
+			removed++
+			continue
+		}
+		kept = append(kept, l)
+	}
+	return strings.Join(kept, "\n"), removed
 }
 
 // stripFiguresAndTables entfernt Bild-/Tabellenbeschriftungen (schützt Zitierungen)
 func stripFiguresAndTables(s string) (string, int) {
     patterns := []*regexp.Regexp{
-        regexp.MustCompile(`(?i)^(?:figure|fig\.|table|supplementary\s+(?:figure|table))\s*\d+\s*[:.\-]`),
-        regexp.MustCompile(`(?i)^caption\s*[:.\-]`),
+        // Lines starting with Figure/Table numbers, allow optional trailing text or punctuation
+        regexp.MustCompile(`(?i)^(?:figure|fig\.|table|supplementary\s+(?:figure|table))\s*\d+(?:\s+.*|\s*[:.\-].*)?$`),
+        regexp.MustCompile(`(?i)^caption\s*[:.\-]?`),
     }
-    return stripLinesByPatternsProtectingCitations(s, patterns)
+	return stripLinesByPatternsProtectingCitations(s, patterns)
 }
 
 // stripLinesByPatternsProtectingCitations entfernt Zeilen, die auf eines der Patterns matchen, schützt aber Zitierungen
 func stripLinesByPatternsProtectingCitations(s string, patterns []*regexp.Regexp) (string, int) {
-    lines := splitLines(s)
-    kept := []string{}
-    removed := 0
-    for _, l := range lines {
-        t := strings.TrimSpace(l)
-        if t == "" {
-            kept = append(kept, l)
-            continue
-        }
-        if ContainsCitation(t) {
-            kept = append(kept, l)
-            continue
-        }
-        drop := false
-        for _, re := range patterns {
-            if re.MatchString(t) {
-                drop = true
-                break
-            }
-        }
-        if drop {
-            removed++
-            continue
-        }
-        kept = append(kept, l)
-    }
-    return strings.Join(kept, "\n"), removed
+	lines := splitLines(s)
+	kept := []string{}
+	removed := 0
+	for _, l := range lines {
+		t := strings.TrimSpace(l)
+		if t == "" {
+			kept = append(kept, l)
+			continue
+		}
+		if ContainsCitation(t) {
+			kept = append(kept, l)
+			continue
+		}
+		drop := false
+		for _, re := range patterns {
+			if re.MatchString(t) {
+				drop = true
+				break
+			}
+		}
+		if drop {
+			removed++
+			continue
+		}
+		kept = append(kept, l)
+	}
+	return strings.Join(kept, "\n"), removed
 }
 
 func firstNNonEmpty(lines []string, n int) []string {

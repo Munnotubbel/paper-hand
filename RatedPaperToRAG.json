@@ -466,7 +466,7 @@
           "sendBody": true,
           "contentType": "raw",
           "rawContentType": "JSON",
-          "body": "={{ JSON.stringify({\n  pdf_extract: {\n    text: $('Quellenverzeichnis entfernen').item.json.main_text || $('Quellenverzeichnis entfernen').item.json.text || $('Normalize Text').item.json.full_text\n  },\n  normalize_unicode: true,\n  fix_hyphenation: true,\n  collapse_whitespace: true,\n  header_footer_detection: false,\n  min_artifact_line_len: 0,\n  strip_publisher_boilerplate: true,\n  strip_correspondence_emails: true,\n  strip_figures_and_tables: true\n}) }}",
+          "body": "={{ JSON.stringify({\n  pdf_extract: {\n    text: $('Quellenverzeichnis entfernen').item.json.main_text || $('Quellenverzeichnis entfernen').item.json.text || $('Normalize Text').item.json.full_text\n  },\n  normalize_unicode: true,\n  fix_hyphenation: true,\n  collapse_whitespace: true,\n  header_footer_detection: false,\n  min_artifact_line_len: 0,\n  strip_publisher_boilerplate: true,\n  strip_correspondence_emails: true,\n  strip_figures_and_tables: true,\n  strip_front_matter: true,\n  publisher_hint: 'frontiers'\n}) }}",
           "options": {
             "timeout": 30000
           }
