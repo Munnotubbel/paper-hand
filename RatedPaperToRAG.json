@@ -14,10 +14,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1312,
-        208
+        -1872,
+        240
       ],
-      "id": "5865ec36-5622-4fbb-acca-7c8bdc395d18",
+      "id": "e81ec75c-620c-44d7-b790-a9a18e707f24",
       "name": "Schedule Trigger1"
     },
     {
@@ -33,13 +33,13 @@
           "timeout": 30000
         }
       },
-      "id": "ce5814e9-e4e1-4d1e-a888-11675aff7283",
+      "id": "6040a6cd-5079-4a3c-abd7-04c84e1bbc3c",
       "name": "1. Get Rated Paper1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1072,
-        208
+        -1632,
+        240
       ],
       "credentials": {
         "httpBearerAuth": {
@@ -111,10 +111,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -864,
-        208
+        -1424,
+        240
       ],
-      "id": "8ae7d3fd-3262-4547-a324-be01a5e74493",
+      "id": "2c9a2a6c-c9e8-437a-a351-8b48c997e0d0",
       "name": "Switch1"
     },
     {
@@ -125,10 +125,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -592,
-        400
+        -1152,
+        432
       ],
-      "id": "497f1d67-d15c-42ad-a944-5d7e62b7109d",
+      "id": "f900e514-ec48-4af3-b238-4b2b082b8e9c",
       "name": "Wait (no result)1",
       "webhookId": "cdb2d1cd-68be-4d2e-a53e-9c5df0c04853"
     },
@@ -140,10 +140,10 @@
       "type": "n8n-nodes-base.s3",
       "typeVersion": 1,
       "position": [
-        -672,
-        208
+        -1232,
+        240
       ],
-      "id": "b1e41d58-0fd2-4940-a8eb-1c8b809db026",
+      "id": "d2a68389-8729-475f-be71-8bdfcde7d52d",
       "name": "Download a file1",
       "credentials": {
         "s3": {
@@ -160,10 +160,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -544,
-        208
+        -1104,
+        240
       ],
-      "id": "82a2a648-c934-463a-a9a2-7f0358f33f4b",
+      "id": "98a91f75-5fc0-4cb3-bbbc-42315a7313ac",
       "name": "Extract from File1"
     },
     {
@@ -196,10 +196,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -416,
-        208
+        -976,
+        240
       ],
-      "id": "2d77bdbb-5cad-43e1-b78f-0b6a27740250",
+      "id": "6b681f5e-3e51-4f63-891a-04467c93babe",
       "name": "Normalize Text1",
       "credentials": {
         "httpHeaderAuth": {
@@ -237,10 +237,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -272,
-        208
+        -832,
+        240
       ],
-      "id": "47b375df-827f-4a5c-b0e4-ef11103f5105",
+      "id": "44b37ba3-5ebe-41cd-8ebd-d7c69308f0ec",
       "name": "Literatur-Extraktor1",
       "credentials": {
         "httpHeaderAuth": {
@@ -278,10 +278,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -112,
-        208
+        -672,
+        240
       ],
-      "id": "bfd2f126-f233-443d-b4a3-60def22a51d1",
+      "id": "75c46dfd-753a-4b66-87cb-0c814a356416",
       "name": "Quellenverzeichnis entfernen1",
       "credentials": {
         "httpHeaderAuth": {
@@ -297,10 +297,10 @@
       "type": "n8n-nodes-base.functionItem",
       "typeVersion": 1,
       "position": [
-        192,
-        112
+        -368,
+        144
       ],
-      "id": "5d34cd1f-ef37-4e80-82cf-6a0062d9f44b",
+      "id": "b35d95c7-968e-4f88-93d2-a409f5804196",
       "name": "Build Metadata1"
     },
     {
@@ -314,10 +314,10 @@
       "type": "n8n-nodes-base.moveBinaryData",
       "typeVersion": 1,
       "position": [
-        368,
-        0
+        -112,
+        -96
       ],
-      "id": "09fb55e6-7360-4dd3-a9f0-24157a1a28bf",
+      "id": "9425308a-9bf9-47a1-a567-4dd588ee5edf",
       "name": "MainText: JSON→Binary1"
     },
     {
@@ -331,10 +331,10 @@
       "type": "n8n-nodes-base.moveBinaryData",
       "typeVersion": 1,
       "position": [
-        384,
-        272
+        144,
+        128
       ],
-      "id": "e43e9a25-fa74-480a-a812-660563e133d3",
+      "id": "2bca2508-3358-4ea7-848f-fc7eeff4532e",
       "name": "Refs: JSON→Binary1"
     },
     {
@@ -374,10 +374,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        528,
-        0
+        160,
+        -32
       ],
-      "id": "76106c4c-ec18-4f59-b733-e8a882434c66",
+      "id": "95f79365-4a56-4d2f-bb91-6a44d849bca5",
       "name": "Upload MainText1",
       "credentials": {
         "httpHeaderAuth": {
@@ -394,10 +394,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1680,
-        96
+        1120,
+        128
       ],
-      "id": "ae174d26-67ac-4ba1-8bc4-b204014240f5",
+      "id": "60b18ebf-7aa1-4b88-916d-b6b0cbd23c34",
       "name": "Wait (after upload)1",
       "webhookId": "2fd69ce6-3048-4fa3-bd6b-9a30f410d1c4"
     },
@@ -438,10 +438,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1472,
-        16
+        912,
+        48
       ],
-      "id": "71057458-3e44-40d6-a959-84a81a7129a2",
+      "id": "e1654c57-50f6-4369-a6c1-be33042e9430",
       "name": "Upload References1",
       "credentials": {
         "httpHeaderAuth": {
@@ -480,10 +480,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        32,
-        208
+        -528,
+        240
       ],
-      "id": "6d271be7-6efe-4b21-a067-733d216b871e",
+      "id": "6791bb9f-8d34-4e6a-a7f6-41431060f9bb",
       "name": "Finalize Main Text1",
       "credentials": {
         "httpHeaderAuth": {
@@ -521,10 +521,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1920,
-        112
+        1360,
+        144
       ],
-      "id": "02ead536-459f-48d7-aecc-e3f28ab169cb",
+      "id": "cf9991d8-c8f7-4e46-b52f-62acfdf0fae9",
       "name": "Upsert Paper Links1",
       "credentials": {
         "httpHeaderAuth": {
@@ -544,13 +544,13 @@
         "jsonBody": "={\n  \"doi\": \"{{ $('1. Get Rated Paper1').item.json.doi }}\",\n  \"added_rag\": true,\n  \"processed\": true,\n  \"lightrag_doc_id\": \"{{ $('Upload MainText1').item.json.doc_id || $('Upload MainText1').item.json.id }}\",\n  \"references_json\": {{ $('Literatur-Extraktor1').item.json }}\n}",
         "options": {}
       },
-      "id": "960261f5-f276-4c63-8e6c-d7d0201ed435",
+      "id": "27071a5b-3e74-4a0e-ae17-5d77a179e637",
       "name": "Mark as Added1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1920,
-        336
+        1360,
+        368
       ],
       "credentials": {
         "httpHeaderAuth": {
@@ -564,36 +564,26 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1056,
-        16
+        496,
+        48
       ],
-      "id": "c4253f77-d2e5-429b-bb0f-6b49a1981f3d",
+      "id": "85335b8f-9b4d-4859-b565-01377c5b4ed6",
       "name": "Merge"
     },
     {
-      "parameters": {},
+      "parameters": {
+        "amount": 2,
+        "unit": "seconds"
+      },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        688,
+        304,
         0
       ],
-      "id": "6d80b994-6a0b-4eb9-b4b4-17d71a9b0129",
+      "id": "3d977271-eff4-43c7-a059-9c014855fa4c",
       "name": "Wait",
       "webhookId": "f83ab555-931c-4156-a4fc-2bdfb4601180"
-    },
-    {
-      "parameters": {
-        "jsCode": "const out = [];\nfor (const item of items) {\n  const fullText = $('Finalize Main Text1').item.json.full_text || $('Quellenverzeichnis entfernen1').item.json.main_text || '';\n  const fileName = (item.json && item.json.main_filename) ? item.json.main_filename : 'main.txt';\n  item.binary = item.binary || {};\n  item.binary.file = {\n    data: Buffer.from(String(fullText), 'utf8').toString('base64'),\n    fileName,\n    mimeType: 'text/plain'\n  };\n  out.push(item);\n}\nreturn out;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1264,
-        16
-      ],
-      "id": "042ed553-ae58-448e-a8ac-399f5ba6e792",
-      "name": "Code"
     },
     {
       "parameters": {
@@ -602,10 +592,23 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        528,
-        -96
+        704,
+        48
       ],
-      "id": "a2d0a8c1-9e69-4f2f-b5d0-3f7b9e2a1c0f",
+      "id": "b7e991c6-9de2-44bb-b25c-4269f3a42700",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "const out = [];\nfor (const item of items) {\n  const fullText = $('Finalize Main Text1').item.json.full_text || $('Quellenverzeichnis entfernen1').item.json.main_text || '';\n  const fileName = (item.json && item.json.main_filename) ? item.json.main_filename : 'main.txt';\n  item.binary = item.binary || {};\n  item.binary.file = {\n    data: Buffer.from(String(fullText), 'utf8').toString('base64'),\n    fileName,\n    mimeType: 'text/plain'\n  };\n  out.push(item);\n}\nreturn out;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        -80
+      ],
+      "id": "b5a096ff-d498-4333-b80d-2757805c5459",
       "name": "Main: data→file"
     },
     {
@@ -615,10 +618,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        304,
-        112
+        -240,
+        128
       ],
-      "id": "f7a2de78-5b7c-4e1d-8e61-9b4c2b7f2a10",
+      "id": "dbadbb1f-00fa-42a2-9512-f42294da602d",
       "name": "Timestamp Filenames"
     }
   ],
@@ -729,38 +732,11 @@
         ]
       ]
     },
-    "Timestamp Filenames": {
-      "main": [
-        [
-          {
-            "node": "MainText: JSON→Binary1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Refs: JSON→Binary1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "MainText: JSON→Binary1": {
       "main": [
         [
           {
             "node": "Main: data→file",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Main: data→file": {
-      "main": [
-        [
-          {
-            "node": "Upload MainText1",
             "type": "main",
             "index": 0
           }
@@ -773,7 +749,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -861,7 +837,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
@@ -871,6 +847,33 @@
         [
           {
             "node": "Upload References1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Main: data→file": {
+      "main": [
+        [
+          {
+            "node": "Upload MainText1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Timestamp Filenames": {
+      "main": [
+        [
+          {
+            "node": "MainText: JSON→Binary1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Refs: JSON→Binary1",
             "type": "main",
             "index": 0
           }
