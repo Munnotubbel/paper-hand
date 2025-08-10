@@ -307,7 +307,7 @@
       "parameters": {
         "mode": "jsonToBinary",
         "options": {
-          "fileName": "={{ $json.main_filename }}",
+          "fileName": "={{ $json.pmid_pdf_id || $json.pmid || 'paper' }}.main.txt",
           "mimeType": "text/plain"
         }
       },
@@ -324,7 +324,7 @@
       "parameters": {
         "mode": "jsonToBinary",
         "options": {
-          "fileName": "={{ $json.refs_filename }}",
+          "fileName": "={{ $json.pmid_pdf_id || $json.pmid || 'paper' }}.references.json",
           "mimeType": "application/json"
         }
       },
@@ -363,7 +363,7 @@
             },
             {
               "name": "metadata",
-              "value": "={{ $json.metadata_main }}"
+              "value": "={{ JSON.stringify(Object.assign(JSON.parse($json.metadata_main), { identity_key: ($json.identity_key || ($json.doi_norm ? 'doi:'+ $json.doi_norm : ($json.pmid_norm ? 'pmid:'+$json.pmid_norm : ''))) })) }}"
             }
           ]
         },
@@ -426,7 +426,7 @@
             },
             {
               "name": "metadata",
-              "value": "={{ $json.metadata_refs }}"
+              "value": "={{ JSON.stringify(Object.assign(JSON.parse($json.metadata_refs), { identity_key: ($json.identity_key || ($json.doi_norm ? 'doi:'+ $json.doi_norm : ($json.pmid_norm ? 'pmid:'+$json.pmid_norm : ''))) })) }}"
             }
           ]
         },
@@ -612,7 +612,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Ensure unique filenames by appending a timestamp\nfor (const item of items) {\n  if (!item.json) continue;\n  const ts = Date.now();\n  if (typeof item.json.main_filename === 'string') {\n    item.json.main_filename = item.json.main_filename.replace(/\\.main\\.txt$/, `.${ts}.main.txt`);\n  }\n  if (typeof item.json.refs_filename === 'string') {\n    item.json.refs_filename = item.json.refs_filename.replace(/\\.references\\.json$/, `.${ts}.references.json`);\n  }\n}\nreturn items;"
+        "jsCode": "// Keep deterministic filenames (no timestamp).\nreturn items;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
