@@ -513,7 +513,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"source\": { \n    \"doi\": \"{{ $('1. Get Rated Paper1').item.json.doi }}\",\n    \"pmid\": \"{{ $('1. Get Rated Paper1').item.json.pmid }}\",\n    \"table\": \"rated_papers\"\n  },\n  \"citations\": {{ Array.isArray($('Literatur-Extraktor1').item.json) ? $('Literatur-Extraktor1').item.json : ($('Literatur-Extraktor1').item.json.references || []) }},\n  \"link_type\": \"cites\"\n}",
+        "jsonBody": "={{ JSON.stringify({\n  source: {\n    doi: $('1. Get Rated Paper1').item.json.doi,\n    pmid: $('1. Get Rated Paper1').item.json.pmid,\n    table: 'rated_papers'\n  },\n  citations: Array.isArray($('Literatur-Extraktor1').item.json) ? $('Literatur-Extraktor1').item.json : ($('Literatur-Extraktor1').item.json.references || []),\n  link_type: 'cites'\n}) }}",
         "options": {
           "timeout": 30000
         }
@@ -584,7 +584,7 @@
     },
     {
       "parameters": {
-        "jsCode": "       // keep only the item that has binary.data, rename to binary.file\n       const out = [];\n       for (const item of items) {\n         if (item.binary && item.binary.data) {\n           item.binary.file = item.binary.data;\n           delete item.binary.data;\n           out.push(item);\n         }\n       }\n       return out;"
+        "jsCode": "const out = [];\nfor (const item of items) {\n  const fullText = $('Finalize Main Text1').item.json.full_text || $('Quellenverzeichnis entfernen1').item.json.main_text || '';\n  const fileName = (item.json && item.json.main_filename) ? item.json.main_filename : 'main.txt';\n  item.binary = item.binary || {};\n  item.binary.file = {\n    data: Buffer.from(String(fullText), 'utf8').toString('base64'),\n    fileName,\n    mimeType: 'text/plain'\n  };\n  out.push(item);\n}\nreturn out;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -597,7 +597,7 @@
     },
     {
       "parameters": {
-        "jsCode": "       // keep only the item that has binary.data, rename to binary.file\n       const out = [];\n       for (const item of items) {\n         if (item.binary && item.binary.data) {\n           item.binary.file = item.binary.data;\n           delete item.binary.data;\n           out.push(item);\n         }\n       }\n       return out;"
+        "jsCode": "const out = [];\nfor (const item of items) {\n  const refs = item.json && typeof item.json.refs_content === 'string' ? item.json.refs_content : '';\n  if (refs) {\n    const fileName = item.json.refs_filename || 'references.json';\n    item.binary = item.binary || {};\n    item.binary.file = {\n      data: Buffer.from(refs, 'utf8').toString('base64'),\n      fileName,\n      mimeType: 'application/json'\n    };\n    out.push(item);\n  }\n}\nreturn out;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
