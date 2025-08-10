@@ -541,7 +541,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({\n  doi: $('1. Get Rated Paper1').item.json.doi,\n  added_rag: true,\n  processed: true,\n  lightrag_doc_id: ($('Upload MainText1').item.json.doc_id || $('Upload MainText1').item.json.id || ''),\n  references_json: $('Literatur-Extraktor1').item.json\n}) }}",
+        "jsonBody": "={{ ({\n  doi: $('1. Get Rated Paper1').item.json.doi,\n  added_rag: true,\n  processed: true,\n  lightrag_doc_id: ($('Upload MainText1').item.json.doc_id || $('Upload MainText1').item.json.id || ''),\n  references_json: $('Literatur-Extraktor1').item.json\n}) }}",
         "options": {}
       },
       "id": "27071a5b-3e74-4a0e-ae17-5d77a179e637",
