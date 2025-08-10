@@ -14,11 +14,11 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1808,
-        192
+        -3008,
+        528
       ],
-      "id": "75c5b709-4151-478c-8324-a3a96e93ee16",
-      "name": "Schedule Trigger"
+      "id": "0b6bd592-ac5d-45b2-8226-0bfa8380ca6f",
+      "name": "Schedule Trigger1"
     },
     {
       "parameters": {
@@ -33,13 +33,13 @@
           "timeout": 30000
         }
       },
-      "id": "aa3ae46b-6158-4819-9765-5bda83f5f202",
-      "name": "1. Get Rated Paper",
+      "id": "d63ad755-29e4-401c-a5d2-e490f8759f86",
+      "name": "1. Get Rated Paper1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1568,
-        192
+        -2768,
+        528
       ],
       "credentials": {
         "httpBearerAuth": {
@@ -111,11 +111,11 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -1360,
-        192
+        -2560,
+        528
       ],
-      "id": "f5f0537c-9b2a-423d-acbe-88a0be08f042",
-      "name": "Switch"
+      "id": "d0885add-8f82-4f76-9ad3-e7728c41e01e",
+      "name": "Switch1"
     },
     {
       "parameters": {
@@ -125,11 +125,11 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -1088,
-        384
+        -2288,
+        720
       ],
-      "id": "2fd861b2-061c-4fcf-9270-8f4095bdae41",
-      "name": "Wait (no result)",
+      "id": "d1482e2e-b26d-42d9-af60-9f7d13e51e18",
+      "name": "Wait (no result)1",
       "webhookId": "cdb2d1cd-68be-4d2e-a53e-9c5df0c04853"
     },
     {
@@ -140,11 +140,11 @@
       "type": "n8n-nodes-base.s3",
       "typeVersion": 1,
       "position": [
-        -1168,
-        192
+        -2368,
+        528
       ],
-      "id": "0f1cf9cc-ea3e-45cc-bccb-dce923c4ecba",
-      "name": "Download a file",
+      "id": "96ace03f-eb7f-4fee-bfd0-2d05b14bb129",
+      "name": "Download a file1",
       "credentials": {
         "s3": {
           "id": "lXbGUFRjp6Yya8kj",
@@ -160,11 +160,11 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -1040,
-        192
+        -2240,
+        528
       ],
-      "id": "054646d1-fa23-4d47-9e5b-cac489a12f00",
-      "name": "Extract from File"
+      "id": "47ab64f0-b35f-4a5c-8adb-02bae294ecca",
+      "name": "Extract from File1"
     },
     {
       "parameters": {
@@ -196,11 +196,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -912,
-        192
+        -2112,
+        528
       ],
-      "id": "43cd4682-816b-433a-ac30-c1426b71c4d3",
-      "name": "Normalize Text",
+      "id": "bcb88e65-f142-4244-8d8f-e3de8d102488",
+      "name": "Normalize Text1",
       "credentials": {
         "httpHeaderAuth": {
           "id": "RTzRC0AggRABuRdo",
@@ -237,11 +237,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -768,
-        192
+        -1968,
+        528
       ],
-      "id": "8307652d-5574-41c3-871a-0569578fd325",
-      "name": "Literatur-Extraktor",
+      "id": "11c9a844-6b22-4f3f-a0da-6ed13f07a3e2",
+      "name": "Literatur-Extraktor1",
       "credentials": {
         "httpHeaderAuth": {
           "id": "RTzRC0AggRABuRdo",
@@ -270,7 +270,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({\ntext: $('Normalize Text').item.json.full_text,\n}) }}",
+        "jsonBody": "={{ JSON.stringify({\ntext: $('Normalize Text1').item.json.full_text,\n}) }}",
         "options": {
           "timeout": 30000
         }
@@ -278,11 +278,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -608,
-        192
+        -1808,
+        528
       ],
-      "id": "e3e96a06-2e10-448e-8dff-a1a37f5e452a",
-      "name": "Quellenverzeichnis entfernen",
+      "id": "df198121-c2b4-4289-8d1b-2ac0fdca3f12",
+      "name": "Quellenverzeichnis entfernen1",
       "credentials": {
         "httpHeaderAuth": {
           "id": "RTzRC0AggRABuRdo",
@@ -297,11 +297,11 @@
       "type": "n8n-nodes-base.functionItem",
       "typeVersion": 1,
       "position": [
-        -304,
-        96
+        -1504,
+        432
       ],
-      "id": "0a020e73-701a-4c6b-a0ad-38fdb4a6b4bd",
-      "name": "Build Metadata"
+      "id": "38693243-fa9c-458c-ac33-1f0159a72928",
+      "name": "Build Metadata1"
     },
     {
       "parameters": {
@@ -314,11 +314,11 @@
       "type": "n8n-nodes-base.moveBinaryData",
       "typeVersion": 1,
       "position": [
-        -80,
-        224
+        -1280,
+        560
       ],
-      "id": "40c74688-dadc-40fc-b9a4-a65c1c47284b",
-      "name": "MainText: JSON→Binary"
+      "id": "ad3ddf26-7f3b-406c-90aa-bb201a204da0",
+      "name": "MainText: JSON→Binary1"
     },
     {
       "parameters": {
@@ -331,11 +331,11 @@
       "type": "n8n-nodes-base.moveBinaryData",
       "typeVersion": 1,
       "position": [
-        -80,
-        0
+        -1280,
+        336
       ],
-      "id": "6f2d20d0-27a5-478e-830b-7745ba834a66",
-      "name": "Refs: JSON→Binary"
+      "id": "50db94f9-b105-460d-a9b8-8d715c919147",
+      "name": "Refs: JSON→Binary1"
     },
     {
       "parameters": {
@@ -374,11 +374,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        144,
-        224
+        -1056,
+        560
       ],
-      "id": "44fd2be0-0c94-458b-9dae-b5c34502c1ee",
-      "name": "Upload MainText",
+      "id": "8fd80045-9350-431d-8ffc-5c1dc96a7ab0",
+      "name": "Upload MainText1",
       "credentials": {
         "httpHeaderAuth": {
           "id": "C6EaRz4vxUMkBGCJ",
@@ -394,11 +394,11 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        368,
-        224
+        -832,
+        560
       ],
-      "id": "3c8267fc-2d65-4c32-b68f-d31febece157",
-      "name": "Wait (after upload)",
+      "id": "560653b0-82ca-4425-acb4-7e5961dd8cec",
+      "name": "Wait (after upload)1",
       "webhookId": "2fd69ce6-3048-4fa3-bd6b-9a30f410d1c4"
     },
     {
@@ -423,7 +423,7 @@
             {
               "parameterType": "formBinaryData",
               "name": "file",
-              "inputDataFieldName": "data"
+              "inputDataFieldName": "file"
             },
             {
               "name": "metadata",
@@ -438,11 +438,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        864,
-        224
+        -832,
+        336
       ],
-      "id": "f5418b0a-478a-4561-a8b3-da678eafd34e",
-      "name": "Upload References",
+      "id": "f26a6d50-2d3f-45f8-aad3-c9cbcccf3e8c",
+      "name": "Upload References1",
       "credentials": {
         "httpHeaderAuth": {
           "id": "C6EaRz4vxUMkBGCJ",
@@ -452,16 +452,17 @@
     },
     {
       "parameters": {
-        "mode": "mergeByPosition"
+        "mode": "combine",
+        "options": {}
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2,
       "position": [
-        640,
-        224
+        -960,
+        448
       ],
-      "id": "7b8f0c2d-3c1a-4a1d-9f2a-9aa4d1a1e5a0",
-      "name": "Gate: Wait+Refs"
+      "id": "5a6a0718-e1a6-4dbd-8c0d-ec4d2bb0f0f5",
+      "name": "Gate before Upload Refs"
     },
     {
       "parameters": {
@@ -485,7 +486,7 @@
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "JSON",
-        "body": "={{ JSON.stringify({\n  pdf_extract: {\n    text: $('Quellenverzeichnis entfernen').item.json.main_text || $('Quellenverzeichnis entfernen').item.json.text || $('Normalize Text').item.json.full_text\n  },\n  normalize_unicode: true,\n  fix_hyphenation: true,\n  collapse_whitespace: true,\n  header_footer_detection: false,\n  min_artifact_line_len: 0,\n  strip_publisher_boilerplate: true,\n  strip_correspondence_emails: true,\n  strip_figures_and_tables: true,\n  strip_front_matter: true,\n  publisher_hint: 'frontiers'\n}) }}",
+        "body": "={{ JSON.stringify({\n  pdf_extract: {\n    text: $('Quellenverzeichnis entfernen1').item.json.main_text || $('Quellenverzeichnis entfernen1').item.json.text || $('Normalize Text1').item.json.full_text\n  },\n  normalize_unicode: true,\n  fix_hyphenation: true,\n  collapse_whitespace: true,\n  header_footer_detection: false,\n  min_artifact_line_len: 0,\n  strip_publisher_boilerplate: true,\n  strip_correspondence_emails: true,\n  strip_figures_and_tables: true,\n  strip_front_matter: true,\n  publisher_hint: 'frontiers'\n}) }}",
         "options": {
           "timeout": 30000
         }
@@ -493,11 +494,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -464,
-        192
+        -1664,
+        528
       ],
-      "id": "d1ffc17e-29c8-414d-baf7-796a4a0c8052",
-      "name": "Finalize Main Text",
+      "id": "8433e79a-0735-4451-9a28-c6e651fad71f",
+      "name": "Finalize Main Text1",
       "credentials": {
         "httpHeaderAuth": {
           "id": "RTzRC0AggRABuRdo",
@@ -526,7 +527,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"source\": { \n    \"doi\": \"{{ $('1. Get Rated Paper').item.json.doi }}\",\n    \"pmid\": \"{{ $('1. Get Rated Paper').item.json.pmid }}\",\n    \"table\": \"rated_papers\"\n  },\n  \"citations\": {{ Array.isArray($('Literatur-Extraktor').item.json) ? $('Literatur-Extraktor').item.json : ($('Literatur-Extraktor').item.json.references || []) }},\n  \"link_type\": \"cites\"\n}",
+        "jsonBody": "={\n  \"source\": { \n    \"doi\": \"{{ $('1. Get Rated Paper1').item.json.doi }}\",\n    \"pmid\": \"{{ $('1. Get Rated Paper1').item.json.pmid }}\",\n    \"table\": \"rated_papers\"\n  },\n  \"citations\": {{ Array.isArray($('Literatur-Extraktor1').item.json) ? $('Literatur-Extraktor1').item.json : ($('Literatur-Extraktor1').item.json.references || []) }},\n  \"link_type\": \"cites\"\n}",
         "options": {
           "timeout": 30000
         }
@@ -534,11 +535,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1008,
-        96
+        -192,
+        432
       ],
-      "id": "6a6c66dd-091e-4c19-84a2-78f3dd861e1a",
-      "name": "Upsert Paper Links",
+      "id": "075e5b4f-6af0-4458-a362-0c4aa6967470",
+      "name": "Upsert Paper Links1",
       "credentials": {
         "httpHeaderAuth": {
           "id": "RTzRC0AggRABuRdo",
@@ -554,16 +555,16 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"doi\": \"{{ $('1. Get Rated Paper').item.json.doi }}\",\n  \"added_rag\": true,\n  \"processed\": true,\n  \"lightrag_doc_id\": \"{{ $('Upload MainText').item.json.doc_id || $('Upload MainText').item.json.id }}\",\n  \"references_json\": {{ $('Literatur-Extraktor').item.json }}\n}",
+        "jsonBody": "={\n  \"doi\": \"{{ $('1. Get Rated Paper1').item.json.doi }}\",\n  \"added_rag\": true,\n  \"processed\": true,\n  \"lightrag_doc_id\": \"{{ $('Upload MainText1').item.json.doc_id || $('Upload MainText1').item.json.id }}\",\n  \"references_json\": {{ $('Literatur-Extraktor1').item.json }}\n}",
         "options": {}
       },
-      "id": "481f0b06-d1a3-44c4-b862-8fb850df2f9a",
-      "name": "Mark as Added",
+      "id": "35ffafbe-c62c-4e2b-b15e-897f216d4b28",
+      "name": "Mark as Added1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        800,
-        224
+        -192,
+        656
       ],
       "credentials": {
         "httpHeaderAuth": {
@@ -574,215 +575,215 @@
     }
   ],
   "connections": {
-    "Schedule Trigger": {
+    "Schedule Trigger1": {
       "main": [
         [
           {
-            "node": "1. Get Rated Paper",
+            "node": "1. Get Rated Paper1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "1. Get Rated Paper": {
+    "1. Get Rated Paper1": {
       "main": [
         [
           {
-            "node": "Switch",
+            "node": "Switch1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Switch": {
+    "Switch1": {
       "main": [
         [
           {
-            "node": "Download a file",
+            "node": "Download a file1",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Wait (no result)",
+            "node": "Wait (no result)1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Download a file": {
+    "Download a file1": {
       "main": [
         [
           {
-            "node": "Extract from File",
+            "node": "Extract from File1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Extract from File": {
+    "Extract from File1": {
       "main": [
         [
           {
-            "node": "Normalize Text",
+            "node": "Normalize Text1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Normalize Text": {
+    "Normalize Text1": {
       "main": [
         [
           {
-            "node": "Literatur-Extraktor",
+            "node": "Literatur-Extraktor1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Literatur-Extraktor": {
+    "Literatur-Extraktor1": {
       "main": [
         [
           {
-            "node": "Quellenverzeichnis entfernen",
+            "node": "Quellenverzeichnis entfernen1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Quellenverzeichnis entfernen": {
+    "Quellenverzeichnis entfernen1": {
       "main": [
         [
           {
-            "node": "Finalize Main Text",
+            "node": "Finalize Main Text1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Build Metadata": {
+    "Build Metadata1": {
       "main": [
         [
           {
-            "node": "MainText: JSON→Binary",
+            "node": "MainText: JSON→Binary1",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Refs: JSON→Binary",
+            "node": "Refs: JSON→Binary1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "MainText: JSON→Binary": {
+    "MainText: JSON→Binary1": {
       "main": [
         [
           {
-            "node": "Upload MainText",
+            "node": "Upload MainText1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Refs: JSON→Binary": {
+    "Refs: JSON→Binary1": {
       "main": [
         [
           {
-            "node": "Upload References",
+            "node": "Upload References1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Upload MainText": {
+    "Upload MainText1": {
       "main": [
         [
           {
-            "node": "Wait (after upload)",
+            "node": "Wait (after upload)1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Wait (after upload)": {
+    "Wait (after upload)1": {
       "main": [
         [
           {
-            "node": "Gate: Wait+Refs",
+            "node": "Upload References1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Upload References": {
+    "Upload References1": {
       "main": [
         [
           {
-            "node": "Gate: Wait+Refs",
+            "node": "Gate: Wait+Refs1",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
     },
-    "Gate: Wait+Refs": {
+    "Gate: Wait+Refs1": {
       "main": [
         [
           {
-            "node": "Upsert Paper Links",
+            "node": "Upsert Paper Links1",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Mark as Added",
+            "node": "Mark as Added1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Finalize Main Text": {
+    "Finalize Main Text1": {
       "main": [
         [
           {
-            "node": "Build Metadata",
+            "node": "Build Metadata1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Upsert Paper Links": {
+    "Upsert Paper Links1": {
       "main": [
         [
           {
-            "node": "Mark as Added",
+            "node": "Mark as Added1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Mark as Added": {
+    "Mark as Added1": {
       "main": [
         [
           {
-            "node": "1. Get Rated Paper",
+            "node": "1. Get Rated Paper1",
             "type": "main",
             "index": 0
           }
