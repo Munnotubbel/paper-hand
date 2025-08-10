@@ -14,10 +14,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -3008,
-        528
+        -1792,
+        208
       ],
-      "id": "0b6bd592-ac5d-45b2-8226-0bfa8380ca6f",
+      "id": "29c2a1ba-b280-49b1-81ac-b6e2dbe4c1a4",
       "name": "Schedule Trigger1"
     },
     {
@@ -33,13 +33,13 @@
           "timeout": 30000
         }
       },
-      "id": "d63ad755-29e4-401c-a5d2-e490f8759f86",
+      "id": "d3b92898-9c5f-4358-92ec-8218fa564218",
       "name": "1. Get Rated Paper1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -2768,
-        528
+        -1552,
+        208
       ],
       "credentials": {
         "httpBearerAuth": {
@@ -111,10 +111,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -2560,
-        528
+        -1344,
+        208
       ],
-      "id": "d0885add-8f82-4f76-9ad3-e7728c41e01e",
+      "id": "a2f3d592-1d33-454d-b33e-bd0597f2afda",
       "name": "Switch1"
     },
     {
@@ -125,10 +125,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -2288,
-        720
+        -1072,
+        400
       ],
-      "id": "d1482e2e-b26d-42d9-af60-9f7d13e51e18",
+      "id": "c551a25b-d8e7-4af4-be87-c45b14aef3c1",
       "name": "Wait (no result)1",
       "webhookId": "cdb2d1cd-68be-4d2e-a53e-9c5df0c04853"
     },
@@ -140,10 +140,10 @@
       "type": "n8n-nodes-base.s3",
       "typeVersion": 1,
       "position": [
-        -2368,
-        528
+        -1152,
+        208
       ],
-      "id": "96ace03f-eb7f-4fee-bfd0-2d05b14bb129",
+      "id": "078ea233-aa2f-4ca7-b9e2-9f42baf87cef",
       "name": "Download a file1",
       "credentials": {
         "s3": {
@@ -160,10 +160,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -2240,
-        528
+        -1024,
+        208
       ],
-      "id": "47ab64f0-b35f-4a5c-8adb-02bae294ecca",
+      "id": "b0c584c6-5012-4dee-8f8c-e1acec55f988",
       "name": "Extract from File1"
     },
     {
@@ -196,10 +196,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -2112,
-        528
+        -896,
+        208
       ],
-      "id": "bcb88e65-f142-4244-8d8f-e3de8d102488",
+      "id": "4ab04761-d773-44b1-b7d1-b9a39348d167",
       "name": "Normalize Text1",
       "credentials": {
         "httpHeaderAuth": {
@@ -237,10 +237,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1968,
-        528
+        -752,
+        208
       ],
-      "id": "11c9a844-6b22-4f3f-a0da-6ed13f07a3e2",
+      "id": "74934644-d7f0-44d0-b235-cd1b34aa307a",
       "name": "Literatur-Extraktor1",
       "credentials": {
         "httpHeaderAuth": {
@@ -278,10 +278,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1808,
-        528
+        -592,
+        208
       ],
-      "id": "df198121-c2b4-4289-8d1b-2ac0fdca3f12",
+      "id": "e7af3859-d19c-4b2e-96f4-c3a7c81d14e7",
       "name": "Quellenverzeichnis entfernen1",
       "credentials": {
         "httpHeaderAuth": {
@@ -297,10 +297,10 @@
       "type": "n8n-nodes-base.functionItem",
       "typeVersion": 1,
       "position": [
-        -1504,
-        432
+        -288,
+        112
       ],
-      "id": "38693243-fa9c-458c-ac33-1f0159a72928",
+      "id": "479b9aa8-c0ca-450d-ae00-f12a19047ea9",
       "name": "Build Metadata1"
     },
     {
@@ -314,10 +314,10 @@
       "type": "n8n-nodes-base.moveBinaryData",
       "typeVersion": 1,
       "position": [
-        -1280,
-        560
+        -64,
+        240
       ],
-      "id": "ad3ddf26-7f3b-406c-90aa-bb201a204da0",
+      "id": "c6fe9017-4790-483f-a4cf-176006475f6c",
       "name": "MainText: JSON→Binary1"
     },
     {
@@ -331,10 +331,10 @@
       "type": "n8n-nodes-base.moveBinaryData",
       "typeVersion": 1,
       "position": [
-        -1280,
-        336
+        -64,
+        16
       ],
-      "id": "50db94f9-b105-460d-a9b8-8d715c919147",
+      "id": "65d59464-35a8-4a9f-803b-6f9971191626",
       "name": "Refs: JSON→Binary1"
     },
     {
@@ -374,10 +374,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1056,
-        560
+        160,
+        240
       ],
-      "id": "8fd80045-9350-431d-8ffc-5c1dc96a7ab0",
+      "id": "3c455b2a-58d6-4235-842d-6741c1be31eb",
       "name": "Upload MainText1",
       "credentials": {
         "httpHeaderAuth": {
@@ -394,10 +394,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -832,
-        560
+        784,
+        96
       ],
-      "id": "560653b0-82ca-4425-acb4-7e5961dd8cec",
+      "id": "d69ae76d-1a6a-4711-af6a-8e70c3df65f1",
       "name": "Wait (after upload)1",
       "webhookId": "2fd69ce6-3048-4fa3-bd6b-9a30f410d1c4"
     },
@@ -438,10 +438,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -832,
-        336
+        544,
+        16
       ],
-      "id": "f26a6d50-2d3f-45f8-aad3-c9cbcccf3e8c",
+      "id": "c54efaea-05da-4558-b6d3-342a2f530a08",
       "name": "Upload References1",
       "credentials": {
         "httpHeaderAuth": {
@@ -449,20 +449,6 @@
           "name": "LightRAG Api key"
         }
       }
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 2,
-      "position": [
-        -960,
-        448
-      ],
-      "id": "5a6a0718-e1a6-4dbd-8c0d-ec4d2bb0f0f5",
-      "name": "Gate before Upload Refs"
     },
     {
       "parameters": {
@@ -494,10 +480,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1664,
-        528
+        -448,
+        208
       ],
-      "id": "8433e79a-0735-4451-9a28-c6e651fad71f",
+      "id": "8f706b5f-e5e0-4790-b456-1865f628cc87",
       "name": "Finalize Main Text1",
       "credentials": {
         "httpHeaderAuth": {
@@ -535,10 +521,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -192,
-        432
+        1024,
+        112
       ],
-      "id": "075e5b4f-6af0-4458-a362-0c4aa6967470",
+      "id": "cd64b54f-717f-4955-90f1-91d80ad1f599",
       "name": "Upsert Paper Links1",
       "credentials": {
         "httpHeaderAuth": {
@@ -558,13 +544,13 @@
         "jsonBody": "={\n  \"doi\": \"{{ $('1. Get Rated Paper1').item.json.doi }}\",\n  \"added_rag\": true,\n  \"processed\": true,\n  \"lightrag_doc_id\": \"{{ $('Upload MainText1').item.json.doc_id || $('Upload MainText1').item.json.id }}\",\n  \"references_json\": {{ $('Literatur-Extraktor1').item.json }}\n}",
         "options": {}
       },
-      "id": "35ffafbe-c62c-4e2b-b15e-897f216d4b28",
+      "id": "33c8abbe-63e0-490c-ba8a-b06d29fb16c5",
       "name": "Mark as Added1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -192,
-        656
+        1024,
+        336
       ],
       "credentials": {
         "httpHeaderAuth": {
@@ -712,7 +698,7 @@
       "main": [
         [
           {
-            "node": "Wait (after upload)1",
+            "node": "Upload References1",
             "type": "main",
             "index": 0
           }
@@ -723,7 +709,7 @@
       "main": [
         [
           {
-            "node": "Upload References1",
+            "node": "Upsert Paper Links1",
             "type": "main",
             "index": 0
           }
@@ -734,23 +720,7 @@
       "main": [
         [
           {
-            "node": "Gate: Wait+Refs1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Gate: Wait+Refs1": {
-      "main": [
-        [
-          {
-            "node": "Upsert Paper Links1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Mark as Added1",
+            "node": "Wait (after upload)1",
             "type": "main",
             "index": 0
           }
