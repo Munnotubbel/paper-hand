@@ -1,771 +1,797 @@
 {
-    "nodes": [
-      {
-        "parameters": {
-          "rule": {
-            "interval": [
-              {
-                "field": "minutes",
-                "minutesInterval": 15
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.scheduleTrigger",
-        "typeVersion": 1.2,
-        "position": [
-          -1632,
-          384
-        ],
-        "id": "adc47549-c41f-4956-8760-5aa3169a0efe",
-        "name": "Schedule Trigger"
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://paper-backend:4242/rated-papers/query",
-          "authentication": "genericCredentialType",
-          "genericAuthType": "httpHeaderAuth",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "{\n  \"min_rating\": 6.1,\n  \"added_rag\": false,\n  \"category_keywords\": [\n    \"Solide Grundlage\", \n    \"Content-Gold\", \n    \"Interessanter Ansatz\"\n  ],\n  \"limit\": 1\n}",
-          "options": {"timeout": 30000}
-        },
-        "id": "251bf126-eaec-4c02-b769-a7afa556dc83",
-        "name": "1. Get Rated Paper",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          -1392,
-          384
-        ],
-        "credentials": {
-          "httpBearerAuth": {
-            "id": "ijgx3lz1xx4Q9zxn",
-            "name": "Bearer Auth account"
-          },
-          "httpHeaderAuth": {
-            "id": "RTzRC0AggRABuRdo",
-            "name": "Auth Header Paper Backend API KEY"
-          }
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
         }
       },
-      {
-        "parameters": {
-          "rules": {
-            "values": [
-              {
-                "conditions": {
-                  "options": {
-                    "caseSensitive": true,
-                    "leftValue": "",
-                    "typeValidation": "strict",
-                    "version": 2
-                  },
-                  "conditions": [
-                    {
-                      "leftValue": "={{ $input.all().length }}",
-                      "rightValue": 0,
-                      "operator": {
-                        "type": "number",
-                        "operation": "gt"
-                      },
-                      "id": "9ca3c566-4222-4f04-8f7a-53905212265f"
-                    }
-                  ],
-                  "combinator": "and"
-                },
-                "renameOutput": true,
-                "outputKey": "Paper gefunden"
-              },
-              {
-                "conditions": {
-                  "options": {
-                    "caseSensitive": true,
-                    "leftValue": "",
-                    "typeValidation": "strict",
-                    "version": 2
-                  },
-                  "conditions": [
-                    {
-                      "leftValue": "={{ $input.all().length }}",
-                      "rightValue": 0,
-                      "operator": {
-                        "type": "number",
-                        "operation": "equals"
-                      },
-                      "id": "5f928ef1-de1c-4891-9681-2190b23cdfab"
-                    }
-                  ],
-                  "combinator": "and"
-                },
-                "renameOutput": true,
-                "outputKey": "Keine Papers gefunden"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "type": "n8n-nodes-base.switch",
-        "typeVersion": 3.2,
-        "position": [
-          -1184,
-          384
-        ],
-        "id": "14771437-ad6b-4eb4-92e3-4b107ebd1b8b",
-        "name": "Switch"
-      },
-      {
-        "parameters": {
-          "amount": 2,
-          "unit": "minutes"
-        },
-        "type": "n8n-nodes-base.wait",
-        "typeVersion": 1.1,
-        "position": [
-          -912,
-          576
-        ],
-        "id": "f9a4efc5-9195-498d-96ed-78337d0953da",
-        "name": "Wait (no result)",
-        "webhookId": "cdb2d1cd-68be-4d2e-a53e-9c5df0c04853"
-      },
-      {
-        "parameters": {
-          "bucketName": "paper-store",
-          "fileKey": "={{ $json.pmid }}.pdf"
-        },
-        "type": "n8n-nodes-base.s3",
-        "typeVersion": 1,
-        "position": [
-          -992,
-          384
-        ],
-        "id": "475e720d-35ce-4547-bdde-f550b8e3f4df",
-        "name": "Download a file",
-        "credentials": {
-          "s3": {
-            "id": "lXbGUFRjp6Yya8kj",
-            "name": "Strato S3 Images"
-          }
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1808,
+        192
+      ],
+      "id": "75c5b709-4151-478c-8324-a3a96e93ee16",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://paper-backend:4242/rated-papers/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"min_rating\": 6.1,\n  \"added_rag\": false,\n  \"category_keywords\": [\n    \"Solide Grundlage\", \n    \"Content-Gold\", \n    \"Interessanter Ansatz\"\n  ],\n  \"limit\": 1\n}",
+        "options": {
+          "timeout": 30000
         }
       },
-      {
-        "parameters": {
-          "operation": "pdf",
-          "options": {}
+      "id": "aa3ae46b-6158-4819-9765-5bda83f5f202",
+      "name": "1. Get Rated Paper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -1568,
+        192
+      ],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "ijgx3lz1xx4Q9zxn",
+          "name": "Bearer Auth account"
         },
-        "type": "n8n-nodes-base.extractFromFile",
-        "typeVersion": 1,
-        "position": [
-          -864,
-          384
-        ],
-        "id": "b4800d81-40c9-4a45-9c1b-7e2c6cc35e3b",
-        "name": "Extract from File"
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://paper-backend:4242/text/normalize-for-n8n",
-          "authentication": "genericCredentialType",
-          "genericAuthType": "httpHeaderAuth",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "name": "X-API-KEY",
-                "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}"
-              }
-            ]
-          },
-          "sendBody": true,
-          "contentType": "raw",
-          "rawContentType": "JSON",
-          "body": "={{ JSON.stringify({\npdf_extract: $json,\nnormalize_unicode: true,\nfix_hyphenation: true,\ncollapse_whitespace: true\n}) }}",
-          "options": {
-            "timeout": 30000
-          }
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          -736,
-          384
-        ],
-        "id": "8562172e-160f-43bd-9e40-a8cd1c1b773f",
-        "name": "Normalize Text",
-        "credentials": {
-          "httpHeaderAuth": {
-            "id": "RTzRC0AggRABuRdo",
-            "name": "Auth Header Paper Backend API KEY"
-          }
+        "httpHeaderAuth": {
+          "id": "RTzRC0AggRABuRdo",
+          "name": "Auth Header Paper Backend API KEY"
         }
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://paper-backend:4242/citations/extract-for-n8n",
-          "authentication": "genericCredentialType",
-          "genericAuthType": "httpHeaderAuth",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "name": "X-API-KEY",
-                "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}"
-              }
-            ]
-          },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({\ntext: $json.full_text,\n}) }}",
-          "options": {
-            "timeout": 30000
-          }
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          -592,
-          384
-        ],
-        "id": "558d7cb0-5433-4402-b4ab-02570d9de420",
-        "name": "Literatur-Extraktor",
-        "credentials": {
-          "httpHeaderAuth": {
-            "id": "RTzRC0AggRABuRdo",
-            "name": "Auth Header Paper Backend API KEY"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://paper-backend:4242/citations/remove-references-for-n8n",
-          "authentication": "genericCredentialType",
-          "genericAuthType": "httpHeaderAuth",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "name": "X-API-KEY",
-                "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}"
-              }
-            ]
-          },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({\ntext: $('Normalize Text').item.json.full_text,\n}) }}",
-          "options": {
-            "timeout": 30000
-          }
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          -432,
-          384
-        ],
-        "id": "b48d2eb1-9aff-4922-af89-37787b60eae0",
-        "name": "Quellenverzeichnis entfernen",
-        "credentials": {
-          "httpHeaderAuth": {
-            "id": "RTzRC0AggRABuRdo",
-            "name": "Auth Header Paper Backend API KEY"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "functionCode": "const paper = $('1. Get Rated Paper').item.json;\nconst refsParsed = $('Literatur-Extraktor').item.json;\n\nconst pmidRaw = paper.pmid || paper.pmid_pdf_id || $json.pmid || $json.pmid_pdf_id;\nconst doiRaw = paper.doi;\n\nfunction normalizeDoi(v){ if(!v) return ''; let s=String(v).toLowerCase().trim(); s = s.replace(/^doi:\\s*/,''); s = s.replace(/\\s/g,''); s = s.replace(/[\\.,;]+$/,''); return s; }\nfunction normalizePmid(v){ if(!v) return ''; const m = String(v).match(/\\d+/g); return m ? m.join('').replace(/^0+/,'') : ''; }\n\nconst doi_norm = normalizeDoi(doiRaw);\nconst pmid_norm = normalizePmid(pmidRaw);\nconst identity_key = doi_norm ? `doi:${doi_norm}` : (pmid_norm ? `pmid:${pmid_norm}` : (pmidRaw ? `pmid_pdf_id:${pmidRaw}` : ''));\n\nconst rating = Number(paper.rating);\nconst confidence = Number(paper.confidence_score);\nconst category = paper.category;\nconst ai_summary = paper.ai_summary || '';\nlet keyFindings = paper.key_findings;\nif (!Array.isArray(keyFindings)) {\n  keyFindings = String(keyFindings || '').split('\\n').map(s => s.trim()).filter(Boolean);\n}\n\nconst referencesArray = Array.isArray(refsParsed) ? refsParsed : (refsParsed?.references ?? []);\nconst refsText = Array.isArray(referencesArray) ? referencesArray.join('\\n') : JSON.stringify(referencesArray||'');\nconst doiRegex = /\\b10\\.\\d{4,9}\\/[-._;()\/:A-Z0-9]+/gi;\nconst seenDOI = new Set();\nconst out_doi_norms = [];\nlet m;\nwhile ((m = doiRegex.exec(refsText))){ const n = normalizeDoi(m[0]); if(n && !seenDOI.has(n)){ seenDOI.add(n); out_doi_norms.push(n);} }\nconst out_links_count = out_doi_norms.length;\n\nconst metadataBase = {\n  title: paper.title || paper.paper_title || null,\n  journal: paper.journal || null,\n  year: paper.year ? Number(paper.year) : null,\n  doi: doiRaw || null,\n  doi_norm,\n  pmid_pdf_id: String(pmidRaw || ''),\n  pmid_norm,\n  identity_key,\n  category,\n  source: 'rated_papers',\n  rating,\n  confidence_score: confidence,\n  ai_summary,\n  key_findings: keyFindings,\n  study_strength: paper.study_strength || '',\n  study_limitations: paper.study_limitations || '',\n  content_url: paper.content_url ?? null,\n  content_status: paper.content_status ?? null,\n  legal_tier: 'studies_only_no_claims',\n  ingestion_timestamp: new Date().toISOString(),\n  document_group: 'papers',\n  graph_ready: true,\n  out_doi_norms,\n  out_links_count\n};\n\nconst metadataMain = { ...metadataBase, section: 'main', references_parsed: referencesArray };\nconst metadataRefs = { ...metadataBase, section: 'references' };\n\nitem.metadata_main = JSON.stringify(metadataMain);\nitem.metadata_refs = JSON.stringify(metadataRefs);\nitem.main_filename = `${pmidRaw || 'paper'}.main.txt`;\nitem.refs_content = JSON.stringify(referencesArray);\nitem.refs_filename = `${pmidRaw || 'paper'}.references.json`;\nreturn item;"
-        },
-        "type": "n8n-nodes-base.functionItem",
-        "typeVersion": 1,
-        "position": [
-          -128,
-          288
-        ],
-        "id": "4e0dd752-d8c9-4a87-96de-28c29abbe917",
-        "name": "Build Metadata"
-      },
-      {
-        "parameters": {
-          "mode": "jsonToBinary",
-          "options": {
-            "fileName": "={{ $json.main_filename }}",
-            "mimeType": "text/plain"
-          }
-        },
-        "type": "n8n-nodes-base.moveBinaryData",
-        "typeVersion": 1,
-        "position": [
-          96,
-          416
-        ],
-        "id": "d2a94a03-6f7b-4975-a339-9a770965420c",
-        "name": "MainText: JSON→Binary"
-      },
-      {
-        "parameters": {
-          "mode": "jsonToBinary",
-          "options": {
-            "fileName": "={{ $json.refs_filename }}",
-            "mimeType": "application/json"
-          }
-        },
-        "type": "n8n-nodes-base.moveBinaryData",
-        "typeVersion": 1,
-        "position": [
-          96,
-          192
-        ],
-        "id": "73c1d54e-c525-451a-9fae-9c9bf1c6373c",
-        "name": "Refs: JSON→Binary"
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://lightrag:8000/documents/upload",
-          "authentication": "genericCredentialType",
-          "genericAuthType": "httpHeaderAuth",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "X-API-Key",
-                "value": "={{ $json.LIGHTRAG_API_KEY || '' }}"
-              }
-            ]
-          },
-          "sendBody": true,
-          "contentType": "multipart-form-data",
-          "bodyParameters": {
-            "parameters": [
-              {
-                "parameterType": "formBinaryData",
-                "name": "file",
-                "inputDataFieldName": "file"
-              },
-              {
-                "name": "metadata",
-                "value": "={{ $json.metadata_main }}"
-              }
-            ]
-          },
-          "options": {
-            "timeout": 60000
-          }
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          320,
-          416
-        ],
-        "id": "09c1d435-b840-42c9-b29c-e11eabfaaa45",
-        "name": "Upload MainText",
-        "credentials": {
-          "httpHeaderAuth": {
-            "id": "C6EaRz4vxUMkBGCJ",
-            "name": "LightRAG Api key"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "amount": 2,
-          "unit": "minutes"
-        },
-        "type": "n8n-nodes-base.wait",
-        "typeVersion": 1.1,
-        "position": [
-          544,
-          416
-        ],
-        "id": "791b6b37-7756-4f73-b58e-fe0ef8ff6d6b",
-        "name": "Wait (after upload)",
-        "webhookId": "2fd69ce6-3048-4fa3-bd6b-9a30f410d1c4"
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://lightrag:8000/documents/upload",
-          "authentication": "genericCredentialType",
-          "genericAuthType": "httpHeaderAuth",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "X-API-Key",
-                "value": "={{ $json.LIGHTRAG_API_KEY || '' }}"
-              }
-            ]
-          },
-          "sendBody": true,
-          "contentType": "multipart-form-data",
-          "bodyParameters": {
-            "parameters": [
-              {
-                "parameterType": "formBinaryData",
-                "name": "file",
-                "inputDataFieldName": "file"
-              },
-              {
-                "name": "metadata",
-                "value": "={{ $json.metadata_refs }}"
-              }
-            ]
-          },
-          "options": {
-            "timeout": 60000
-          }
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          752,
-          416
-        ],
-        "id": "ed5bc08d-f9e9-4d2b-95a1-5d8df652ed18",
-        "name": "Upload References",
-        "credentials": {
-          "httpHeaderAuth": {
-            "id": "C6EaRz4vxUMkBGCJ",
-            "name": "LightRAG Api key"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://paper-backend:4242/text/normalize-for-n8n",
-          "authentication": "genericCredentialType",
-          "genericAuthType": "httpHeaderAuth",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "name": "X-API-KEY",
-                "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}"
-              }
-            ]
-          },
-          "sendBody": true,
-          "contentType": "raw",
-          "rawContentType": "JSON",
-          "body": "={{ JSON.stringify({\n  pdf_extract: {\n    text: $('Quellenverzeichnis entfernen').item.json.main_text || $('Quellenverzeichnis entfernen').item.json.text || $('Normalize Text').item.json.full_text\n  },\n  normalize_unicode: true,\n  fix_hyphenation: true,\n  collapse_whitespace: true,\n  header_footer_detection: false,\n  min_artifact_line_len: 0,\n  strip_publisher_boilerplate: true,\n  strip_correspondence_emails: true,\n  strip_figures_and_tables: true,\n  strip_front_matter: true,\n  publisher_hint: 'frontiers'\n}) }}",
-          "options": {
-            "timeout": 30000
-          }
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          -288,
-          384
-        ],
-        "id": "9da84214-df2f-4692-9771-b3fbdcdedb97",
-        "name": "Finalize Main Text",
-        "credentials": {
-          "httpHeaderAuth": {
-            "id": "RTzRC0AggRABuRdo",
-            "name": "Auth Header Paper Backend API KEY"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://paper-backend:4242/graph/paper-links/upsert",
-          "authentication": "genericCredentialType",
-          "genericAuthType": "httpHeaderAuth",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "name": "X-API-KEY",
-                "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}"
-              }
-            ]
-          },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={\n  \"source\": { \n    \"doi\": \"{{ $('1. Get Rated Paper').item.json.doi }}\",\n    \"pmid\": \"{{ $('1. Get Rated Paper').item.json.pmid }}\",\n    \"table\": \"rated_papers\"\n  },\n  \"citations\": {{ Array.isArray($('Literatur-Extraktor').item.json) ? $('Literatur-Extraktor').item.json : ($('Literatur-Extraktor').item.json.references || []) }},\n  \"link_type\": \"cites\"\n}",
-          "options": {
-            "timeout": 30000
-          }
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          1184,
-          288
-        ],
-        "id": "cbbbf43d-65a3-42b1-a7e7-d483a918ddef",
-        "name": "Upsert Paper Links",
-        "credentials": {
-          "httpHeaderAuth": {
-            "id": "RTzRC0AggRABuRdo",
-            "name": "Auth Header Paper Backend API KEY"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "method": "PATCH",
-          "url": "http://paper-backend:4242/rated-papers/added-rag",
-          "authentication": "genericCredentialType",
-          "genericAuthType": "httpHeaderAuth",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={\n  \"doi\": \"{{ $('1. Get Rated Paper').item.json.doi }}\",\n  \"added_rag\": true,\n  \"processed\": true,\n  \"lightrag_doc_id\": \"{{ $('Upload MainText').item.json.doc_id || $('Upload MainText').item.json.id }}\",\n  \"references_json\": {{ $('Literatur-Extraktor').item.json }}\n}",
-          "options": {}
-        },
-        "id": "8289cf89-aa23-4dc5-b0a3-2d82d826b0cb",
-        "name": "Mark as Added",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          976,
-          416
-        ],
-        "credentials": {
-          "httpHeaderAuth": {
-            "id": "RTzRC0AggRABuRdo",
-            "name": "Auth Header Paper Backend API KEY"
-          }
-        }
-      }
-    ],
-    "connections": {
-      "Schedule Trigger": {
-        "main": [
-          [
-            {
-              "node": "1. Get Rated Paper",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "1. Get Rated Paper": {
-        "main": [
-          [
-            {
-              "node": "Switch",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Switch": {
-        "main": [
-          [
-            {
-              "node": "Download a file",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "Wait (no result)",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Download a file": {
-        "main": [
-          [
-            {
-              "node": "Extract from File",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Extract from File": {
-        "main": [
-          [
-            {
-              "node": "Normalize Text",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Normalize Text": {
-        "main": [
-          [
-            {
-              "node": "Literatur-Extraktor",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Literatur-Extraktor": {
-        "main": [
-          [
-            {
-              "node": "Quellenverzeichnis entfernen",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Quellenverzeichnis entfernen": {
-        "main": [
-          [
-            {
-              "node": "Finalize Main Text",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Build Metadata": {
-        "main": [
-          [
-            {
-              "node": "MainText: JSON→Binary",
-              "type": "main",
-              "index": 0
-            },
-            {
-              "node": "Refs: JSON→Binary",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "MainText: JSON→Binary": {
-        "main": [
-          [
-            {
-              "node": "Upload MainText",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Refs: JSON→Binary": {
-        "main": [
-          [
-            {
-              "node": "Upload References",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Upload MainText": {
-        "main": [
-          [
-            {
-              "node": "Wait (after upload)",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Wait (after upload)": {
-        "main": [
-          [
-            {
-              "node": "Upload References",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Upload References": {
-        "main": [
-          [
-            {
-              "node": "Upsert Paper Links",
-              "type": "main",
-              "index": 0
-            },
-            {
-              "node": "Mark as Added",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Finalize Main Text": {
-        "main": [
-          [
-            {
-              "node": "Build Metadata",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Upsert Paper Links": {
-        "main": [
-          [
-            {
-              "node": "Mark as Added",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Mark as Added": {
-        "main": [
-          [
-            {
-              "node": "1. Get Rated Paper",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
       }
     },
-    "pinData": {},
-    "meta": {
-      "instanceId": "e29847cb0d85386a381a01c77c5a370e3c3dcd4f4ebcacf20107c8e6e234123a"
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $input.all().length }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    },
+                    "id": "9ca3c566-4222-4f04-8f7a-53905212265f"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Paper gefunden"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $input.all().length }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    },
+                    "id": "5f928ef1-de1c-4891-9681-2190b23cdfab"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Keine Papers gefunden"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1360,
+        192
+      ],
+      "id": "f5f0537c-9b2a-423d-acbe-88a0be08f042",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1088,
+        384
+      ],
+      "id": "2fd861b2-061c-4fcf-9270-8f4095bdae41",
+      "name": "Wait (no result)",
+      "webhookId": "cdb2d1cd-68be-4d2e-a53e-9c5df0c04853"
+    },
+    {
+      "parameters": {
+        "bucketName": "paper-store",
+        "fileKey": "={{ $json.pmid }}.pdf"
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        -1168,
+        192
+      ],
+      "id": "0f1cf9cc-ea3e-45cc-bccb-dce923c4ecba",
+      "name": "Download a file",
+      "credentials": {
+        "s3": {
+          "id": "lXbGUFRjp6Yya8kj",
+          "name": "Strato S3 Images"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        192
+      ],
+      "id": "054646d1-fa23-4d47-9e5b-cac489a12f00",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://paper-backend:4242/text/normalize-for-n8n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-API-KEY",
+              "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "JSON",
+        "body": "={{ JSON.stringify({\npdf_extract: $json,\nnormalize_unicode: true,\nfix_hyphenation: true,\ncollapse_whitespace: true\n}) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -912,
+        192
+      ],
+      "id": "43cd4682-816b-433a-ac30-c1426b71c4d3",
+      "name": "Normalize Text",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RTzRC0AggRABuRdo",
+          "name": "Auth Header Paper Backend API KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://paper-backend:4242/citations/extract-for-n8n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-API-KEY",
+              "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\ntext: $json.full_text,\n}) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -768,
+        192
+      ],
+      "id": "8307652d-5574-41c3-871a-0569578fd325",
+      "name": "Literatur-Extraktor",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RTzRC0AggRABuRdo",
+          "name": "Auth Header Paper Backend API KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://paper-backend:4242/citations/remove-references-for-n8n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-API-KEY",
+              "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\ntext: $('Normalize Text').item.json.full_text,\n}) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -608,
+        192
+      ],
+      "id": "e3e96a06-2e10-448e-8dff-a1a37f5e452a",
+      "name": "Quellenverzeichnis entfernen",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RTzRC0AggRABuRdo",
+          "name": "Auth Header Paper Backend API KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "const paper = $('1. Get Rated Paper').item.json;\nconst refsParsed = $('Literatur-Extraktor').item.json;\n\nconst pmidRaw = paper.pmid || paper.pmid_pdf_id || $json.pmid || $json.pmid_pdf_id;\nconst doiRaw = paper.doi;\n\nfunction normalizeDoi(v){ if(!v) return ''; let s=String(v).toLowerCase().trim(); s = s.replace(/^doi:\\s*/,''); s = s.replace(/\\s/g,''); s = s.replace(/[\\.,;]+$/,''); return s; }\nfunction normalizePmid(v){ if(!v) return ''; const m = String(v).match(/\\d+/g); return m ? m.join('').replace(/^0+/,'') : ''; }\n\nconst doi_norm = normalizeDoi(doiRaw);\nconst pmid_norm = normalizePmid(pmidRaw);\nconst identity_key = doi_norm ? `doi:${doi_norm}` : (pmid_norm ? `pmid:${pmid_norm}` : (pmidRaw ? `pmid_pdf_id:${pmidRaw}` : ''));\n\nconst rating = Number(paper.rating);\nconst confidence = Number(paper.confidence_score);\nconst category = paper.category;\nconst ai_summary = paper.ai_summary || '';\nlet keyFindings = paper.key_findings;\nif (!Array.isArray(keyFindings)) {\n  keyFindings = String(keyFindings || '').split('\\n').map(s => s.trim()).filter(Boolean);\n}\n\nconst referencesArray = Array.isArray(refsParsed) ? refsParsed : (refsParsed?.references ?? []);\nconst refsText = Array.isArray(referencesArray) ? referencesArray.join('\\n') : JSON.stringify(referencesArray||'');\nconst doiRegex = /\\b10\\.\\d{4,9}\\/[-._;()/:A-Z0-9]+/gi;\nconst seenDOI = new Set();\nconst out_doi_norms = [];\nlet m;\nwhile ((m = doiRegex.exec(refsText))){ const n = normalizeDoi(m[0]); if(n && !seenDOI.has(n)){ seenDOI.add(n); out_doi_norms.push(n);} }\nconst out_links_count = out_doi_norms.length;\n\nconst metadataBase = {\n  title: paper.title || paper.paper_title || null,\n  journal: paper.journal || null,\n  year: paper.year ? Number(paper.year) : null,\n  doi: doiRaw || null,\n  doi_norm,\n  pmid_pdf_id: String(pmidRaw || ''),\n  pmid_norm,\n  identity_key,\n  category,\n  source: 'rated_papers',\n  rating,\n  confidence_score: confidence,\n  ai_summary,\n  key_findings: keyFindings,\n  study_strength: paper.study_strength || '',\n  study_limitations: paper.study_limitations || '',\n  content_url: paper.content_url ?? null,\n  content_status: paper.content_status ?? null,\n  legal_tier: 'studies_only_no_claims',\n  ingestion_timestamp: new Date().toISOString(),\n  document_group: 'papers',\n  graph_ready: true,\n  out_doi_norms,\n  out_links_count\n};\n\nconst metadataMain = { ...metadataBase, section: 'main', references_parsed: referencesArray };\nconst metadataRefs = { ...metadataBase, section: 'references' };\n\nitem.metadata_main = JSON.stringify(metadataMain);\nitem.metadata_refs = JSON.stringify(metadataRefs);\nitem.main_filename = `${pmidRaw || 'paper'}.main.txt`;\nitem.refs_content = JSON.stringify(referencesArray);\nitem.refs_filename = `${pmidRaw || 'paper'}.references.json`;\nreturn item;"
+      },
+      "type": "n8n-nodes-base.functionItem",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        96
+      ],
+      "id": "0a020e73-701a-4c6b-a0ad-38fdb4a6b4bd",
+      "name": "Build Metadata"
+    },
+    {
+      "parameters": {
+        "mode": "jsonToBinary",
+        "options": {
+          "fileName": "={{ $json.main_filename }}",
+          "mimeType": "text/plain"
+        }
+      },
+      "type": "n8n-nodes-base.moveBinaryData",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        224
+      ],
+      "id": "40c74688-dadc-40fc-b9a4-a65c1c47284b",
+      "name": "MainText: JSON→Binary"
+    },
+    {
+      "parameters": {
+        "mode": "jsonToBinary",
+        "options": {
+          "fileName": "={{ $json.refs_filename }}",
+          "mimeType": "application/json"
+        }
+      },
+      "type": "n8n-nodes-base.moveBinaryData",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        0
+      ],
+      "id": "6f2d20d0-27a5-478e-830b-7745ba834a66",
+      "name": "Refs: JSON→Binary"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://lightrag:8000/documents/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $json.LIGHTRAG_API_KEY || '' }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "file"
+            },
+            {
+              "name": "metadata",
+              "value": "={{ $json.metadata_main }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        144,
+        224
+      ],
+      "id": "44fd2be0-0c94-458b-9dae-b5c34502c1ee",
+      "name": "Upload MainText",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C6EaRz4vxUMkBGCJ",
+          "name": "LightRAG Api key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        368,
+        224
+      ],
+      "id": "3c8267fc-2d65-4c32-b68f-d31febece157",
+      "name": "Wait (after upload)",
+      "webhookId": "2fd69ce6-3048-4fa3-bd6b-9a30f410d1c4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://lightrag:8000/documents/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $json.LIGHTRAG_API_KEY || '' }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "metadata",
+              "value": "={{ $json.metadata_refs }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        864,
+        224
+      ],
+      "id": "f5418b0a-478a-4561-a8b3-da678eafd34e",
+      "name": "Upload References",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C6EaRz4vxUMkBGCJ",
+          "name": "LightRAG Api key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "wait"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        640,
+        224
+      ],
+      "id": "7b8f0c2d-3c1a-4a1d-9f2a-9aa4d1a1e5a0",
+      "name": "Gate: Wait+Refs"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://paper-backend:4242/text/normalize-for-n8n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-API-KEY",
+              "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "JSON",
+        "body": "={{ JSON.stringify({\n  pdf_extract: {\n    text: $('Quellenverzeichnis entfernen').item.json.main_text || $('Quellenverzeichnis entfernen').item.json.text || $('Normalize Text').item.json.full_text\n  },\n  normalize_unicode: true,\n  fix_hyphenation: true,\n  collapse_whitespace: true,\n  header_footer_detection: false,\n  min_artifact_line_len: 0,\n  strip_publisher_boilerplate: true,\n  strip_correspondence_emails: true,\n  strip_figures_and_tables: true,\n  strip_front_matter: true,\n  publisher_hint: 'frontiers'\n}) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -464,
+        192
+      ],
+      "id": "d1ffc17e-29c8-414d-baf7-796a4a0c8052",
+      "name": "Finalize Main Text",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RTzRC0AggRABuRdo",
+          "name": "Auth Header Paper Backend API KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://paper-backend:4242/graph/paper-links/upsert",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-API-KEY",
+              "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"source\": { \n    \"doi\": \"{{ $('1. Get Rated Paper').item.json.doi }}\",\n    \"pmid\": \"{{ $('1. Get Rated Paper').item.json.pmid }}\",\n    \"table\": \"rated_papers\"\n  },\n  \"citations\": {{ Array.isArray($('Literatur-Extraktor').item.json) ? $('Literatur-Extraktor').item.json : ($('Literatur-Extraktor').item.json.references || []) }},\n  \"link_type\": \"cites\"\n}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1008,
+        96
+      ],
+      "id": "6a6c66dd-091e-4c19-84a2-78f3dd861e1a",
+      "name": "Upsert Paper Links",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RTzRC0AggRABuRdo",
+          "name": "Auth Header Paper Backend API KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "http://paper-backend:4242/rated-papers/added-rag",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"doi\": \"{{ $('1. Get Rated Paper').item.json.doi }}\",\n  \"added_rag\": true,\n  \"processed\": true,\n  \"lightrag_doc_id\": \"{{ $('Upload MainText').item.json.doc_id || $('Upload MainText').item.json.id }}\",\n  \"references_json\": {{ $('Literatur-Extraktor').item.json }}\n}",
+        "options": {}
+      },
+      "id": "481f0b06-d1a3-44c4-b862-8fb850df2f9a",
+      "name": "Mark as Added",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        800,
+        224
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RTzRC0AggRABuRdo",
+          "name": "Auth Header Paper Backend API KEY"
+        }
+      }
     }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "1. Get Rated Paper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Get Rated Paper": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Download a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait (no result)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download a file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Normalize Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Text": {
+      "main": [
+        [
+          {
+            "node": "Literatur-Extraktor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Literatur-Extraktor": {
+      "main": [
+        [
+          {
+            "node": "Quellenverzeichnis entfernen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quellenverzeichnis entfernen": {
+      "main": [
+        [
+          {
+            "node": "Finalize Main Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Metadata": {
+      "main": [
+        [
+          {
+            "node": "MainText: JSON→Binary",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Refs: JSON→Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MainText: JSON→Binary": {
+      "main": [
+        [
+          {
+            "node": "Upload MainText",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refs: JSON→Binary": {
+      "main": [
+        [
+          {
+            "node": "Upload References",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload MainText": {
+      "main": [
+        [
+          {
+            "node": "Wait (after upload)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait (after upload)": {
+      "main": [
+        [
+          {
+            "node": "Gate: Wait+Refs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload References": {
+      "main": [
+        [
+          {
+            "node": "Gate: Wait+Refs",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Gate: Wait+Refs": {
+      "main": [
+        [
+          {
+            "node": "Upsert Paper Links",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Mark as Added",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finalize Main Text": {
+      "main": [
+        [
+          {
+            "node": "Build Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert Paper Links": {
+      "main": [
+        [
+          {
+            "node": "Mark as Added",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark as Added": {
+      "main": [
+        [
+          {
+            "node": "1. Get Rated Paper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "e29847cb0d85386a381a01c77c5a370e3c3dcd4f4ebcacf20107c8e6e234123a"
   }
+}
