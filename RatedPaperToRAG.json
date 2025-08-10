@@ -452,7 +452,7 @@
     },
     {
       "parameters": {
-        "mode": "wait"
+        "mode": "mergeByPosition"
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2,
