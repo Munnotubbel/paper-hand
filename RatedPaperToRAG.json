@@ -587,7 +587,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const out = [];\nfor (const item of items) {\n  const refs = item.json && typeof item.json.refs_content === 'string' ? item.json.refs_content : '';\n  if (refs) {\n    const fileName = item.json.refs_filename || 'references.json';\n    item.binary = item.binary || {};\n    item.binary.file = {\n      data: Buffer.from(refs, 'utf8').toString('base64'),\n      fileName,\n      mimeType: 'application/json'\n    };\n    out.push(item);\n  }\n}\nreturn out;"
+        "jsCode": "const out = [];\nfor (const item of items) {\n  if (item.binary && item.binary.data) {\n    item.binary.file = item.binary.data;\n    delete item.binary.data;\n    out.push(item);\n  }\n}\nreturn out;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -749,7 +749,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
@@ -837,7 +837,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
