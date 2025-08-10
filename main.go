@@ -142,8 +142,8 @@ func main() {
 	setupContentArticleRoutes(router, ratedDB, logging)
 	setupCitationRoutes(router, logging)
 	setupTextRoutes(router, logging)
-    setupGraphRoutes(router, rawDB, logging)
-    setupAnswerRoutes(router, logging)
+	setupGraphRoutes(router, rawDB, logging)
+	setupAnswerRoutes(router, logging)
 
 	// Setup Cron
 	cronScheduler := cron.New()
@@ -1155,32 +1155,32 @@ func setupTextRoutes(router *gin.Engine, log *zap.Logger) {
 
 // setupAnswerRoutes provides helper endpoints to ensure numbered citations [n] map to a deterministic bibliography
 func setupAnswerRoutes(router *gin.Engine, log *zap.Logger) {
-    rg := router.Group("/answers")
-    // POST /answers/format-bibliography
-    // Body: { answer_text: string, sources: [ {number, doi, pmid, title, year, journal, authors[], doc_id} ] }
-    rg.POST("/format-bibliography", func(c *gin.Context) {
-        var req struct {
-            AnswerText string                   `json:"answer_text"`
-            Sources    []services.SourceItem    `json:"sources"`
-        }
-        if err := c.ShouldBindJSON(&req); err != nil {
-            c.JSON(http.StatusBadRequest, gin.H{"error": "invalid body"})
-            return
-        }
-        ordered, warnings := services.BuildBibliography(req.AnswerText, req.Sources)
-        // Render formatted references
-        formatted := make([]string, 0, len(ordered))
-        for i, s := range ordered {
-            // force sequential numbering in output position
-            _ = i
-            formatted = append(formatted, services.FormatReference(s))
-        }
-        c.JSON(http.StatusOK, gin.H{
-            "ordered_sources": ordered,
-            "formatted":       formatted,
-            "warnings":        warnings,
-        })
-    })
+	rg := router.Group("/answers")
+	// POST /answers/format-bibliography
+	// Body: { answer_text: string, sources: [ {number, doi, pmid, title, year, journal, authors[], doc_id} ] }
+	rg.POST("/format-bibliography", func(c *gin.Context) {
+		var req struct {
+			AnswerText string                `json:"answer_text"`
+			Sources    []services.SourceItem `json:"sources"`
+		}
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid body"})
+			return
+		}
+		ordered, warnings := services.BuildBibliography(req.AnswerText, req.Sources)
+		// Render formatted references
+		formatted := make([]string, 0, len(ordered))
+		for i, s := range ordered {
+			// force sequential numbering in output position
+			_ = i
+			formatted = append(formatted, services.FormatReference(s))
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"ordered_sources": ordered,
+			"formatted":       formatted,
+			"warnings":        warnings,
+		})
+	})
 }
 
 func seedDefaultSubstances(db *gorm.DB, logger *zap.Logger) {

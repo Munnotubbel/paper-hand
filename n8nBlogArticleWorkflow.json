@@ -1,0 +1,3146 @@
+{
+    "nodes": [
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "060e95f9-7249-4c93-aa30-5795ddcccf0c",
+                "name": "Extracted URLs",
+                "value": "={{$json[\"urlset\"][\"url\"].map(i => i.loc).join(\"\\n\")}}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1296,
+          -1216
+        ],
+        "id": "173b2a87-16b6-4037-bdde-d28454327aab",
+        "name": "Extract URLs"
+      },
+      {
+        "parameters": {
+          "model": "={{ $('Configuration').item.json.model_name }}",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.2,
+        "position": [
+          1584,
+          -992
+        ],
+        "id": "66225964-4dcd-46e7-939e-5baf4c35400c",
+        "name": "Anthropic Chat Model",
+        "credentials": {
+          "anthropicApi": {
+            "id": "kay2kK6GU12A3vZW",
+            "name": "Anthropic Company Account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "23d7579b-abac-47fe-a180-1fb245be0fee",
+                "name": "article_title",
+                "value": "={{ $json.metadata['dc:title'] }}",
+                "type": "string"
+              },
+              {
+                "id": "bbedb276-ad8b-4cde-b112-f426683366be",
+                "name": "article_outline",
+                "value": "={{ $('1. Get Rated Paper1').item.json.outline }}",
+                "type": "string"
+              },
+              {
+                "id": "71cbb806-1ffb-4e61-a62f-466d7054a40a",
+                "name": "article_citations",
+                "value": "={{ $('1. Get Rated Paper1').item.json.citations }}",
+                "type": "string"
+              },
+              {
+                "id": "4cb802e2-3c5a-412d-b4e4-f587436db977",
+                "name": "article_instructions",
+                "value": "=={{`Titel <= 60 Zeichen, H2 als Fragen mit Kernsubstanz, logische Struktur H1->H2->H3, FAQ-Sektion, Keywords natürlich ohne Stuffing; kognitive Last: max. 1–2 neue Konzepte pro Absatz; Fachbegriffe sofort erklären, dann einfache Begriffe; komplexe Prozesse mit Analogien; narrativ: Problem -> Lösung -> Hoffnung -> Leserrelevanz; alle (Autor et al., Jahr) Referenzen unverändert übernehmen; keine unbelegten Claims; am Ende \"## Quellen\" alphabetisch aus Literatur-Extraktor; keine \"Was ist [Substanz]\"-Abschnitte, keine Meta-Texte, keine Prozessbeschreibungen.`}}\n",
+                "type": "string"
+              },
+              {
+                "id": "9f5da8d3-f90a-475f-816b-0db8b69b09c7",
+                "name": "article_tone_of_voice",
+                "value": "=={{`Empathisch, respektvoll, hoffnungsvoll; vorsichtige Evidenzsprache (\"könnte\", \"deutet darauf hin\", \"vielversprechend\"); Zitationsschutz: (Autor et al., Jahr) 1:1 beibehalten; laienverständlich, Fachbegriffe sofort erklären, danach einfache Sprache; angstfrei, patientenorientiert (\"Was bedeutet das für Sie?\"); transparent über Grenzen; narrativ mit alltagsnahen Analogien.`}}\n",
+                "type": "string"
+              },
+              {
+                "id": "26bbcba6-eed0-4a99-80cc-5b6a9847a54a",
+                "name": "article_keywords",
+                "value": "={{ $json.metadata['pdf:keywords'] }}",
+                "type": "string"
+              },
+              {
+                "id": "5f32112c-3a59-49f9-8849-dc2fb31adb35",
+                "name": "article_status",
+                "value": "={{ $('1. Get Rated Paper1').item.json.content_status }}",
+                "type": "string"
+              },
+              {
+                "id": "c04367af-9cf9-4d17-9171-89051cf9aa91",
+                "name": "featured_image",
+                "value": "={{ ($json[\"Featured Image\"] && $json[\"Featured Image\"][0] && $json[\"Featured Image\"][0].url) ? $json[\"Featured Image\"][0].url : \"\" }}",
+                "type": "string"
+              },
+              {
+                "id": "b1bd83e6-aa50-4fda-b0ab-366df90c9815",
+                "name": "deep_research",
+                "value": "={{ $('1. Get Rated Paper1').item.json.deep_research }}",
+                "type": "string"
+              },
+              {
+                "id": "9466916c-f5ea-49cb-b30b-fa780318a8d6",
+                "name": "article_length",
+                "value": "=4",
+                "type": "string"
+              },
+              {
+                "id": "76489fa3-1d75-4f59-a60b-9a3790f0e24c",
+                "name": "randomSessionID",
+                "value": "={{ Math.random() }}",
+                "type": "string"
+              },
+              {
+                "id": "7219cc14-adf7-4704-877d-a70d74ae899d",
+                "name": "article_target_wordcount",
+                "value": "=3",
+                "type": "string"
+              },
+              {
+                "id": "fe4f3b26-77dc-44e9-b15d-2e96f00fca21",
+                "name": "article_tone_of_voice_examples",
+                "value": "={{ $json['Tone of Voice Examples (Optional)'] }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -208,
+          -1088
+        ],
+        "id": "1da42a7a-3d02-46f9-8654-85bf8bd62d19",
+        "name": "Article fields"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Pick up to 3 URLs from the URLs_list that are most relevant for the following topic: {{ $('Article fields').item.json.article_title }}\n\n<urls_list>\n{{ $json['Extracted URLs'] }}\n</urls_list>\n\nOnly respond with the chosen URLs separated by newlines."
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.5,
+        "position": [
+          1520,
+          -1216
+        ],
+        "id": "71b36237-2deb-412d-97b0-d01c2f7cd3fd",
+        "name": "Pick Internal Links",
+        "retryOnFail": false,
+        "notesInFlow": false
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $('Article fields').item.json.article_outline ? $('Article fields').item.json.article_outline.length : 0 }}",
+                      "rightValue": 50,
+                      "operator": {
+                        "type": "number",
+                        "operation": "lt"
+                      },
+                      "id": "8f1ba322-7824-4454-af66-e819f69794ba"
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "52864ebc-9bad-4a07-afb4-c9d77e1be069",
+                      "leftValue": "{{ $('Article fields').item.json.article_outline }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "notEmpty",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          2000,
+          -960
+        ],
+        "id": "b38de87e-9d45-4b97-aea4-1efccc1bc0a1",
+        "name": "Outline Required?"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6a050473-7d5f-4a0c-a25b-e7e3f46058a8",
+                "name": "article_outline",
+                "value": "={{ $('Agentic RAG').isExecuted && $('Agentic RAG').item.json.article_outline || $('Article fields').item.json.article_outline }}",
+                "type": "string"
+              },
+              {
+                "id": "c70cdb94-ae29-4bf1-8898-becba67a1150",
+                "name": "citations",
+                "value": "={{ $('Agentic RAG').isExecuted && JSON.stringify($('Agentic RAG').item.json.output.citations) || $('Article fields').item.json.article_citations }}",
+                "type": "string"
+              },
+              {
+                "id": "42bef85d-8561-49ca-adee-3940a04e77ad",
+                "name": "deep_research",
+                "value": "={{ $('Agentic RAG').isExecuted && JSON.stringify($('Agentic RAG').item.json.output.research_findings) || $('Article fields').item.json.deep_research }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2560,
+          -1600
+        ],
+        "id": "2a7a1604-c60a-40ac-8d73-3cea5e36e16f",
+        "name": "Merged outline and citations"
+      },
+      {
+        "parameters": {
+          "content": "# Agentic RAG Research & Article Outline Creation",
+          "height": 720,
+          "width": 1720,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          512,
+          -2064
+        ],
+        "id": "e6df163c-fb46-430d-96a9-8ec0d82a8ea0",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "triggerAtHour": 9
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -1184,
+          -960
+        ],
+        "id": "a11311c4-c13c-4608-9c47-3a6b916ac3aa",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          1216,
+          -416
+        ],
+        "id": "57bd22e0-d25a-422b-b4de-58522fa7901f",
+        "name": "Continue"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://hook.eu1.make.com/jd97r0rx4p7thjz4x68lxc52w1b50l41",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "text",
+                "value": "={{ $('Get NocoDB Record').item.json['Facebook Post'] }}"
+              },
+              {
+                "name": "image",
+                "value": "={{ $('Get NocoDB Record').item.json['Featured Image'] }}"
+              },
+              {
+                "name": "link",
+                "value": "={{ $('Get NocoDB Record').item.json['Article Link'] }}"
+              },
+              {
+                "name": "platform",
+                "value": "facebook"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1776,
+          -640
+        ],
+        "id": "137ec6b1-f126-4d60-9ccd-f5bcff0a4f7d",
+        "name": "Facebook post",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "6b85be8d-292f-42f2-a3ed-f02fb2fc13ee",
+                "leftValue": "={{ $('Get NocoDB Record').item.json[\"Facebook Post\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "5610f138-3bf4-4eb3-b4ab-7fd7dd79fd23",
+                "leftValue": "={{ $('Get NocoDB Record').item.json[\"Facebook Post\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          1536,
+          -640
+        ],
+        "id": "887fe19e-9a78-49cf-bc72-fc479e32abff",
+        "name": "Filter"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "6b85be8d-292f-42f2-a3ed-f02fb2fc13ee",
+                "leftValue": "={{ $('Get NocoDB Record').item.json[\"Twitter Post\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "5610f138-3bf4-4eb3-b4ab-7fd7dd79fd23",
+                "leftValue": "={{ $('Get NocoDB Record').item.json[\"Twitter Post\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          1536,
+          -464
+        ],
+        "id": "a7968bad-ef0a-4c9e-af8d-80f99e696699",
+        "name": "Filter1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://hook.eu1.make.com/jd97r0rx4p7thjz4x68lxc52w1b50l41",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "text",
+                "value": "={{ $('Get Airtable Record').item.json[\"Twitter Post\"] }}"
+              },
+              {
+                "name": "image",
+                "value": "={{ $('Get Airtable Record').item.json[\"Featured Image\"][0].url }}"
+              },
+              {
+                "name": "link",
+                "value": "={{ $('Get Airtable Record').item.json[\"Article Link\"] }}"
+              },
+              {
+                "name": "platform",
+                "value": "twitter"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1776,
+          -464
+        ],
+        "id": "a6194e49-6eb7-49b2-b8ae-b2d541e96a6a",
+        "name": "Twitter Post",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "6b85be8d-292f-42f2-a3ed-f02fb2fc13ee",
+                "leftValue": "={{ $('Get NocoDB Record').item.json[\"Instagram Post\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "5610f138-3bf4-4eb3-b4ab-7fd7dd79fd23",
+                "leftValue": "={{ $('Get NocoDB Record').item.json[\"Instagram Post\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          1536,
+          -272
+        ],
+        "id": "c187b5ca-36c6-43f4-97f6-265eaeead952",
+        "name": "Filter2"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://hook.eu1.make.com/jd97r0rx4p7thjz4x68lxc52w1b50l41",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "text",
+                "value": "={{ $('Get Airtable Record').item.json[\"Instagram Post\"] }}"
+              },
+              {
+                "name": "image",
+                "value": "={{ $('Get Airtable Record').item.json[\"Featured Image\"][0].url }}"
+              },
+              {
+                "name": "link",
+                "value": "={{ $('Get Airtable Record').item.json[\"Article Link\"] }}"
+              },
+              {
+                "name": "platform",
+                "value": "instagram"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1776,
+          -272
+        ],
+        "id": "8a72e9fe-d3a4-4897-a6cd-6834ed027b23",
+        "name": "Instagram Post",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "6b85be8d-292f-42f2-a3ed-f02fb2fc13ee",
+                "leftValue": "={{ $('Get NocoDB Record').item.json[\"Instagram Post\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "5610f138-3bf4-4eb3-b4ab-7fd7dd79fd23",
+                "leftValue": "={{ $('Get NocoDB Record').item.json[\"Instagram Post\"] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          1536,
+          -96
+        ],
+        "id": "c4fd6ffe-9768-4025-99c5-24df699af3d6",
+        "name": "Filter3"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://hook.eu1.make.com/jd97r0rx4p7thjz4x68lxc52w1b50l41",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "text",
+                "value": "={{ $('Get Airtable Record').item.json[\"Instagram Post\"] }}"
+              },
+              {
+                "name": "image",
+                "value": "={{ $('Get Airtable Record').item.json[\"Featured Image\"][0].url }}"
+              },
+              {
+                "name": "link",
+                "value": "={{ $('Get Airtable Record').item.json[\"Article Link\"] }}"
+              },
+              {
+                "name": "platform",
+                "value": "instagram"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1776,
+          -96
+        ],
+        "id": "41f0d932-c7ed-4e49-bf74-ba082f7db931",
+        "name": "LinkedIn Post",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "content": "# Social Media",
+          "height": 1020,
+          "width": 1680,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          464,
+          -704
+        ],
+        "id": "f9d32853-da79-480d-a28a-f6215d4a4703",
+        "name": "Sticky Note1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "bb4510c0-772e-4e32-b9e4-3929e6e39639",
+                "leftValue": "={{ $('Outline Required?').isExecuted }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "false",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1616,
+          -2016
+        ],
+        "id": "bc06bf42-5c1e-40a0-8714-4ea7dbddf2a7",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "url": "={{ $('Configuration').item.json.sitemap_url }}",
+          "options": {
+            "response": {
+              "response": {}
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          816,
+          -1216
+        ],
+        "id": "ca4cdfd3-6fa6-4c54-b85f-7c6fc7145194",
+        "name": "Get Sitemap"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.xml",
+        "typeVersion": 1,
+        "position": [
+          1024,
+          -1216
+        ],
+        "id": "1301c35b-2f32-46ee-9556-803153ccd91b",
+        "name": "Convert to JSON"
+      },
+      {
+        "parameters": {
+          "content": "# Article Media (Images & Videos)",
+          "height": 2160,
+          "width": 1900,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          2352,
+          -1856
+        ],
+        "id": "a09af5cb-1d1b-4b57-86ed-d124e408c909",
+        "name": "Sticky Note2"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Title:\n{{$('Article fields').item.json.article_title}}\n\n{{ $('Article fields').item.json.article_instructions ? \"Instructions: \" + $('Article fields').item.json.article_instructions : \"\" }}\n\nSientific Paper:\nfindest du unter der pdf Nummer {{ $('1. Get Rated Paper1').item.json.pmid }} im LightRAG query tool",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=# Role\n\nYou are an expert writer, tasked with creating an article outline based on the added sientific paper. You have a number of research tools at your disposal to assist you in creating the outline\n\n# Available Research Tools\n\n## 1. LightRAG query tool\n\nCall this tool to search our LightRAG database of sientific papers for food supplement substances.\nLet LightRAG query tool look for the name of the pdf of the sientific paper  which is {{ $('1. Get Rated Paper1').item.json.pmid }}.pdf\nIMPORTANT: Do not call the \"LightRAG query tool\" more than three times!\n\n## 2. Deep Research with Perplexity (Report)\n\nPerplexity Deep Research excels at generating comprehensive research reports by autonomously exploring and synthesizing information from numerous sources. Only scientifically sound information is considered.\n\nIMPORTANT: Do not call the Deep Research tool more than once\n\n## 3. Deep Search with Jina.ai (Question Answering)\n\nDeep Search focuses on providing accurate and concise answers to complex questions through iterative web searching and reasoning.\n\nIMPORTANT: Do not call the Deep Research tool more than twice\n\n# Standard Operating Procedure\n\n## Step 1\n\nAnalyze the provided article sientific paper and instructions, then trigger the most relevant tools to research and learn about the topics. You can call multiple tools, multiple times if necessary.\n\n## Step 2\n\nBased on the output from these tool, create the following ...\n\n### An Article Outline\n\nTry to retain as much of the information from the sienctific research paper as possible and include it within the outline - this needs to be balanced based on the target article length. Do not number your headings. Do not include generic headings like \"key points\", \"overview\", etc.\n\nFeel free to reorder sections of the research, combine them where necessary, and structure the outline to be engaging in order to follow the inverted pyramid structure.\n\n### Article Type\n\nArticle Type: sientific blog-article\n\n{{ $('Article fields').item.json.article_tone_of_voice ? \"## Tone of Voice:\\n\\nFor reference, this article will be written in a \" + $('Article fields').item.json.article_tone_of_voice + \" tone of voice.\\n\\n\" : \"\" }}\n{{ $('Article fields').item.json.article_tone_of_voice_examples ? \"## Tone of Voice Example:\\n\\nFor reference, the following is an article snippet written by this author.\\n\\n\\\" \" + $('Article fields').item.json.article_tone_of_voice_examples + \"\\\"\\n\\n\" : \"\" }}\n### Article Outline Format & Length\n\nArticle Length: {{ $('Article fields').item.json.article_length }}\n\nThere should be a maximum of {{ $('Article fields').item.json.article_length }} section(s). Combine parts of the research if necessary to reduce the number of sections to a maximum of {{ $('Article fields').item.json.article_length }}. The heading should be written as it will appear in the article.\n\nThe outline should be in the following format:\n\nHeading\n- key points, data, information: be specific and provide this information.\n- any main keywords to include, facts, figures. You must include the specific facts/figures/statistics/keywords that need to be included within the article.\n\n### Research Findings\n\nCreate a detailed comprehensive report based on the information outputted from the various research tools called.\n\n### Citations\n\nOutput a list of URLs of important sources from the research tools and the papers of the LightRAG query tool. Focus on using sources from LightRAG.\n\n# Important Notes\nIt's important for my job that you design the outline based on the article length (long)",
+            "maxIterations": 8,
+            "returnIntermediateSteps": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.8,
+        "position": [
+          976,
+          -2016
+        ],
+        "id": "7e7de258-de96-4a27-aef6-a80ad201da77",
+        "name": "Agentic RAG",
+        "alwaysOutputData": false,
+        "retryOnFail": true,
+        "waitBetweenTries": 5000
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          496,
+          -1312
+        ],
+        "id": "938493ef-d66a-47a9-984f-ae2dd3108851",
+        "name": "Go"
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n  \"article_outline\":\"\",\n  \"research_findings\":\"\",\n  \"citations\":[\"doi\",\"doi\",\"url\"]\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.2,
+        "position": [
+          1776,
+          -1664
+        ],
+        "id": "999be18b-6e18-441c-ae54-317bde4a147d",
+        "name": "Output Format"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "={{ $('Configuration').item.json.model_name }}",
+            "mode": "id"
+          },
+          "options": {
+            "maxTokensToSample": 8000,
+            "thinking": true,
+            "thinkingBudget": 2000
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.3,
+        "position": [
+          832,
+          -1664
+        ],
+        "id": "7d6206be-3293-453b-8d59-81146ca06bab",
+        "name": "Anthropic Chat Model1",
+        "credentials": {
+          "anthropicApi": {
+            "id": "kay2kK6GU12A3vZW",
+            "name": "Anthropic Company Account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $('Article fields').item.json.randomSessionID }}",
+          "contextWindowLength": 50
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          992,
+          -1664
+        ],
+        "id": "96ceedd9-de26-49d0-83b1-9d75a0b9a03f",
+        "name": "Simple Memory"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "49ff639a-b7f8-44b1-a6df-d7b7a71244d0",
+                "name": "model_name",
+                "value": "claude-3-7-sonnet-20250219",
+                "type": "string"
+              },
+              {
+                "id": "dcc07e91-9737-428b-b6a0-3cebfd58a264",
+                "name": "website_root_url",
+                "value": "https://wordpress-1157655-4032111.cloudwaysapps.com/",
+                "type": "string"
+              },
+              {
+                "id": "bc37d3b1-2022-432c-bdab-bcfbac6d7843",
+                "name": "sitemap_url",
+                "value": "https://wordpress-1157655-4032111.cloudwaysapps.com/post-sitemap.xml",
+                "type": "string"
+              },
+              {
+                "id": "2ee30a7a-d0f0-469c-b51c-720a1852546a",
+                "name": "ai_image_model_url",
+                "value": "https://fal.run/fal-ai/flux-pro/v1.1-ultra",
+                "type": "string"
+              },
+              {
+                "id": "8a09ef29-3649-4e29-9d7a-f1eb384d0512",
+                "name": "nocodb_url",
+                "value": "https://nocodb-production-9809.up.railway.app/",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -16,
+          -1088
+        ],
+        "id": "7e1a648e-0fc0-4aa2-8474-69feee07efba",
+        "name": "Configuration"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $('Article fields').item.json.article_status }}",
+                      "rightValue": " idee",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "38478fa1-7c66-4a42-8cf0-d7e7cdd11e78"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "idea to outline"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "292cf33b-ae6f-4e9e-aedc-206999d30670",
+                      "leftValue": "={{ $('Article fields').item.json.article_status }}",
+                      "rightValue": "Ready for Article Generation",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "cc59117b-c7ef-43f4-bbb3-44e098eb4a1c",
+                      "leftValue": "={{ $('Article fields').item.json.article_status }}",
+                      "rightValue": "Push to Socials",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          192,
+          -1104
+        ],
+        "id": "fb5250f3-5e0b-4e79-83db-8ad1c2486ae8",
+        "name": "Check Status",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=<topic>\n{{ $('Article fields').item.json.article_title }}\n</topic>\n\n<article_brief>\n{{ $('Merged outline and citations').item.json.article_outline }}\n</article_brief>\n\n<deep_research>\n{{ $('Merged outline and citations').item.json.deep_research }}\n</deep_research>\n\n<citations>\n{{ $('Merged outline and citations').item.json.citations }}\n</citations>\n\n<internal_links>\n{{ $('Pick Internal Links').item.json.text }}\n</internal_links>",
+          "options": {
+            "systemMessage": "=# Role\n\nYou are an expert writer. \n\n# Task\n\nYou will be provided an <article_brief> below. Your job is to write an article based on it. \n\n## Details\n\nYou will be provided with a considerable amount of data and insights in the <deep_research> section. \n\nIt's your role to create an easy to understand blog post based on this, in relatively concise and simple language.\n\n# Article Length & Target Word Count\n\nArticle Type: {{ $('Get NocoDB Record').item.json['Article Type'] }}\nArticle Length: {{ $('Search NocoDB').item.json['Article Length'] }}\nTarget Total Word Count: {{ $('Article fields').item.json.article_target_wordcount }}\n\n# Article Structure\n\n## Introduction\n\nFor the introduction: You will create an introduction for the article based on the provided <article_brief>.\n\nWrite a concise two-sentence introduction section in NLP friendly format giving a high-level perspective on the <topic>. It should contain some high-level and relevant information based on the article rather than generic information about the topic. It should specifically address the following topic: \"{{ $('Article fields').item.json.article_title }}\"\n\n{{ $('Article fields').item.json.article_target_wordcount > 500 ? \"## Key Takeaways\\n\\nAfter the Introduction, add a key takeaways section. Add a \\\"key takeaways\\\" heading and an unordered list with the important key takeaways.\\n\\nThere should be a maximum of 5 bullet points in your key takeaways sections with no sub bullet points.\\n\\nBold one or two important words per bullet point using the <strong> tag.\\n\\n\" : \"\" }}\n{{ $('Choose Youtube URL').item.json.text.includes(\"www.youtu\") ? \"## Youtube Video\\n\\nYou must add the exact HTML <p>\"+$('Choose Youtube URL').item.json.text+\"</p> after the key takeaways section.\\n\\n\" : \"\" }}\n\n## Article Body\n\nThen write the remaining sections of the article based on the provided brief.\n\nEach section should start with a <h2> tag.\n\nYou must include the following image with image tag after the first section:\n\n<image_tag_html>\n<img src=\"{{ $json.guid.rendered }}\"/>\n</image_tag_html>\n\nInclude list items where necessary to demonstrate your points, but write a line of text to introduce the bullet points when doing so.\n\nAny time a specific figure/fact/statistic or study is mentioned you should cite the name of the source as it was provided in the outline. If a source is not provided in the outline then don't cite a source.\n\n## Sources\n\nAt the end of the article, you MUST include a \"sources\" based on the provided <citations> section. \n\nIf including sources, work them naturally into the text. For the sources, return a valid set of a href links with rel=\"nofollow\" tag. \n\nYour response must start with a <p> tag. The anchor text of the link should be the website name and article name. \n\nIf you are unsure then just provide the website URL without www and without http or https as the anchor text for the link.\n\n## Writing Style / Tone of Voice\n\n{{ $('Article fields').item.json.article_tone_of_voice ? \"## Tone of Voice:\\n\\nWrite in a \" + $('Article fields').item.json.article_tone_of_voice + \" tone of voice.\\n\\n\" : \"You writing should be aimed at both novices and seasoned users, offering insights that balance depth with accessibility. The writing should combine technical descriptions with practical advice. Sentences are structured to convey confidence and expertise, often integrating direct recommendations and subtle marketing if suited to the topic.\" }}\n{{ $('Article fields').item.json.article_tone_of_voice_examples ? \"## Tone of Voice Example:\\n\\n\" + $('Article fields').item.json.article_tone_of_voice_examples + \"\\n\\n\" : \"\" }}\n\nUse contractions in your writing. Do not start consecutive sentences or paragraphs with the same word. Keep sentences short. Use an active voice instead of a passive one. Do not start with a welcome. Do not start with a question. The text should be written from the perspective of I as opposed to we.\n\nThe following words should not be used, replace them with appropriate alternatives: meticulous, meticulously, navigating, complexities, realm, bespoke, tailored, towards, underpins, ever-changing, ever-evolving, the world of, not only, seeking more than just, designed to enhance, it's not merely, our suite, it is advisable, daunting, in the heart of, when it comes to, in the realm of, amongst, unlock the secrets, delving, unveil the secrets, and robust.\n\n{{ $('Article fields').item.json.article_keywords ? \"## Keywords to Include:\\n\\nInclude each of the following keywords exactly as they are written at least once naturally within the text: \" + $('Article fields').item.json.article_keywords + \"\\n\\n\" : \"\" }}\n\n## Internal Links\n\nInclude the following <internal_links> naturally within the text, with a maximum of one occurance per link in the internal_links. Each should be a valid <a> HTML link with natural anchor text of between 1 to 6 words that flows within the text. The SRC should be the url within the internal_links data.\n\n## Output Format\n\n= Do not return in markdown. \n- You must respond in HTML format.\n- Your response must start with a <p> tag with no other characters.\n- Max 2 sentences per paragraph. \n- There can be multiple paragraphs per section.\n- You must bold important words throughout the article with <strong> tags, between 1 to 5 words per paragraph."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.8,
+        "position": [
+          4480,
+          -944
+        ],
+        "id": "b8187287-2c82-4fb9-ba86-e551f5b0cd70",
+        "name": "Write Article",
+        "retryOnFail": true,
+        "waitBetweenTries": 5000,
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.largeImageURL }}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3296,
+          -864
+        ],
+        "id": "5f5c7c4c-799e-4ac1-9748-4d3d7cd79dfb",
+        "name": "Get Image2"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Get the 'hits' array from the first node's output\nconst hits = items[0].json.hits;\n\n// Function to shuffle the array using Fisher-Yates algorithm\nfunction shuffle(array) {\n  for (let i = array.length - 1; i > 0; i--) {\n    const j = Math.floor(Math.random() * (i + 1));\n    [array[i], array[j]] = [array[j], array[i]];\n  }\n  return array;\n}\n\n// Shuffle the hits array\nconst shuffledHits = shuffle(hits);\n\n// Extract the largeImageURL from the first item\nconst largeImageURL = shuffledHits[0]?.largeImageURL || 'No Image Found';\n\n// Return the result\nreturn [\n  {\n    json: {\n      largeImageURL: largeImageURL\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3120,
+          -864
+        ],
+        "id": "0fb725f6-449b-4779-aa44-6f5b0e0e389b",
+        "name": "Pick Random"
+      },
+      {
+        "parameters": {
+          "url": "https://pixabay.com/api/",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "q",
+                "value": "={{ $('Image prompt helper').item.json.output.image2 }}"
+              },
+              {
+                "name": "image_type",
+                "value": "photo"
+              },
+              {
+                "name": "per_page",
+                "value": "15"
+              },
+              {
+                "name": "key",
+                "value": "<INSERT-KEY>"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2944,
+          -864
+        ],
+        "id": "04bfb605-3e79-4228-b13b-763f5c93d4b5",
+        "name": "Pixabay"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "19307073-3ee7-4aa8-9e9a-e7c1722a5289",
+                "leftValue": "={{ $('Image prompt helper').item.json.output.image_type }}",
+                "rightValue": "ai",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2752,
+          -1024
+        ],
+        "id": "a9326d54-46cc-4ee7-8588-eb3710d9c842",
+        "name": "If1",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "a0b6472b-f298-4a28-a884-9ba794784365",
+                "name": "extract_youtube_urls",
+                "value": "={{ $json.tasks.flatMap(task => task.result.flatMap(r => r.items.map(item => item.url))).join(\"\\n\") }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          3616,
+          -1600
+        ],
+        "id": "6227e4a6-738a-48c2-919c-ebb93afb9e64",
+        "name": "Extract youtube urls"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=you are an assistant that will return the first youtube.com video URL that you find in the following <text>. Only respond with the valid URL and no other text. If there is no youtube URL then provide a blank response.\n\n<text>\n{{ $json.extract_youtube_urls }}\n</text>"
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.5,
+        "position": [
+          3840,
+          -1600
+        ],
+        "id": "a1d7f069-8842-4132-8b53-e59499d06de5",
+        "name": "Choose Youtube URL",
+        "retryOnFail": true,
+        "notesInFlow": false,
+        "waitBetweenTries": 5000
+      },
+      {
+        "parameters": {
+          "model": "={{ $('Configuration').item.json.model_name }}",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.2,
+        "position": [
+          3840,
+          -1376
+        ],
+        "id": "f8168644-3cfe-455f-ba74-8b2c84d180f8",
+        "name": "Anthropic Chat Model7",
+        "credentials": {
+          "anthropicApi": {
+            "id": "kay2kK6GU12A3vZW",
+            "name": "Anthropic Company Account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.dataforseo.com/v3/serp/google/organic/live/advanced",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBasicAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "=[{  \"language_code\": \"en\",   \"location_name\": \"United States\",   \"keyword\": {{ JSON.stringify($('Article fields').item.json.article_title + \" - youtube.com\") }},   \"calculate_rectangles\": false,   \"se_domain\": \"google.com\",   \"depth\": \"20\" }]",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3392,
+          -1600
+        ],
+        "id": "f40e073d-fddb-4d76-a636-ce74e5ebb78b",
+        "name": "Get Youtube Video",
+        "credentials": {
+          "httpBasicAuth": {
+            "id": "Ez6sqrfFhtjtozYr",
+            "name": "Basic Auth DataForSeo"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $('Article fields').item.json.article_title }}",
+          "additionalFields": {
+            "content": "={{ $json.output[1].text }}"
+          }
+        },
+        "type": "n8n-nodes-base.wordpress",
+        "typeVersion": 1,
+        "position": [
+          4832,
+          -800
+        ],
+        "id": "64e303b2-6ffa-4e83-9186-f5487c8b34a1",
+        "name": "Wordpress",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "model": "={{ $('Configuration').item.json.model_name }}",
+          "options": {
+            "maxTokensToSample": 30000,
+            "thinking": true,
+            "thinkingBudget": 10000
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.2,
+        "position": [
+          4464,
+          -560
+        ],
+        "id": "c83be857-fb9a-4976-93df-ea11633a99fc",
+        "name": "Anthropic Chat Model5",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Configuration').item.json.website_root_url }}wp-json/wp/v2/media",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "content-disposition",
+                "value": "=attachment; filename={{JSON.stringify($('Image prompt helper').item.json.output.image2)}}.{{ $binary.data.fileExtension }}"
+              },
+              {
+                "name": "content-type",
+                "value": "={{ $binary.data.mimeType }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "binaryData",
+          "inputDataFieldName": "data",
+          "options": {}
+        },
+        "id": "33326a8b-0c3f-4b86-89a2-d49d748f7ed7",
+        "name": "Upload In-content image",
+        "type": "n8n-nodes-base.httpRequest",
+        "position": [
+          3536,
+          -1024
+        ],
+        "typeVersion": 4.1,
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.images[0].url }}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3216,
+          -1104
+        ],
+        "id": "c521daf1-b71e-4253-816a-a8b7ebad5909",
+        "name": "Get Image"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Configuration').item.json.ai_image_model_url }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\"prompt\": {{JSON.stringify($('Image prompt helper').item.json.output.image2)}}, \"num_images\": {{ \n  (!$('Article fields').item.json.featured_image || \n   $('Article fields').item.json.featured_image.trim() === \"\") \n    ? 2 \n    : 1 \n}}\n, \"aspect_ratio\": \"16:9\"}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "json"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2992,
+          -1104
+        ],
+        "id": "8a4f9dd4-af91-4226-bc69-9e4aefd8ab1d",
+        "name": "Generate content image",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C6EaRz4vxUMkBGCJ",
+            "name": "LightRAG Api key"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": "={{ $('Configuration').item.json.model_name }}",
+          "options": {
+            "thinking": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.2,
+        "position": [
+          2864,
+          -1360
+        ],
+        "id": "54b6694b-b492-4e3d-b28f-486e67db77cc",
+        "name": "Anthropic Chat Model4",
+        "credentials": {
+          "anthropicApi": {
+            "id": "kay2kK6GU12A3vZW",
+            "name": "Anthropic Company Account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Title: {{ $('Article fields').item.json.article_title }}\n\nOutline: {{ $json.article_outline }}",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=Analyze the following article title and outline.\n\nBased on that analysis, decide if a stock image or an AI image is most appropriate for this article.\n\nBased on that decision, output two appropriate prompts (if AI image) or search terms (if stock photo)\n\nSAMPLE OUTPUT STRUCTURE\n\n{\n\t\"image_type\": \"ai OR stock\",\n\t\"image1\": \"image prompt or search term - MUST BE UNDER 70 CHARACTERS\",\n\t\"image2\": \"image prompt or search term - MUST BE UNDER 70 CHARACTERS\"\n}"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.5,
+        "position": [
+          2880,
+          -1600
+        ],
+        "id": "0a9a4849-6662-4703-92d0-4440c928530e",
+        "name": "Image prompt helper",
+        "retryOnFail": true,
+        "notesInFlow": false,
+        "waitBetweenTries": 5000
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Configuration').item.json.website_root_url }}/wp-json/wp/v2/media",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "content-disposition",
+                "value": "=attachment; filename={{JSON.stringify($('Image prompt helper').item.json.output.image1)}}.{{ $binary.data.fileExtension }}"
+              },
+              {
+                "name": "content-type",
+                "value": "={{ $binary.data.mimeType }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "binaryData",
+          "inputDataFieldName": "data",
+          "options": {}
+        },
+        "id": "8e78ffda-2ff0-4dab-a16c-c9c2053f0c39",
+        "name": "Upload In-content image1",
+        "type": "n8n-nodes-base.httpRequest",
+        "position": [
+          3504,
+          -336
+        ],
+        "typeVersion": 4.1,
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Configuration').item.json.website_root_url }}wp-json/wp/v2/posts/{{ $('Wordpress').item.json.id }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "featured_media",
+                "value": "={{ $json.id }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "8a997642-1429-454c-aad0-655459de489a",
+        "name": "Set Featured Image",
+        "type": "n8n-nodes-base.httpRequest",
+        "position": [
+          3696,
+          -336
+        ],
+        "typeVersion": 4.1,
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "model": "={{ $('Configuration').item.json.model_name }}",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.2,
+        "position": [
+          4496,
+          -80
+        ],
+        "id": "e565f5eb-a917-4989-9559-2df6cee76c06",
+        "name": "Anthropic Chat Model6",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n  \"social_media\": {\n    \"Instagram\": \"\",\n    \"Facebook\": \"\",\n    \"Twitter\": \"\",\n    \"LinkedIn\": \"\"\n  }\n}\n"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.2,
+        "position": [
+          4656,
+          -80
+        ],
+        "id": "181457db-4b39-4bc0-b46e-a76fe24714f7",
+        "name": "Structured Output Parser"
+      },
+      {
+        "parameters": {
+          "url": "={{  || $('Generate content image').item.json.images[1].url }}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3040,
+          -544
+        ],
+        "id": "2b9dc97a-4c73-42ce-874d-a15acee01958",
+        "name": "Get Image1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Configuration').item.json.ai_image_model_url }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\"prompt\": {{JSON.stringify($('Image prompt helper').item.json.output.image1)}}, \"num_images\": {{ \n  (!$('Article fields').item.json.featured_image || \n   $('Article fields').item.json.featured_image.trim() === \"\") \n    ? 2 \n    : 1 \n}}\n, \"aspect_ratio\": \"16:9\"}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "json"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2960,
+          -352
+        ],
+        "id": "209a503e-cf4f-4b8d-91fe-4fd273444983",
+        "name": "Generate content image1",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.images[0].url }}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3136,
+          -352
+        ],
+        "id": "f5c84f31-3ba1-4e25-9043-6af8fd7043ba",
+        "name": "Get Image3"
+      },
+      {
+        "parameters": {
+          "url": "https://pixabay.com/api/",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "q",
+                "value": "={{ $('Image prompt helper').item.json.output.image1 }}"
+              },
+              {
+                "name": "image_type",
+                "value": "photo"
+              },
+              {
+                "name": "per_page",
+                "value": "15"
+              },
+              {
+                "name": "key",
+                "value": "<INSERT-KEY>"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2896,
+          -160
+        ],
+        "id": "9a32c0df-dc51-40ee-8a7b-fb2695cf35f2",
+        "name": "Pixabay1"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Get the 'hits' array from the first node's output\nconst hits = items[0].json.hits;\n\n// Function to shuffle the array using Fisher-Yates algorithm\nfunction shuffle(array) {\n  for (let i = array.length - 1; i > 0; i--) {\n    const j = Math.floor(Math.random() * (i + 1));\n    [array[i], array[j]] = [array[j], array[i]];\n  }\n  return array;\n}\n\n// Shuffle the hits array\nconst shuffledHits = shuffle(hits);\n\n// Extract the largeImageURL from the first item\nconst largeImageURL = shuffledHits[0]?.largeImageURL || 'No Image Found';\n\n// Return the result\nreturn [\n  {\n    json: {\n      largeImageURL: largeImageURL\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3056,
+          -160
+        ],
+        "id": "7af094a5-e63c-4621-9b9d-67db1200c7bb",
+        "name": "Pick Random1"
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.largeImageURL }}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3216,
+          -160
+        ],
+        "id": "a3b76967-a904-4fcc-b71c-b90085d896a9",
+        "name": "Get Image4"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $('Article fields').item.json.featured_image}}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "notEmpty",
+                        "singleValue": true
+                      },
+                      "id": "80a8463f-5f8a-42b2-93c8-ff2e566805bd"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "706698e3-8f5f-4d0b-877a-86384a66070b",
+                      "leftValue": "={{ $('Image prompt helper').item.json.output.image_type }}",
+                      "rightValue": "ai",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "35243abe-4cb0-40af-9ade-a8da7bd9c382",
+                      "leftValue": "={{ $('Image prompt helper').item.json.output.image_type }}",
+                      "rightValue": "stock",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          2656,
+          -336
+        ],
+        "id": "ccec5319-eff3-4c8a-b021-3e86323dfb62",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "authentication": "nocoDbApiToken",
+          "operation": "update",
+          "projectId": "pjgn0gmnxy68wqi",
+          "table": "mzmh14sloork359",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldName": "Id",
+                "fieldValue": "={{ $('Get NocoDB Record').first().json.Id }}"
+              },
+              {
+                "fieldName": "Status",
+                "fieldValue": "Article Generated"
+              },
+              {
+                "fieldName": "Article Link",
+                "fieldValue": "={{ $('Wordpress').item.json.guid.rendered }}"
+              },
+              {
+                "fieldName": "Featured Image",
+                "fieldValue": "=[\n    {\n      \"mimetype\": \"{{ $json.mimetype }}\",\n      \"size\": {{ $json.size }},\n      \"title\": \"{{ $json.title }}\",\n      \"url\": \"{{$('Configuration').item.json.nocodb_url}}{{ $json.path }}\",\n      \"icon\": \"\"\n    }\n  ]"
+              },
+              {
+                "fieldName": "Facebook Post",
+                "fieldValue": "={{ $('Write Social Media Posts').item.json.output.social_media.Facebook }}"
+              },
+              {
+                "fieldName": "Instagram Post",
+                "fieldValue": "={{ $('Write Social Media Posts').item.json.output.social_media.Instagram }}"
+              },
+              {
+                "fieldName": "X Post",
+                "fieldValue": "={{ $('Write Social Media Posts').item.json.output.social_media.Twitter }}"
+              },
+              {
+                "fieldName": "LinkedIn Post",
+                "fieldValue": "={{ $('Write Social Media Posts').item.json.output.social_media.LinkedIn }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.nocoDb",
+        "typeVersion": 3,
+        "position": [
+          5280,
+          -304
+        ],
+        "id": "40046be6-b87c-4415-b1ac-3d97ec7ac8b9",
+        "name": "Update Record",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"image_type\": \"ai OR stock\",\n\t\"image1\": \"image prompt or search term\",\n\t\"image2\": \"image prompt or search term\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.2,
+        "position": [
+          3056,
+          -1360
+        ],
+        "id": "08289618-a6f3-4591-8cc2-e1f9fae1727e",
+        "name": "Structured Output Parser1"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $('Write Article').item.json.output[1].text }}",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=You will write the text for social media posts for facebook, linkedin, Instagram, and twitter for the provided article\n\nExample output\n\n{\n  \"social_media\": {\n    \"Instagram\": \"<ADD TEXT>\",\n    \"Facebook\": \"<ADD TEXT>\",\n    \"Twitter\": \"<ADD TEXT>\",    \n    \"LinkedIn\": \"<ADD TEXT>\"\n  }\n}"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.5,
+        "position": [
+          4496,
+          -304
+        ],
+        "id": "fb7d5abd-44f4-4d05-9165-8474bb50a117",
+        "name": "Write Social Media Posts",
+        "retryOnFail": true,
+        "notesInFlow": false,
+        "waitBetweenTries": 5000
+      },
+      {
+        "parameters": {
+          "content": "# NocoDB Trigger",
+          "width": 780,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -1744,
+          -1200
+        ],
+        "id": "6f2dd006-79af-4bc7-9307-1ed26bba0854",
+        "name": "Sticky Note4"
+      },
+      {
+        "parameters": {
+          "content": "# Schedule Trigger",
+          "width": 780,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -1744,
+          -976
+        ],
+        "id": "f549a1be-2513-41c1-b06d-3d4115c301af",
+        "name": "Sticky Note5"
+      },
+      {
+        "parameters": {
+          "content": "# Internal Links",
+          "height": 460,
+          "width": 1180,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          784,
+          -1312
+        ],
+        "id": "d4402739-6430-4db4-85b0-e3225593e1cd",
+        "name": "Sticky Note6"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          1936,
+          -2080
+        ],
+        "id": "fa34dc1b-2cfa-4f0a-84a3-3dd429ff575f",
+        "name": "End"
+      },
+      {
+        "parameters": {
+          "mode": "load",
+          "pineconeIndex": {
+            "__rl": true,
+            "value": "n8n",
+            "mode": "list",
+            "cachedResultName": "n8n"
+          },
+          "prompt": "={{ $json.query }}",
+          "options": {
+            "pineconeNamespace": "={{ $json.namespace }}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+        "typeVersion": 1,
+        "position": [
+          -416,
+          -1904
+        ],
+        "id": "a7e0cc8b-57f8-40c9-bdc3-7c0ff0039fac",
+        "name": "Pinecone Vector Store1",
+        "alwaysOutputData": true,
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          -48,
+          -1904
+        ],
+        "id": "ead72d70-06c6-485f-816a-77fa7e110a47",
+        "name": "Aggregate"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          -384,
+          -1680
+        ],
+        "id": "13b6d6b6-0ad1-4932-a81c-db90374fe6da",
+        "name": "Embeddings OpenAI",
+        "credentials": {
+          "openAiApi": {
+            "id": "1HL55XZtq3JLgfHk",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "# Vector Store Search & Retrieval",
+          "height": 500,
+          "width": 960,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -736,
+          -2016
+        ],
+        "id": "c159be52-7c4d-4500-b615-a6d39ebb6e8a",
+        "name": "Sticky Note7"
+      },
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "namespace"
+              },
+              {
+                "name": "query"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -656,
+          -1904
+        ],
+        "id": "6d19cfad-7fb1-47ec-b294-5d01853cc83c",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "path": "aa02abc6-5417-4b5e-9d4b-d956bba8e6f8",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -1184,
+          -1184
+        ],
+        "id": "6f8a61df-11f3-4797-ba1e-51e46320aa83",
+        "name": "Webhook",
+        "webhookId": "aa02abc6-5417-4b5e-9d4b-d956bba8e6f8",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{$('Configuration').item.json.nocodb_url}}api/v1/db/storage/upload",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "nocoDbApiToken",
+          "sendBody": true,
+          "contentType": "multipart-form-data",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "parameterType": "formBinaryData",
+                "name": "file",
+                "inputDataFieldName": "data"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          5056,
+          -304
+        ],
+        "id": "f1552336-f853-4ed9-aaa6-c1091244ef62",
+        "name": "Upload Image to NoCoDB Binary",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "url": "={{ $('Article fields').item.json.featured_image ? $('Article fields').item.json.featured_image : ($('Generate content image1').isExecuted ? $('Generate content image1').item.json.images[0].url : $('Pick Random1').item.json.largeImageURL) }}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          4864,
+          -304
+        ],
+        "id": "959a6f1d-3829-47da-819a-4a9da12bb53b",
+        "name": "Download"
+      },
+      {
+        "parameters": {
+          "content": "[![The AI Automators](https://www.theaiautomators.com/wp-content/uploads/2025/03/gray-logo.png)](https://www.theaiautomators.com/)",
+          "height": 140,
+          "width": 300,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          2384,
+          -2112
+        ],
+        "id": "9a8bc32c-61ce-46c9-bd9b-02c5cc6558eb",
+        "name": "Sticky Note8"
+      },
+      {
+        "parameters": {
+          "method": "PATCH",
+          "url": "http://paper-backend:4242/rated-papers/",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"doi\": \"123\",\n  \"outline\": \"bla\"\n}",
+          "options": {}
+        },
+        "id": "233a9c64-7689-4d69-a1b4-d74a25d5c37b",
+        "name": "Save outline",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1376,
+          -2016
+        ],
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "ijgx3lz1xx4Q9zxn",
+            "name": "Bearer Auth account"
+          },
+          "httpHeaderAuth": {
+            "id": "RTzRC0AggRABuRdo",
+            "name": "Auth Header Paper Backend API KEY"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "toolDescription": "Use this tool to search our LightRAG database for scientific research and additional background information directly relevant to the provided paper. Summarize all findings and explanations in clear, simple, and non-technical language, understandable to non-experts and laypersons. If available, locate the paper itself and ensure all explanations and additional insights are concise, context-sensitive, and accessible.\n",
+          "method": "POST",
+          "url": "=https://rag.clapclap.cc/query",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "accept",
+                "value": "application/json"
+              },
+              {
+                "name": "X-API-Key",
+                "value": "buh0vitamin2GOLFER3weii-chrissie"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "query",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', ``, 'string') }}"
+              },
+              {}
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          1440,
+          -1664
+        ],
+        "id": "d37845af-c5f6-4798-8178-51d87a2c42ac",
+        "name": "LightRAG query tool",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C6EaRz4vxUMkBGCJ",
+            "name": "LightRAG Api key"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "PATCH",
+          "url": "http://paper-backend:4242/rated-papers/",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n\"content_status\":\"posted Social\"\n}",
+          "options": {}
+        },
+        "id": "765240af-755f-4579-8cd2-6aea5b6bb92e",
+        "name": "Save outline1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1536,
+          80
+        ],
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "ijgx3lz1xx4Q9zxn",
+            "name": "Bearer Auth account"
+          },
+          "httpHeaderAuth": {
+            "id": "RTzRC0AggRABuRdo",
+            "name": "Auth Header Paper Backend API KEY"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "pdf",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1,
+        "position": [
+          -400,
+          -1072
+        ],
+        "id": "3c2cf4e9-753b-4fac-b910-d09a6fd9eaa5",
+        "name": "Extract from File"
+      },
+      {
+        "parameters": {
+          "bucketName": "paper-store",
+          "fileKey": "={{ $json.pmid }}.pdf"
+        },
+        "type": "n8n-nodes-base.s3",
+        "typeVersion": 1,
+        "position": [
+          -592,
+          -1072
+        ],
+        "id": "846c6b62-37d1-4593-9340-3f50404ba17e",
+        "name": "Download a file",
+        "credentials": {
+          "s3": {
+            "id": "lXbGUFRjp6Yya8kj",
+            "name": "Strato S3 Images"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://paper-backend:4242/rated-papers/query",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"min_rating\": 6.1,\n  \"content_status\": \"idee\",\n  \"category_keywords\": [\n    \"Solide Grundlage\", \n    \"Content-Gold\", \n    \"Interessanter Ansatz\"\n  ],\n  \"limit\": 1\n}",
+          "options": {}
+        },
+        "id": "59a7df04-6e78-4cb4-8329-7a87ae02ee1a",
+        "name": "1. Get Rated Paper1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          -928,
+          -1072
+        ],
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "ijgx3lz1xx4Q9zxn",
+            "name": "Bearer Auth account"
+          },
+          "httpHeaderAuth": {
+            "id": "RTzRC0AggRABuRdo",
+            "name": "Auth Header Paper Backend API KEY"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $input.all().length }}",
+                      "rightValue": 0,
+                      "operator": {
+                        "type": "number",
+                        "operation": "gt"
+                      },
+                      "id": "9ca3c566-4222-4f04-8f7a-53905212265f"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Paper gefunden"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "5f928ef1-de1c-4891-9681-2190b23cdfab",
+                      "leftValue": "={{ $input.all().length }}",
+                      "rightValue": 0,
+                      "operator": {
+                        "type": "number",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Keine Papers gefunden"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          -800,
+          -1072
+        ],
+        "id": "d9ee80a1-33d4-4a6e-907f-516142fd5222",
+        "name": "Switch1"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Use this tool if you need to carry out a quick search on some key topics of the provided scientific paper. If the topic requires a much deeper understanding of a topic, use the Deep Research tool instead.\n\nIMPORTNAT: DO NOT CALL MORE THAN TWICE",
+          "method": "POST",
+          "url": "https://deepsearch.jina.ai/v1/chat/completions",
+          "sendHeaders": true,
+          "parametersHeaders": {
+            "values": [
+              {
+                "name": "Authorization",
+                "valueProvider": "=Bearer jina_c86f06e918b245028e58a1042558a80aKJe5_h7VlmeqE3zsenV0sNVRF3tr"
+              },
+              {
+                "name": "Content-Type"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n    \"model\": \"jina-deepsearch-v1\",\n    \"messages\": [\n        {\n            \"role\": \"user\",\n            \"content\": \"{prompt}\"\n        }\n    ],\n    \"stream\": false,\n    \"reasoning_effort\": \"low\",\n    \"no_direct_answer\": true\n  }",
+          "placeholderDefinitions": {
+            "values": [
+              {
+                "name": "prompt",
+                "description": "Populate this with the keywords or topic to be searched"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+        "typeVersion": 1.1,
+        "position": [
+          1136,
+          -1456
+        ],
+        "id": "3a5f5627-1414-458d-a949-3b743e55f36e",
+        "name": "Deep Search with Jina old",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "resource": "research",
+          "researchQuery": "Populate this with the keywords or topic to be searched",
+          "options": {},
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.jinaAiTool",
+        "typeVersion": 1,
+        "position": [
+          1152,
+          -1664
+        ],
+        "id": "929e7c1e-933b-420c-816f-b8b5cf597b84",
+        "name": "Deep Search with Jina",
+        "credentials": {
+          "jinaAiApi": {
+            "id": "zOl636sEio26claF",
+            "name": "Jina AI account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "toolDescription": "This tool is to carry out deep research using Perplexity. If you need very deep research on the key topic of the scientific paper provided, particularly based on up-to-date information, this is the tool to use.\n\nIMPORTNAT: DO NOT CALL MORE THAN ONCE",
+          "method": "POST",
+          "url": "https://api.perplexity.ai/chat/completions",
+          "sendHeaders": true,
+          "parametersHeaders": {
+            "values": [
+              {
+                "name": "Authorization",
+                "valueProvider": "=Bearer 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"
+              },
+              {
+                "name": "Content-Type"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"model\": \"sonar-deep-research\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"you will create a summary of facts/figures and information to include for a blog post. Do not respond with introductory text. Do not number the headings.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": {prompt}\n    }\n  ]\n}",
+          "placeholderDefinitions": {
+            "values": [
+              {
+                "name": "prompt",
+                "description": "=Populate this with a prompt based on this structure ...\n\nCreate a summary of facts/figures and information to include for this topic <PROVIDE TOPIOC>. Be detailed. Each section should have the following:  Heading - key points, data, information: be specific and provide this information. - any main keywords to include, facts, figures. You must include the specific facts/figures/statistics/keywords that need to be included within the article.  Add elaboration on each key point with specific instructions for including data, comparisons, and explanations.  If providing lists of products, software, or other types of entities, then list out the specific items of the list.",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+        "typeVersion": 1.1,
+        "position": [
+          1328,
+          -1472
+        ],
+        "id": "467cf0a9-65bc-47fb-89a5-9eb9bf6908da",
+        "name": "Deep Research with Perplexity old",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "descriptionType": "manual",
+          "toolDescription": "This tool is to carry out deep research using Perplexity. If you need very deep research on the key topic of the scientific paper provided, particularly based on up-to-date information, this is the tool to use.\n\nIMPORTNAT: DO NOT CALL MORE THAN ONCE",
+          "model": "sonar-deep-research",
+          "messages": {
+            "message": [
+              {
+                "content": "you will create a summary of facts/figures and information to include for a blog post. Do not respond with introductory text. Do not number the headings.",
+                "role": "system"
+              },
+              {
+                "content": "Populate this with a prompt based on this structure ...\n\nCreate a summary of facts/figures and information to include for this topic <PROVIDE TOPIOC>. Be detailed. Each section should have the following:  Heading - key points, data, information: be specific and provide this information. - any main keywords to include, facts, figures. You must include the specific facts/figures/statistics/keywords that need to be included within the article.  Add elaboration on each key point with specific instructions for including data, comparisons, and explanations.  If providing lists of products, software, or other types of entities, then list out the specific items of the list."
+              }
+            ]
+          },
+          "options": {},
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.perplexityTool",
+        "typeVersion": 1,
+        "position": [
+          1296,
+          -1680
+        ],
+        "id": "96670675-ced0-4783-bce5-7ded81398c14",
+        "name": "Deep Research with Perplexity",
+        "credentials": {
+          "perplexityApi": {
+            "id": "JBDa4J8nPXuQsRDN",
+            "name": "Perplexity account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Extract URLs": {
+        "main": [
+          [
+            {
+              "node": "Pick Internal Links",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Pick Internal Links",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Article fields": {
+        "main": [
+          [
+            {
+              "node": "Configuration",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pick Internal Links": {
+        "main": [
+          [
+            {
+              "node": "Outline Required?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Outline Required?": {
+        "main": [
+          [
+            {
+              "node": "Go",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Merged outline and citations",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merged outline and citations": {
+        "main": [
+          [
+            {
+              "node": "Image prompt helper",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "1. Get Rated Paper1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Continue": {
+        "main": [
+          [
+            {
+              "node": "Filter",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Filter1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Filter2",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Filter3",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Save outline1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter": {
+        "main": [
+          [
+            {
+              "node": "Facebook post",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter1": {
+        "main": [
+          [
+            {
+              "node": "Twitter Post",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter2": {
+        "main": [
+          [
+            {
+              "node": "Instagram Post",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter3": {
+        "main": [
+          [
+            {
+              "node": "LinkedIn Post",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "End",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Merged outline and citations",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Sitemap": {
+        "main": [
+          [
+            {
+              "node": "Convert to JSON",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to JSON": {
+        "main": [
+          [
+            {
+              "node": "Extract URLs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agentic RAG": {
+        "main": [
+          [
+            {
+              "node": "Save outline",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Save outline",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Go": {
+        "main": [
+          [
+            {
+              "node": "Agentic RAG",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Output Format": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Agentic RAG",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agentic RAG",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Simple Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "Agentic RAG",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Configuration": {
+        "main": [
+          [
+            {
+              "node": "Check Status",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check Status": {
+        "main": [
+          [
+            {
+              "node": "Go",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Get Sitemap",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Continue",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Write Article": {
+        "main": [
+          [
+            {
+              "node": "Wordpress",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Image2": {
+        "main": [
+          [
+            {
+              "node": "Upload In-content image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pick Random": {
+        "main": [
+          [
+            {
+              "node": "Get Image2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pixabay": {
+        "main": [
+          [
+            {
+              "node": "Pick Random",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Generate content image",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Pixabay",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract youtube urls": {
+        "main": [
+          [
+            {
+              "node": "Choose Youtube URL",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Choose Youtube URL": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model7": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Choose Youtube URL",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Youtube Video": {
+        "main": [
+          [
+            {
+              "node": "Extract youtube urls",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wordpress": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model5": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Write Article",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload In-content image": {
+        "main": [
+          [
+            {
+              "node": "Write Article",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Image": {
+        "main": [
+          [
+            {
+              "node": "Upload In-content image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate content image": {
+        "main": [
+          [
+            {
+              "node": "Get Image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model4": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Image prompt helper",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Image prompt helper": {
+        "main": [
+          [
+            {
+              "node": "Get Youtube Video",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload In-content image1": {
+        "main": [
+          [
+            {
+              "node": "Set Featured Image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set Featured Image": {
+        "main": [
+          [
+            {
+              "node": "Write Social Media Posts",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model6": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Write Social Media Posts",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Write Social Media Posts",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Image1": {
+        "main": [
+          [
+            {
+              "node": "Upload In-content image1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate content image1": {
+        "main": [
+          [
+            {
+              "node": "Get Image3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Image3": {
+        "main": [
+          [
+            {
+              "node": "Upload In-content image1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pixabay1": {
+        "main": [
+          [
+            {
+              "node": "Pick Random1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pick Random1": {
+        "main": [
+          [
+            {
+              "node": "Get Image4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Image4": {
+        "main": [
+          [
+            {
+              "node": "Upload In-content image1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "Get Image1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Generate content image1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Pixabay1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser1": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Image prompt helper",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Write Social Media Posts": {
+        "main": [
+          [
+            {
+              "node": "Download",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pinecone Vector Store1": {
+        "main": [
+          [
+            {
+              "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Embeddings OpenAI": {
+        "ai_embedding": [
+          [
+            {
+              "node": "Pinecone Vector Store1",
+              "type": "ai_embedding",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Pinecone Vector Store1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "1. Get Rated Paper1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload Image to NoCoDB Binary": {
+        "main": [
+          [
+            {
+              "node": "Update Record",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download": {
+        "main": [
+          [
+            {
+              "node": "Upload Image to NoCoDB Binary",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Save outline": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "LightRAG query tool": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract from File": {
+        "main": [
+          [
+            {
+              "node": "Article fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download a file": {
+        "main": [
+          [
+            {
+              "node": "Extract from File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "1. Get Rated Paper1": {
+        "main": [
+          [
+            {
+              "node": "Switch1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch1": {
+        "main": [
+          [
+            {
+              "node": "Download a file",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          []
+        ]
+      },
+      "Deep Search with Jina old": {
+        "ai_tool": [
+          []
+        ]
+      },
+      "Deep Search with Jina": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Deep Research with Perplexity old": {
+        "ai_tool": [
+          []
+        ]
+      },
+      "Deep Research with Perplexity": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {},
+    "meta": {
+      "instanceId": "e29847cb0d85386a381a01c77c5a370e3c3dcd4f4ebcacf20107c8e6e234123a"
+    }
+  }

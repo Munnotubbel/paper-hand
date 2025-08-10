@@ -512,27 +512,27 @@ func splitLines(s string) []string {
 func stripPublisherBoilerplate(s string, hint string) (string, int) {
 	patterns := []*regexp.Regexp{
 		regexp.MustCompile(`(?i)^(?:©|copyright|all rights reserved)`),
-        regexp.MustCompile(`(?i)^this (?:article|manuscript) (?:is|was) (?:an open access|distributed|published)`),
+		regexp.MustCompile(`(?i)^this (?:article|manuscript) (?:is|was) (?:an open access|distributed|published)`),
 		regexp.MustCompile(`(?i)^(?:creative commons|cc-?by)`),
 		regexp.MustCompile(`(?i)^permission to reproduce`),
 		regexp.MustCompile(`(?i)^rights? and permissions`),
-        // common PDF tool artifacts
-        regexp.MustCompile(`(?i)^(?:dvips|miktex|ghostscript)`),
-        regexp.MustCompile(`(?i)acrobat\s+distiller`),
-        regexp.MustCompile(`(?i)arbortext\s+advanced\s+print\s+publisher`),
-        // journal portal and boiler lines
-        regexp.MustCompile(`(?i)\bfrontiersin\.org\b`),
-        regexp.MustCompile(`(?i)^frontiers\b`),
-        regexp.MustCompile(`(?i)^open\s+access\b`),
-        regexp.MustCompile(`(?i)^edited\s+by\b`),
-        regexp.MustCompile(`(?i)^reviewed\s+by\b`),
-        regexp.MustCompile(`(?i)^publisher'?s\s+note\b`),
+		// common PDF tool artifacts
+		regexp.MustCompile(`(?i)^(?:dvips|miktex|ghostscript)`),
+		regexp.MustCompile(`(?i)acrobat\s+distiller`),
+		regexp.MustCompile(`(?i)arbortext\s+advanced\s+print\s+publisher`),
+		// journal portal and boiler lines
+		regexp.MustCompile(`(?i)\bfrontiersin\.org\b`),
+		regexp.MustCompile(`(?i)^frontiers\b`),
+		regexp.MustCompile(`(?i)^open\s+access\b`),
+		regexp.MustCompile(`(?i)^edited\s+by\b`),
+		regexp.MustCompile(`(?i)^reviewed\s+by\b`),
+		regexp.MustCompile(`(?i)^publisher'?s\s+note\b`),
 	}
 	// Publisher-Hinweis: füge grobe Patterns hinzu
 	if strings.TrimSpace(hint) != "" {
 		h := strings.ToLower(strings.TrimSpace(hint))
 		switch h {
-        case "springer":
+		case "springer":
 			patterns = append(patterns, regexp.MustCompile(`(?i)^springer`))
 		case "elsevier":
 			patterns = append(patterns, regexp.MustCompile(`(?i)^elsevier`))
@@ -540,13 +540,13 @@ func stripPublisherBoilerplate(s string, hint string) (string, int) {
 			patterns = append(patterns, regexp.MustCompile(`(?i)^wiley`))
 		case "nature":
 			patterns = append(patterns, regexp.MustCompile(`(?i)^nature (?:research|publishing)`))
-        case "frontiers":
-            patterns = append(patterns,
-                regexp.MustCompile(`(?i)^frontiers`),
-                regexp.MustCompile(`(?i)\bfrontiersin\.org\b`),
-                regexp.MustCompile(`(?i)^type\s+review\b`),
-                regexp.MustCompile(`(?i)^citation\b`),
-            )
+		case "frontiers":
+			patterns = append(patterns,
+				regexp.MustCompile(`(?i)^frontiers`),
+				regexp.MustCompile(`(?i)\bfrontiersin\.org\b`),
+				regexp.MustCompile(`(?i)^type\s+review\b`),
+				regexp.MustCompile(`(?i)^citation\b`),
+			)
 		}
 	}
 	return stripLinesByPatternsProtectingCitations(s, patterns)
@@ -563,7 +563,7 @@ func stripFrontMatter(s string) (string, int) {
 			break
 		}
 	}
-    patterns := []*regexp.Regexp{
+	patterns := []*regexp.Regexp{
 		regexp.MustCompile(`(?i)^keywords?\s*:`),
 		regexp.MustCompile(`(?i)^abbreviations?\s*:`),
 		regexp.MustCompile(`(?i)^received\s*:`),
@@ -572,12 +572,12 @@ func stripFrontMatter(s string) (string, int) {
 		regexp.MustCompile(`(?i)^author\s+contributions?\s*:`),
 		regexp.MustCompile(`(?i)^funding\s*:`),
 		regexp.MustCompile(`(?i)^conflicts? of interest\s*:`),
-        // journal boiler lines typically in front matter
-        regexp.MustCompile(`(?i)^open\s+access\b`),
-        regexp.MustCompile(`(?i)^edited\s+by\b`),
-        regexp.MustCompile(`(?i)^reviewed\s+by\b`),
-        regexp.MustCompile(`(?i)^type\s+review\b`),
-        regexp.MustCompile(`(?i)^publisher'?s\s+note\b`),
+		// journal boiler lines typically in front matter
+		regexp.MustCompile(`(?i)^open\s+access\b`),
+		regexp.MustCompile(`(?i)^edited\s+by\b`),
+		regexp.MustCompile(`(?i)^reviewed\s+by\b`),
+		regexp.MustCompile(`(?i)^type\s+review\b`),
+		regexp.MustCompile(`(?i)^publisher'?s\s+note\b`),
 	}
 	kept := []string{}
 	removed := 0
@@ -632,11 +632,11 @@ func stripCorrespondenceEmails(s string) (string, int) {
 
 // stripFiguresAndTables entfernt Bild-/Tabellenbeschriftungen (schützt Zitierungen)
 func stripFiguresAndTables(s string) (string, int) {
-    patterns := []*regexp.Regexp{
-        // Lines starting with Figure/Table numbers, allow optional trailing text or punctuation
-        regexp.MustCompile(`(?i)^(?:figure|fig\.|table|supplementary\s+(?:figure|table))\s*\d+(?:\s+.*|\s*[:.\-].*)?$`),
-        regexp.MustCompile(`(?i)^caption\s*[:.\-]?`),
-    }
+	patterns := []*regexp.Regexp{
+		// Lines starting with Figure/Table numbers, allow optional trailing text or punctuation
+		regexp.MustCompile(`(?i)^(?:figure|fig\.|table|supplementary\s+(?:figure|table))\s*\d+(?:\s+.*|\s*[:.\-].*)?$`),
+		regexp.MustCompile(`(?i)^caption\s*[:.\-]?`),
+	}
 	return stripLinesByPatternsProtectingCitations(s, patterns)
 }
 
