@@ -2,6 +2,18 @@
     "nodes": [
       {
         "parameters": {
+          "functionCode": "const html = $('Write Article').item.json.output?.[1]?.text || $('Write Article').item.json.text || '';\nconst formatted = $('Format Bibliography').item.json.formatted || [];\nconst biblioHtml = '<h2>Quellen</h2><ol>' + formatted.map(x => `<li>${x}</li>`).join('') + '</ol>';\nconst cleaned = html.replace(/<h2[^>]*>\\s*Quellen[\\s\\S]*$/i, '').trim();\nreturn { json: { html: cleaned + '\\n\\n' + biblioHtml } };"
+        },
+        "type": "n8n-nodes-base.functionItem",
+        "typeVersion": 1,
+        "position": [
+          4768,
+          -720
+        ],
+        "id": "4a73a3d0-bcba-4c7c-9b1a-3fd5d6e6d5a2",
+        "name": "Assemble Final HTML"
+      },
+        "parameters": {
           "assignments": {
             "assignments": [
               {
@@ -334,7 +346,7 @@
         ],
         "id": "137ec6b1-f126-4d60-9ccd-f5bcff0a4f7d",
         "name": "Facebook post",
-        "disabled": true
+        "disabled": false
       },
       {
         "parameters": {
@@ -821,7 +833,7 @@
         ],
         "id": "f3d6a2c0-8f16-4b0c-9f92-bb6a5e7f0a21",
         "name": "Format Bibliography",
-        "disabled": true
+        "disabled": false
       },
       {
         "parameters": {
@@ -1004,9 +1016,9 @@
       {
         "parameters": {
           "promptType": "define",
-          "text": "=<topic>\n{{ $('Article fields').item.json.article_title }}\n</topic>\n\n<article_brief>\n{{ $('Merged outline and citations').item.json.article_outline }}\n</article_brief>\n\n<deep_research>\n{{ $('Merged outline and citations').item.json.deep_research }}\n</deep_research>\n\n<citations>\n{{ $('Merged outline and citations').item.json.citations }}\n</citations>\n\n<internal_links>\n{{ $('Pick Internal Links').item.json.text }}\n</internal_links>",
+          "text": "=<topic>\n{{ $('Article fields').item.json.article_title }}\n</topic>\n\n<article_brief>\n{{ $('Merged outline and citations').item.json.article_outline }}\n</article_brief>\n\n<deep_research>\n{{ $('Merged outline and citations').item.json.deep_research }}\n</deep_research>\n\n<citations>\n{{ $('Merged outline and citations').item.json.citations }}\n</citations>\n\n<internal_links>\n{{ $('Pick Internal Links').item.json.text }}\n</internal_links>\n\n<allowed_sources_json>\n{{ $('Make Source List').item.json.sources }}\n</allowed_sources_json>\n\n<allowed_sources_human>\n{{ JSON.parse($('Make Source List').item.json.sources || '[]').map(s => `[${s.number}] ${s.title || 'Untitled'}${s.doi ? ' doi:'+s.doi : ''}${s.pmid ? ' pmid:'+s.pmid : ''}`).join('\\n') }}\n</allowed_sources_human>",
           "options": {
-            "systemMessage": "=# Role\n\nYou are an expert writer. \n\n# Task\n\nYou will be provided an <article_brief> below. Your job is to write an article based on it. \n\n## Details\n\nYou will be provided with a considerable amount of data and insights in the <deep_research> section. \n\nIt's your role to create an easy to understand blog post based on this, in relatively concise and simple language.\n\n# Article Length & Target Word Count\n\nArticle Type: {{ $('Get NocoDB Record').item.json['Article Type'] }}\nArticle Length: {{ $('Search NocoDB').item.json['Article Length'] }}\nTarget Total Word Count: {{ $('Article fields').item.json.article_target_wordcount }}\n\n# Article Structure\n\n## Introduction\n\nFor the introduction: You will create an introduction for the article based on the provided <article_brief>.\n\nWrite a concise two-sentence introduction section in NLP friendly format giving a high-level perspective on the <topic>. It should contain some high-level and relevant information based on the article rather than generic information about the topic. It should specifically address the following topic: \"{{ $('Article fields').item.json.article_title }}\"\n\n{{ $('Article fields').item.json.article_target_wordcount > 500 ? \"## Key Takeaways\\n\\nAfter the Introduction, add a key takeaways section. Add a \\\"key takeaways\\\" heading and an unordered list with the important key takeaways.\\n\\nThere should be a maximum of 5 bullet points in your key takeaways sections with no sub bullet points.\\n\\nBold one or two important words per bullet point using the <strong> tag.\\n\\n\" : \"\" }}\n{{ $('Choose Youtube URL').item.json.text.includes(\"www.youtu\") ? \"## Youtube Video\\n\\nYou must add the exact HTML <p>\"+$('Choose Youtube URL').item.json.text+\"</p> after the key takeaways section.\\n\\n\" : \"\" }}\n\n## Article Body\n\nThen write the remaining sections of the article based on the provided brief.\n\nEach section should start with a <h2> tag.\n\nYou must include the following image with image tag after the first section:\n\n<image_tag_html>\n<img src=\"{{ $json.guid.rendered }}\"/>\n</image_tag_html>\n\nInclude list items where necessary to demonstrate your points, but write a line of text to introduce the bullet points when doing so.\n\nAny time a specific figure/fact/statistic or study is mentioned you should cite the name of the source as it was provided in the outline. If a source is not provided in the outline then don't cite a source.\n\n## Sources\n\nAt the end of the article, you MUST include a \"sources\" based on the provided <citations> section. \n\nIf including sources, work them naturally into the text. For the sources, return a valid set of a href links with rel=\"nofollow\" tag. \n\nYour response must start with a <p> tag. The anchor text of the link should be the website name and article name. \n\nIf you are unsure then just provide the website URL without www and without http or https as the anchor text for the link.\n\n## Writing Style / Tone of Voice\n\n{{ $('Article fields').item.json.article_tone_of_voice ? \"## Tone of Voice:\\n\\nWrite in a \" + $('Article fields').item.json.article_tone_of_voice + \" tone of voice.\\n\\n\" : \"You writing should be aimed at both novices and seasoned users, offering insights that balance depth with accessibility. The writing should combine technical descriptions with practical advice. Sentences are structured to convey confidence and expertise, often integrating direct recommendations and subtle marketing if suited to the topic.\" }}\n{{ $('Article fields').item.json.article_tone_of_voice_examples ? \"## Tone of Voice Example:\\n\\n\" + $('Article fields').item.json.article_tone_of_voice_examples + \"\\n\\n\" : \"\" }}\n\nUse contractions in your writing. Do not start consecutive sentences or paragraphs with the same word. Keep sentences short. Use an active voice instead of a passive one. Do not start with a welcome. Do not start with a question. The text should be written from the perspective of I as opposed to we.\n\nThe following words should not be used, replace them with appropriate alternatives: meticulous, meticulously, navigating, complexities, realm, bespoke, tailored, towards, underpins, ever-changing, ever-evolving, the world of, not only, seeking more than just, designed to enhance, it's not merely, our suite, it is advisable, daunting, in the heart of, when it comes to, in the realm of, amongst, unlock the secrets, delving, unveil the secrets, and robust.\n\n{{ $('Article fields').item.json.article_keywords ? \"## Keywords to Include:\\n\\nInclude each of the following keywords exactly as they are written at least once naturally within the text: \" + $('Article fields').item.json.article_keywords + \"\\n\\n\" : \"\" }}\n\n## Internal Links\n\nInclude the following <internal_links> naturally within the text, with a maximum of one occurance per link in the internal_links. Each should be a valid <a> HTML link with natural anchor text of between 1 to 6 words that flows within the text. The SRC should be the url within the internal_links data.\n\n## Output Format\n\n= Do not return in markdown. \n- You must respond in HTML format.\n- Your response must start with a <p> tag with no other characters.\n- Max 2 sentences per paragraph. \n- There can be multiple paragraphs per section.\n- You must bold important words throughout the article with <strong> tags, between 1 to 5 words per paragraph."
+            "systemMessage": "=# Rolle\n\nDu bist ein exzellenter deutschsprachiger Fachautor.\n\n# Aufgabe\n\nSchreibe basierend auf <article_brief> einen klar strukturierten Blogartikel auf Deutsch. Nutze die Informationen in <deep_research> und die internen Links in <internal_links>.\n\n# Zitationsregeln (VERBINDLICH)\n- Verwende ausschließlich nummerierte In‑Text‑Zitate im Format [n].\n- Die erlaubten Quellen sind in <allowed_sources_json>/<allowed_sources_human> definiert. Du darfst nur diese Nummern verwenden.\n- Keine neuen Quellen erfinden, keine Nummern überspringen oder neu anordnen.\n- Zitiere jede konkrete Studie/Fakt/Statistik mit [n]. Mehrfachzitate als [1,3] oder Spannen als [2–4].\n- Am Ende KEINE eigene Quellenliste erzeugen – die Bibliographie wird serverseitig generiert.\n\n# Artikelumfang & Struktur\n\nArticle Type: {{ $('Get NocoDB Record').item.json['Article Type'] }}\nArticle Length: {{ $('Search NocoDB').item.json['Article Length'] }}\nTarget Total Word Count: {{ $('Article fields').item.json.article_target_wordcount }}\n\nBeginne mit einer kurzen Einleitung (2 Sätze). Danach die Hauptsektionen mit <h2>. Füge nach der ersten Sektion das Bild aus <image_tag_html> ein. Nutze Listen, wo sinnvoll, mit einleitendem Satz.\n\n# Stil\n\nSchreibe prägnant, aktiv, verständlich für Laien und Fortgeschrittene. Keine überflüssigen Floskeln.\n\n# Ausgabeformat\n\n- HTML, kein Markdown.\n- Antworte mit <p> beginnend.\n- Maximal 2 Sätze pro Absatz; mehrere Absätze pro Sektion sind erlaubt.\n- Wichtige Wörter fett (<strong>), 1–5 pro Absatz."
           }
         },
         "type": "@n8n/n8n-nodes-langchain.agent",
@@ -2610,6 +2622,28 @@
         ]
       },
       "Write Article": {
+        "main": [
+          [
+            {
+              "node": "Wordpress",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Format Bibliography": {
+        "main": [
+          [
+            {
+              "node": "Assemble Final HTML",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Assemble Final HTML": {
         "main": [
           [
             {
