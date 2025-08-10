@@ -729,7 +729,7 @@
       {
         "parameters": {
           "promptType": "define",
-          "text": "=Du bist ein Outline-Generator für einen Blogartikel.  \nErstelle eine prägnante, klar strukturierte Gliederung (Outline) in Markdown, basierend auf den verfügbaren Paper-Inhalten (GraphRAG-Ergebnisse) und ergänzenden Deep Searches aus Jina.\n\n## Regeln\n- **Kein Fließtext**, nur nummerierte Hauptkapitel (**H2**) und Stichpunkte (**H3**).\n- **Jeder Punkt MUSS eine Quelle haben.**\n- **Quellenformat:**\n  - Aus Paper/GraphRAG (bevorzugt DOI): **Quelle:** DOI:<DOI> (GraphRAG, S.xx falls bekannt)\n  - **Fallback**, wenn keine DOI vorliegt: **Quelle:** <PDF-ID>.pdf (GraphRAG, S.xx falls bekannt)\n  - Aus Jina Search: **Quelle:** [Jina-URL] (Jina Search)\n- **Ergänzende Themen aus Jina** immer mit **„Ergänzung:“** kennzeichnen; **max. 2** Jina-Ergänzungen pro Hauptkapitel.\n- Gliederungstiefe: **H2 (nummeriert)** + **H3**-Stichpunkte.\n- Fokus: klare Struktur für einen Blogartikel, **keine Ausformulierung**.\n\n## Titel\n{{ $('Article fields').item.json.article_title }}\n\n## Instructions\n{{ $('Article fields').item.json.article_instructions }}\n\n## Kontext / Primärquelle\n- Primäres Paper DOI: {{ $('1. Get Rated Paper1').item.json.doi }}\n- Interne PDF-ID (Fallback): {{ $('1. Get Rated Paper1').item.json.pmid }}\n\n> Wenn DOI vorhanden, IMMER „DOI:<wert>“ in den Quellen nutzen.  \n> Wenn DOI fehlt, stattdessen „<PDF-ID>.pdf“ verwenden.  \n> Wenn GraphRAG Seitenzahlen liefert, „(GraphRAG, S.xx)“ anhängen.\n\n---\n\n## Beispielausgabe (Schema)\n\n# Outline: <Titel>\n\n## 1. Einleitung\n- Kurze Definition & Relevanz des Themas  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821 (GraphRAG, S.1)\n- **Ergänzung:** Marktpotenzial in der Nutraceutical-Branche  \n  **Quelle:** [Jina-URL] (Jina Search)\n\n## 2. Molekulare Wirkmechanismen – wie schützt Curcumin Neuronen?\n- Antioxidation (Nrf2, SOD, CAT, GPx)  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821 (GraphRAG, S.3–4)\n- Hemmung toxischer Proteinaggregate (Aβ, α-Syn)  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- **Ergänzung:** Metallchelierung bei Alzheimer (Cu/Fe)  \n  **Quelle:** [Jina-URL] (Jina Search)\n\n## 3. Warum ist Curcumin schwer bioverfügbar?\n- Geringe Wasserlöslichkeit, schneller Metabolismus  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821 (GraphRAG)\n- Blut-Hirn-Schranke als zusätzliche Hürde  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n\n## 4. Strategien zur Bioverfügbarkeitssteigerung – was wirkt wirklich?\n- Piperin als Bioenhancer  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- Nano-/Lipid-Formulierungen (Liposomen, Phytosome/Longvida®, Theracurmin)  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- **Ergänzung:** γ-Cyclodextrin-Ansätze (Kurzüberblick)  \n  **Quelle:** [Jina-URL] (Jina Search)\n\n## 5. Klinische Evidenz – was zeigen Humanstudien?\n- Alzheimer: Theracurmin (180 mg/Tag) – Gedächtnis & Bildgebungsmarker  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821 (GraphRAG)\n- AD: Unformuliertes Curcumin (2–4 g/Tag) – keine Wirksamkeit, GI-Nebenwirkungen  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- Parkinson: Nanomicellen – gemischte Ergebnisse  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n\n## 6. Praxisleitfaden – Auswahl geeigneter Formulierungen\n- Kriterien: Evidenz, Dosis, Verträglichkeit, Kosten/Nutzen  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- Häufige Fehler (Dosis vs. Formulierung)  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n\n## 7. FAQ\n- „Brauche ich Piperin immer?“ – Nur wenn die Formulierung es erfordert.  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- „Welche Biomarker verbesserten sich in Studien?“  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n",
+          "text": "=Du bist ein Outline-Generator für einen Blogartikel.  \nErstelle eine prägnante, klar strukturierte Gliederung (Outline) in Markdown, basierend auf den verfügbaren Paper-Inhalten (GraphRAG-Ergebnisse) und ergänzenden Deep Searches aus Jina.\n\n## Regeln\n- **Kein Fließtext**, nur nummerierte Hauptkapitel (**H2**) und Stichpunkte (**H3**).\n- **Jeder Punkt MUSS eine Quelle haben.**\n- **Quellenformat:**\n  - Aus Paper/GraphRAG (bevorzugt DOI): **Quelle:** DOI:<DOI> (GraphRAG, S.xx falls bekannt)\n  - **Fallback**, wenn keine DOI vorliegt: **Quelle:** <PDF-ID>.pdf (GraphRAG, S.xx falls bekannt)\n  - Aus Jina Search: **Quelle:** [Jina-URL] (Jina Search)\n- **Ergänzende Themen aus Jina** immer mit **„Ergänzung:“** kennzeichnen; **max. 2** Jina-Ergänzungen pro Hauptkapitel.\n- Gliederungstiefe: **H2 (nummeriert)** + **H3**-Stichpunkte.\n- Fokus: klare Struktur für einen Blogartikel, **keine Ausformulierung**.\n\n## Titel\n{{ $('Article fields').item.json.article_title }}\n\n## Instructions\n{{ $('Article fields').item.json.article_instructions }}\n\n## Kontext / Primärquelle\n- Primäres Paper DOI: {{ $('1. Get Rated Paper1').item.json.doi }}\n- Interne PDF-ID (Fallback): {{ $('1. Get Rated Paper1').item.json.pmid }}\n\n> Wenn DOI vorhanden, IMMER „DOI:<wert>“ in den Quellen nutzen.  \n> Wenn DOI fehlt, stattdessen „<PDF-ID>.pdf“ verwenden.  \n> Wenn GraphRAG Seitenzahlen liefert, „(GraphRAG, S.xx)“ anhängen.\n\n---\n\n## Zitations-Regel (für späteren Fließtext)\n- Wenn du später Fließtext schreibst, verwende ausschließlich nummerierte In-Text-Zitate im Format [n].\n- Die Nummern werden deterministisch vom System vergeben; du erfindest keine neuen Nummern.\n\n## Beispielausgabe (Schema)\n\n# Outline: <Titel>\n\n## 1. Einleitung\n- Kurze Definition & Relevanz des Themas  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821 (GraphRAG, S.1)\n- **Ergänzung:** Marktpotenzial in der Nutraceutical-Branche  \n  **Quelle:** [Jina-URL] (Jina Search)\n\n## 2. Molekulare Wirkmechanismen – wie schützt Curcumin Neuronen?\n- Antioxidation (Nrf2, SOD, CAT, GPx)  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821 (GraphRAG, S.3–4)\n- Hemmung toxischer Proteinaggregate (Aβ, α-Syn)  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- **Ergänzung:** Metallchelierung bei Alzheimer (Cu/Fe)  \n  **Quelle:** [Jina-URL] (Jina Search)\n\n## 3. Warum ist Curcumin schwer bioverfügbar?\n- Geringe Wasserlöslichkeit, schneller Metabolismus  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821 (GraphRAG)\n- Blut-Hirn-Schranke als zusätzliche Hürde  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n\n## 4. Strategien zur Bioverfügbarkeitssteigerung – was wirkt wirklich?\n- Piperin als Bioenhancer  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- Nano-/Lipid-Formulierungen (Liposomen, Phytosome/Longvida®, Theracurmin)  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- **Ergänzung:** γ-Cyclodextrin-Ansätze (Kurzüberblick)  \n  **Quelle:** [Jina-URL] (Jina Search)\n\n## 5. Klinische Evidenz – was zeigen Humanstudien?\n- Alzheimer: Theracurmin (180 mg/Tag) – Gedächtnis & Bildgebungsmarker  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821 (GraphRAG)\n- AD: Unformuliertes Curcumin (2–4 g/Tag) – keine Wirksamkeit, GI-Nebenwirkungen  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- Parkinson: Nanomicellen – gemischte Ergebnisse  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n\n## 6. Praxisleitfaden – Auswahl geeigneter Formulierungen\n- Kriterien: Evidenz, Dosis, Verträglichkeit, Kosten/Nutzen  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- Häufige Fehler (Dosis vs. Formulierung)  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n\n## 7. FAQ\n- „Brauche ich Piperin immer?“ – Nur wenn die Formulierung es erfordert.  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n- „Welche Biomarker verbesserten sich in Studien?“  \n  **Quelle:** DOI:10.3389/fphar.2025.1625821\n",
           "hasOutputParser": true,
           "options": {
             "systemMessage": "=# Role\n\nYou are an expert writer, tasked with creating an article outline based on the provided scientific paper.  \nThe primary reference is identified by its DOI. All citations must prioritize DOI.  \nIf DOI is missing, fallback to internal PDF-ID.\n\n# Available Research Tools\n\n## 1. LightRAG query tool\nCall this tool to search our LightRAG database of scientific papers for food supplement substances.  \nLet LightRAG query tool look for the DOI of the scientific paper: {{ $('1. Get Rated Paper1').item.json.doi }}.  \nIf DOI is missing, use the fallback PDF-ID: {{ $('1. Get Rated Paper1').item.json.pmid }}.pdf  \nIMPORTANT: Do not call the \"LightRAG query tool\" more than three times.\n\n## 2. Deep Research with Perplexity (Report)\nPerplexity Deep Research excels at generating comprehensive research reports by autonomously exploring and synthesizing information from numerous sources. Only scientifically sound information is considered.  \nIMPORTANT: Do not call the Deep Research tool more than once.\n\n## 3. Deep Search with Jina.ai (Question Answering)\nDeep Search focuses on providing accurate and concise answers to complex questions through iterative web searching and reasoning.  \nIMPORTANT: Do not call the Deep Search tool more than twice.\n\n# Standard Operating Procedure\n\n## Step 1\nAnalyze the provided scientific paper and instructions, then trigger the most relevant tools to research and learn about the topics.  \nYou can call multiple tools, multiple times if necessary.\n\n## Step 2\nBased on the outputs from these tools, create the following:\n\n---\n\n### An Article Outline\n- Output in **Markdown**.\n- **No full sentences** in the outline – use numbered **H2** sections and bullet-point **H3** subpoints.\n- **Every point must have a source**:\n  - From GraphRAG/Paper (prefer DOI): **Quelle:** DOI:<DOI> (GraphRAG, S.xx)\n  - Fallback if DOI missing: **Quelle:** <PDF-ID>.pdf (GraphRAG, S.xx)\n  - From Jina Search: **Quelle:** [Jina-URL] (Jina Search)\n- **Supplementary topics** from Jina must be labeled **\"Ergänzung:\"** and limited to **max. 2 per H2 section**.\n- Focus: clear, logical structure for a blog article.\n- Depth: H2 numbered + H3 bullet points.\n\n---\n\n### Output Format for Outline (MANDATORY)\n\n# Outline: {{ $('Article fields').item.json.article_title }}\n\n## 1. Einleitung\n- <bullet point text>  \n  **Quelle:** DOI:{{ $('1. Get Rated Paper1').item.json.doi }} (GraphRAG, S.xx)\n- **Ergänzung:** <bullet point text>  \n  **Quelle:** [Jina-URL] (Jina Search)\n\n## 2. <Hauptkapitel-Titel>\n- <bullet point text>  \n  **Quelle:** DOI:{{ $('1. Get Rated Paper1').item.json.doi }} (GraphRAG, S.xx)\n- <bullet point text>  \n  **Quelle:** {{ $('1. Get Rated Paper1').item.json.pmid }}.pdf (GraphRAG, S.xx)\n- **Ergänzung:** <bullet point text>  \n  **Quelle:** [Jina-URL] (Jina Search)\n\n(Repeat for all sections)\n\n---\n\n### Article Type\nScientific blog article.\n\n{{ $('Article fields').item.json.article_tone_of_voice ? \"## Tone of Voice:\\n\\nThis article will be written in a \" + $('Article fields').item.json.article_tone_of_voice + \" tone.\\n\\n\" : \"\" }}\n\n### Article Length\nMaximum {{ $('Article fields').item.json.article_length }} sections.\n\n### Research Findings\nProvide a separate detailed report summarizing the gathered research.\n\n### Citations\nList all important sources with URLs at the end. Prioritize DOI sources.\n",
@@ -772,6 +772,56 @@
         ],
         "id": "999be18b-6e18-441c-ae54-317bde4a147d",
         "name": "Output Format"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "name": "sources",
+                "type": "string",
+                "value": "={{ JSON.stringify(($('Agentic RAG').item.json.output?.sources || []).slice(0,20).map((s,idx)=>({ number: idx+1, doi: s.doi||'', pmid: s.pmid||'', title: s.title||'', year: Number(s.year)||0, journal: s.journal||'', authors: Array.isArray(s.authors)?s.authors:[], doc_id: s.doc_id||s.id||'' }))) }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2208,
+          -1536
+        ],
+        "id": "a2b9ed2a-0b9d-4b2c-9b3f-3b2c1f0a2bcd",
+        "name": "Make Source List"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $vars.PAPER_BACKEND_URL }}/answers/format-bibliography",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "X-API-KEY", "value": "={{ $vars.API_SECRET_KEY || 'your-api-key' }}" }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ answer_text: $('Write Article').item.json.output?.[1]?.text || '', sources: JSON.parse($('Make Source List').item.json.sources || '[]') }) }}",
+          "options": { "timeout": 30000 }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          4512,
+          -720
+        ],
+        "id": "f3d6a2c0-8f16-4b0c-9f92-bb6a5e7f0a21",
+        "name": "Format Bibliography",
+        "disabled": true
       },
       {
         "parameters": {
@@ -2457,6 +2507,17 @@
           ]
         ]
       },
+      "Make Source List": {
+        "main": [
+          [
+            {
+              "node": "Output Format",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
       "Go": {
         "main": [
           [
@@ -2474,6 +2535,17 @@
             {
               "node": "Agentic RAG",
               "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Write Article": {
+        "main": [
+          [
+            {
+              "node": "Format Bibliography",
+              "type": "main",
               "index": 0
             }
           ]

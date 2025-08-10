@@ -23,13 +23,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "=http://paper-backend:4242/rated-papers/query",
+          "url": "={{ $vars.PAPER_BACKEND_URL }}/rated-papers/query",
           "authentication": "genericCredentialType",
           "genericAuthType": "httpHeaderAuth",
           "sendBody": true,
           "specifyBody": "json",
           "jsonBody": "{\n  \"min_rating\": 6.1,\n  \"added_rag\": false,\n  \"category_keywords\": [\n    \"Solide Grundlage\", \n    \"Content-Gold\", \n    \"Interessanter Ansatz\"\n  ],\n  \"limit\": 1\n}",
-          "options": {}
+          "options": {"timeout": 30000}
         },
         "id": "251bf126-eaec-4c02-b769-a7afa556dc83",
         "name": "1. Get Rated Paper",
@@ -167,7 +167,7 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "=http://paper-backend:4242/text/normalize-for-n8n",
+          "url": "={{ $vars.PAPER_BACKEND_URL }}/text/normalize-for-n8n",
           "authentication": "genericCredentialType",
           "genericAuthType": "httpHeaderAuth",
           "sendHeaders": true,
@@ -176,6 +176,10 @@
               {
                 "name": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "name": "X-API-KEY",
+                "value": "={{ $vars.API_SECRET_KEY || 'your-api-key' }}"
               }
             ]
           },
@@ -205,7 +209,7 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "=http://paper-backend:4242/citations/extract-for-n8n",
+          "url": "={{ $vars.PAPER_BACKEND_URL }}/citations/extract-for-n8n",
           "authentication": "genericCredentialType",
           "genericAuthType": "httpHeaderAuth",
           "sendHeaders": true,
@@ -246,7 +250,7 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "=http://paper-backend:4242/citations/remove-references-for-n8n",
+          "url": "={{ $vars.PAPER_BACKEND_URL }}/citations/remove-references-for-n8n",
           "authentication": "genericCredentialType",
           "genericAuthType": "httpHeaderAuth",
           "sendHeaders": true,
@@ -447,7 +451,7 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "=http://paper-backend:4242/text/normalize-for-n8n",
+          "url": "={{ $vars.PAPER_BACKEND_URL }}/text/normalize-for-n8n",
           "authentication": "genericCredentialType",
           "genericAuthType": "httpHeaderAuth",
           "sendHeaders": true,
