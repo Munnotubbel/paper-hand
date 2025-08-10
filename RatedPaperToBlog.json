@@ -811,14 +811,14 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $vars.PAPER_BACKEND_URL }}/answers/format-bibliography",
+          "url": "http://paper-backend:4242/answers/format-bibliography",
           "authentication": "genericCredentialType",
           "genericAuthType": "httpHeaderAuth",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               { "name": "Content-Type", "value": "application/json" },
-              { "name": "X-API-KEY", "value": "={{ $vars.API_SECRET_KEY || 'your-api-key' }}" }
+              { "name": "X-API-KEY", "value": "={{ $json.API_SECRET_KEY || 'your-api-key' }}" }
             ]
           },
           "sendBody": true,
