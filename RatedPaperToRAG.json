@@ -14,10 +14,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1872,
-        240
+        -1856,
+        384
       ],
-      "id": "e81ec75c-620c-44d7-b790-a9a18e707f24",
+      "id": "5fe92473-9424-48ba-922f-6b5d0a8dc245",
       "name": "Schedule Trigger1"
     },
     {
@@ -33,13 +33,13 @@
           "timeout": 30000
         }
       },
-      "id": "6040a6cd-5079-4a3c-abd7-04c84e1bbc3c",
+      "id": "30bc0afb-7322-4a93-999c-fef0a078835a",
       "name": "1. Get Rated Paper1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1632,
-        240
+        -1616,
+        384
       ],
       "credentials": {
         "httpBearerAuth": {
@@ -111,10 +111,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -1424,
-        240
+        -1408,
+        384
       ],
-      "id": "2c9a2a6c-c9e8-437a-a351-8b48c997e0d0",
+      "id": "8f581a03-ef29-4899-aa49-eac688050978",
       "name": "Switch1"
     },
     {
@@ -125,10 +125,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -1152,
-        432
+        -1136,
+        576
       ],
-      "id": "f900e514-ec48-4af3-b238-4b2b082b8e9c",
+      "id": "63ff8cfc-c6f5-4a1d-a0ca-1a8d586262ec",
       "name": "Wait (no result)1",
       "webhookId": "cdb2d1cd-68be-4d2e-a53e-9c5df0c04853"
     },
@@ -140,10 +140,10 @@
       "type": "n8n-nodes-base.s3",
       "typeVersion": 1,
       "position": [
-        -1232,
-        240
+        -1216,
+        384
       ],
-      "id": "d2a68389-8729-475f-be71-8bdfcde7d52d",
+      "id": "60519103-c66d-4061-af28-999a6a466fce",
       "name": "Download a file1",
       "credentials": {
         "s3": {
@@ -160,10 +160,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -1104,
-        240
+        -1088,
+        384
       ],
-      "id": "98a91f75-5fc0-4cb3-bbbc-42315a7313ac",
+      "id": "007d29c2-ce4d-406d-8eb1-48c317f2602b",
       "name": "Extract from File1"
     },
     {
@@ -196,10 +196,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -976,
-        240
+        -960,
+        384
       ],
-      "id": "6b681f5e-3e51-4f63-891a-04467c93babe",
+      "id": "4ccd80cd-03ad-4a3a-95fc-14342343542b",
       "name": "Normalize Text1",
       "credentials": {
         "httpHeaderAuth": {
@@ -237,10 +237,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -832,
-        240
+        -816,
+        384
       ],
-      "id": "44b37ba3-5ebe-41cd-8ebd-d7c69308f0ec",
+      "id": "08124c40-579e-4330-8473-82be19e2cbdb",
       "name": "Literatur-Extraktor1",
       "credentials": {
         "httpHeaderAuth": {
@@ -278,10 +278,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -672,
-        240
+        -656,
+        384
       ],
-      "id": "75c46dfd-753a-4b66-87cb-0c814a356416",
+      "id": "e3325fb1-a11f-41a2-b596-e493d79ea564",
       "name": "Quellenverzeichnis entfernen1",
       "credentials": {
         "httpHeaderAuth": {
@@ -297,10 +297,10 @@
       "type": "n8n-nodes-base.functionItem",
       "typeVersion": 1,
       "position": [
-        -368,
-        144
+        -352,
+        288
       ],
-      "id": "b35d95c7-968e-4f88-93d2-a409f5804196",
+      "id": "3f63a23e-0e43-440a-905b-187677bae8cd",
       "name": "Build Metadata1"
     },
     {
@@ -314,10 +314,10 @@
       "type": "n8n-nodes-base.moveBinaryData",
       "typeVersion": 1,
       "position": [
-        -112,
-        -96
+        -96,
+        48
       ],
-      "id": "9425308a-9bf9-47a1-a567-4dd588ee5edf",
+      "id": "3cbb556d-cec2-4858-82d5-ee91c56c3949",
       "name": "MainText: JSON→Binary1"
     },
     {
@@ -331,10 +331,10 @@
       "type": "n8n-nodes-base.moveBinaryData",
       "typeVersion": 1,
       "position": [
-        144,
-        128
+        160,
+        272
       ],
-      "id": "2bca2508-3358-4ea7-848f-fc7eeff4532e",
+      "id": "db605d38-d70f-4be2-a1d7-fefcad7037f7",
       "name": "Refs: JSON→Binary1"
     },
     {
@@ -374,10 +374,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        160,
-        -32
+        176,
+        112
       ],
-      "id": "95f79365-4a56-4d2f-bb91-6a44d849bca5",
+      "id": "52eef251-499e-4cde-9758-24bc789ef181",
       "name": "Upload MainText1",
       "credentials": {
         "httpHeaderAuth": {
@@ -388,16 +388,15 @@
     },
     {
       "parameters": {
-        "amount": 2,
-        "unit": "minutes"
+        "amount": 2
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1120,
-        128
+        1136,
+        272
       ],
-      "id": "60b18ebf-7aa1-4b88-916d-b6b0cbd23c34",
+      "id": "a4d92dbf-6a24-462b-9367-ced75e7ad0cf",
       "name": "Wait (after upload)1",
       "webhookId": "2fd69ce6-3048-4fa3-bd6b-9a30f410d1c4"
     },
@@ -438,10 +437,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        912,
-        48
+        928,
+        192
       ],
-      "id": "e1654c57-50f6-4369-a6c1-be33042e9430",
+      "id": "99c68acd-d151-417b-866a-5ef18cb10973",
       "name": "Upload References1",
       "credentials": {
         "httpHeaderAuth": {
@@ -480,10 +479,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -528,
-        240
+        -512,
+        384
       ],
-      "id": "6791bb9f-8d34-4e6a-a7f6-41431060f9bb",
+      "id": "d6d8795e-f728-4b21-ba76-a9536f547de5",
       "name": "Finalize Main Text1",
       "credentials": {
         "httpHeaderAuth": {
@@ -521,10 +520,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1360,
-        144
+        1376,
+        288
       ],
-      "id": "cf9991d8-c8f7-4e46-b52f-62acfdf0fae9",
+      "id": "7307aa00-46df-484a-9b2e-81f60fce83d6",
       "name": "Upsert Paper Links1",
       "credentials": {
         "httpHeaderAuth": {
@@ -540,17 +539,18 @@
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ doi: $('1. Get Rated Paper1').item.json.doi, added_rag: true, processed: true, lightrag_doc_id: ($('Upload MainText1').item.json.doc_id || $('Upload MainText1').item.json.id || ''), references_json: $('Literatur-Extraktor1').item.json }) }}",
+        "contentType": "raw",
+        "rawContentType": "JSON",
+        "body": "={{ JSON.stringify({ doi: $('1. Get Rated Paper1').item.json.doi, added_rag: true, processed: true, lightrag_doc_id: ($('Upload MainText1').item.json.doc_id || $('Upload MainText1').item.json.id || ''), references_json: JSON.stringify($('Literatur-Extraktor1').item.json) }) }}",
         "options": {}
       },
-      "id": "27071a5b-3e74-4a0e-ae17-5d77a179e637",
+      "id": "9f99d7cb-b0ca-4349-b336-56f7534a0f70",
       "name": "Mark as Added1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1360,
-        368
+        1376,
+        512
       ],
       "credentials": {
         "httpHeaderAuth": {
@@ -564,24 +564,23 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        496,
-        48
+        512,
+        192
       ],
-      "id": "85335b8f-9b4d-4859-b565-01377c5b4ed6",
+      "id": "b07138b6-a33b-41d7-a346-2813c2a7104c",
       "name": "Merge"
     },
     {
       "parameters": {
-        "amount": 2,
-        "unit": "seconds"
+        "amount": 2
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        304,
-        0
+        320,
+        144
       ],
-      "id": "3d977271-eff4-43c7-a059-9c014855fa4c",
+      "id": "228394c5-7506-4ce7-b3de-6d48b3afd584",
       "name": "Wait",
       "webhookId": "f83ab555-931c-4156-a4fc-2bdfb4601180"
     },
@@ -592,10 +591,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        704,
-        48
+        720,
+        192
       ],
-      "id": "b7e991c6-9de2-44bb-b25c-4269f3a42700",
+      "id": "b1bafb13-acfe-4a11-a6a3-29bb359a4ebe",
       "name": "Code"
     },
     {
@@ -605,10 +604,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        32,
-        -80
+        48,
+        64
       ],
-      "id": "b5a096ff-d498-4333-b80d-2757805c5459",
+      "id": "cc006833-47f4-40fb-90e0-0b2fd5d52258",
       "name": "Main: data→file"
     },
     {
@@ -618,10 +617,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -240,
-        128
+        -224,
+        272
       ],
-      "id": "dbadbb1f-00fa-42a2-9512-f42294da602d",
+      "id": "85c3223c-7020-461f-88a3-86aa96f0e399",
       "name": "Timestamp Filenames"
     }
   ],
