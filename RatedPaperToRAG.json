@@ -541,7 +541,7 @@
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "JSON",
-        "body": "={{ JSON.stringify({ doi: $items('1. Get Rated Paper1')[0].json.doi, added_rag: true, processed: true, lightrag_doc_id: ($items('Upload MainText1')[0].json.doc_id || $items('Upload MainText1')[0].json.id || ''), references_json: JSON.stringify($items('Literatur-Extraktor1')[0].json) }) }}",
+        "body": "={{ JSON.stringify({ doi: $items('1. Get Rated Paper1')[0].json.doi, added_rag: true, processed: true, lightrag_doc_id: ($items('Upload MainText1')[0].json.doc_id || $items('Upload MainText1')[0].json.id || ''), references_json: $items('Literatur-Extraktor1')[0].json }) }}",
         "options": {}
       },
       "id": "9f99d7cb-b0ca-4349-b336-56f7534a0f70",
