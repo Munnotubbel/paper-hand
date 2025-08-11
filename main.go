@@ -603,14 +603,14 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 		c.JSON(http.StatusOK, enrichedPaper)
 	})
 
-	rg.PATCH("/added-rag", func(c *gin.Context) {
-		var req struct {
-			DOI            string `json:"doi" binding:"required"`
-			AddedRag       *bool  `json:"added_rag"`
-			Processed      *bool  `json:"processed"`
-			LightRAGDocID  string `json:"lightrag_doc_id"`
-			ReferencesJSON string `json:"references_json"`
-		}
+    rg.PATCH("/added-rag", func(c *gin.Context) {
+        var req struct {
+            DOI            string          `json:"doi" binding:"required"`
+            AddedRag       *bool           `json:"added_rag"`
+            Processed      *bool           `json:"processed"`
+            LightRAGDocID  string          `json:"lightrag_doc_id"`
+            ReferencesJSON json.RawMessage `json:"references_json"`
+        }
 		if err := c.ShouldBindJSON(&req); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid body: doi required"})
 			return
@@ -629,9 +629,9 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 		if req.LightRAGDocID != "" {
 			updates["lightrag_doc_id"] = req.LightRAGDocID
 		}
-		if req.ReferencesJSON != "" {
-			updates["references_json"] = req.ReferencesJSON
-		}
+        if len(req.ReferencesJSON) > 0 && string(req.ReferencesJSON) != "null" {
+            updates["references_json"] = req.ReferencesJSON
+        }
 		if len(updates) == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "No updatable fields provided"})
 			return
