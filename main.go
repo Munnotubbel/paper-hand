@@ -488,38 +488,97 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 			return
 		}
-		var ratedPaper models.RatedPaper
-		if err := c.ShouldBindJSON(&ratedPaper); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
-			return
+		// Helper: Coercion
+		coerceString := func(v any) string {
+			switch t := v.(type) {
+			case string:
+				return strings.TrimSpace(t)
+			case float64:
+				return strings.TrimSpace(strconv.FormatFloat(t, 'f', -1, 64))
+			case int:
+				return strings.TrimSpace(strconv.Itoa(t))
+			case bool:
+				if t {
+					return "true"
+				}
+				return "false"
+			default:
+				return ""
+			}
+		}
+		coerceFloat := func(v any) float64 {
+			switch t := v.(type) {
+			case float64:
+				return t
+			case string:
+				s := strings.TrimSpace(t)
+				if s == "" {
+					return 0
+				}
+				if f, err := strconv.ParseFloat(s, 64); err == nil {
+					return f
+				}
+				return 0
+			case int:
+				return float64(t)
+			default:
+				return 0
+			}
+		}
+		coerceBool := func(v any) bool {
+			switch t := v.(type) {
+			case bool:
+				return t
+			case string:
+				s := strings.ToLower(strings.TrimSpace(t))
+				return s == "true" || s == "1" || s == "yes" || s == "on"
+			case float64:
+				return t != 0
+			case int:
+				return t != 0
+			default:
+				return false
+			}
 		}
 
-		// DOI ggf. über PMID aus rawDB auflösen
-		ratedPaper.DOI = strings.TrimSpace(ratedPaper.DOI)
-		if ratedPaper.DOI == "" {
-			// pmid aus Body lesen (pmid oder pmid_pdf_id)
-			var pmid string
-			if v, ok := raw["pmid"].(string); ok {
-				pmid = strings.TrimSpace(v)
-			}
+		// DOI direkt oder via PMID/pmid_pdf_id aus rawDB ermitteln
+		doi := coerceString(raw["doi"])
+		if doi == "" {
+			pmid := coerceString(raw["pmid"])
 			if pmid == "" {
-				if v, ok := raw["pmid_pdf_id"].(string); ok {
-					pmid = strings.TrimSpace(v)
-				}
+				pmid = coerceString(raw["pmid_pdf_id"])
 			}
 			if pmid != "" {
 				var paper models.Paper
 				if err := rawDB.Where("pmid = ?", pmid).First(&paper).Error; err == nil {
-					if doi := strings.TrimSpace(paper.DOI); doi != "" {
-						ratedPaper.DOI = doi
-					}
+					doi = strings.TrimSpace(paper.DOI)
 				}
 			}
 		}
-		// Falls weiterhin leer, abbrechen
-		if ratedPaper.DOI == "" {
+		if doi == "" {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "doi is required (or provide pmid to resolve)"})
 			return
+		}
+
+		// RatedPaper aus raw map befüllen (tolerant gegenüber Typen)
+		ratedPaper := models.RatedPaper{
+			DOI:              doi,
+			S3Link:           coerceString(raw["s3_link"]),
+			Rating:           coerceFloat(raw["rating"]),
+			ConfidenceScore:  coerceFloat(raw["confidence_score"]),
+			Category:         coerceString(raw["category"]),
+			AiSummary:        coerceString(raw["ai_summary"]),
+			KeyFindings:      coerceString(raw["key_findings"]),
+			StudyStrengths:   coerceString(raw["study_strengths"]),
+			StudyLimitations: coerceString(raw["study_limitations"]),
+			ContentIdea:      coerceString(raw["content_idea"]),
+			ContentStatus:    coerceString(raw["content_status"]),
+			ContentURL:       coerceString(raw["content_url"]),
+			Processed:        coerceBool(raw["processed"]),
+			AddedRag:         coerceBool(raw["added_rag"]),
+			Outline:          coerceString(raw["outline"]),
+			Citations:        coerceString(raw["citations"]),
+			DeepResearch:     coerceString(raw["deep_research"]),
 		}
 
 		// Versuche: vorhandenen Datensatz per DOI finden und selektiv updaten; sonst neu erstellen
