@@ -480,31 +480,70 @@ func setupGraphRoutes(router *gin.Engine, rawDB *gorm.DB, log *zap.Logger) {
 
 func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB, log *zap.Logger) {
 	rg := router.Group("/rated-papers")
-	rg.POST("/", func(c *gin.Context) {
+	saveRatedPaperHandler := func(c *gin.Context) {
 		var ratedPaper models.RatedPaper
 		if err := c.ShouldBindJSON(&ratedPaper); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 			return
 		}
 
-		// Alle Felder, die bei einem Konflikt aktualisiert werden sollen.
-		updateColumns := []string{
-			"s3_link", "rating", "confidence_score", "category", "ai_summary",
-			"key_findings", "study_strengths", "study_limitations",
-			"content_idea", "content_status", "content_url", "processed", "added_rag",
+		// DOI validieren (leer nicht zulassen)
+		ratedPaper.DOI = strings.TrimSpace(ratedPaper.DOI)
+		if ratedPaper.DOI == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "doi is required"})
+			return
 		}
 
-		err := ratedDB.Clauses(clause.OnConflict{
-			Columns:   []clause.Column{{Name: "doi"}},
-			DoUpdates: clause.AssignmentColumns(updateColumns),
-		}).Create(&ratedPaper).Error
+		// Versuche: vorhandenen Datensatz per DOI finden und selektiv updaten; sonst neu erstellen
+		var existing models.RatedPaper
+		findErr := ratedDB.Where("doi = ?", ratedPaper.DOI).First(&existing).Error
+		if findErr == nil {
+			updates := map[string]any{
+				"s3_link":           ratedPaper.S3Link,
+				"rating":            ratedPaper.Rating,
+				"confidence_score":  ratedPaper.ConfidenceScore,
+				"category":          ratedPaper.Category,
+				"ai_summary":        ratedPaper.AiSummary,
+				"key_findings":      ratedPaper.KeyFindings,
+				"study_strengths":   ratedPaper.StudyStrengths,
+				"study_limitations": ratedPaper.StudyLimitations,
+				"content_idea":      ratedPaper.ContentIdea,
+				"content_status":    ratedPaper.ContentStatus,
+				"content_url":       ratedPaper.ContentURL,
+				"processed":         ratedPaper.Processed,
+				"added_rag":         ratedPaper.AddedRag,
+				// neue Content-Felder
+				"outline":       ratedPaper.Outline,
+				"citations":     ratedPaper.Citations,
+				"deep_research": ratedPaper.DeepResearch,
+			}
+			if err := ratedDB.Model(&existing).Updates(updates).Error; err != nil {
+				log.Error("Failed to update existing rated paper", zap.String("doi", ratedPaper.DOI), zap.Error(err))
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save rated paper"})
+				return
+			}
+			// lade aktualisierten Datensatz
+			var saved models.RatedPaper
+			_ = ratedDB.Where("doi = ?", ratedPaper.DOI).First(&saved).Error
+			c.JSON(http.StatusOK, saved)
+			return
+		}
+		if !errors.Is(findErr, gorm.ErrRecordNotFound) {
+			log.Error("Failed to query rated paper by DOI", zap.String("doi", ratedPaper.DOI), zap.Error(findErr))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save rated paper"})
+			return
+		}
 
-		if err != nil {
+		if err := ratedDB.Create(&ratedPaper).Error; err != nil {
+			log.Error("Failed to create rated paper", zap.String("doi", ratedPaper.DOI), zap.Error(err))
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save rated paper"})
 			return
 		}
 		c.JSON(http.StatusOK, ratedPaper)
-	})
+	}
+	// Unterstütze beide Pfade: mit und ohne abschließenden Slash
+	rg.POST("/", saveRatedPaperHandler)
+	rg.POST("", saveRatedPaperHandler)
 	// NEU: General Update Endpoint
 	rg.PATCH("/", func(c *gin.Context) {
 		// Payload mit allen optionalen Feldern
@@ -514,9 +553,9 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			ContentURL    *string `json:"content_url"`
 			Processed     *bool   `json:"processed"`
 			AddedRag      *bool   `json:"added_rag"`
-			Outline       string  `json:"outline"`
-			Citations     string  `json:"citations"`
-			DeepResearch  string  `json:"deep_research"`
+			Outline       *string `json:"outline"`
+			Citations     *string `json:"citations"`
+			DeepResearch  *string `json:"deep_research"`
 		}
 		if err := c.ShouldBindJSON(&payload); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing or invalid fields (doi required)"})
@@ -536,6 +575,16 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 		}
 		if payload.AddedRag != nil {
 			updates["added_rag"] = *payload.AddedRag
+		}
+
+		if payload.Outline != nil {
+			updates["outline"] = *payload.Outline
+		}
+		if payload.Citations != nil {
+			updates["citations"] = *payload.Citations
+		}
+		if payload.DeepResearch != nil {
+			updates["deep_research"] = *payload.DeepResearch
 		}
 
 		if len(updates) == 0 {
@@ -603,14 +652,14 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 		c.JSON(http.StatusOK, enrichedPaper)
 	})
 
-    rg.PATCH("/added-rag", func(c *gin.Context) {
-        var req struct {
-            DOI            string          `json:"doi" binding:"required"`
-            AddedRag       *bool           `json:"added_rag"`
-            Processed      *bool           `json:"processed"`
-            LightRAGDocID  string          `json:"lightrag_doc_id"`
-            ReferencesJSON json.RawMessage `json:"references_json"`
-        }
+	rg.PATCH("/added-rag", func(c *gin.Context) {
+		var req struct {
+			DOI            string          `json:"doi" binding:"required"`
+			AddedRag       *bool           `json:"added_rag"`
+			Processed      *bool           `json:"processed"`
+			LightRAGDocID  string          `json:"lightrag_doc_id"`
+			ReferencesJSON json.RawMessage `json:"references_json"`
+		}
 		if err := c.ShouldBindJSON(&req); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid body: doi required"})
 			return
@@ -629,9 +678,9 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 		if req.LightRAGDocID != "" {
 			updates["lightrag_doc_id"] = req.LightRAGDocID
 		}
-        if len(req.ReferencesJSON) > 0 && string(req.ReferencesJSON) != "null" {
-            updates["references_json"] = req.ReferencesJSON
-        }
+		if len(req.ReferencesJSON) > 0 && string(req.ReferencesJSON) != "null" {
+			updates["references_json"] = req.ReferencesJSON
+		}
 		if len(updates) == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "No updatable fields provided"})
 			return

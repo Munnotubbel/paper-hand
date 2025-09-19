@@ -1,8 +1,8 @@
 package models
 
 import (
-    "time"
-    "gorm.io/datatypes"
+	"encoding/json"
+	"time"
 )
 
 // RatedPaper speichert das Analyseergebnis einer KI für ein wissenschaftliches Paper.
@@ -36,8 +36,8 @@ type RatedPaper struct {
 	Processed bool `json:"processed" gorm:"default:false"`
 	AddedRag  bool `json:"added_rag" gorm:" default:false"`
 	// LightRAG integration
-    LightRAGDocID  string         `json:"lightrag_doc_id" gorm:"index"`
-    ReferencesJSON datatypes.JSON `json:"references_json" gorm:"type:jsonb"`
+	LightRAGDocID  string          `json:"lightrag_doc_id" gorm:"column:lightrag_doc_id;index"`
+	ReferencesJSON json.RawMessage `json:"references_json" gorm:"type:jsonb"`
 }
 
 // TableName gibt explizit den Tabellennamen an.
