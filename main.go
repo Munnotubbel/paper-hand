@@ -481,16 +481,44 @@ func setupGraphRoutes(router *gin.Engine, rawDB *gorm.DB, log *zap.Logger) {
 func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB, log *zap.Logger) {
 	rg := router.Group("/rated-papers")
 	saveRatedPaperHandler := func(c *gin.Context) {
+		// Rohdaten lesen, damit wir ggf. pmid nutzen können
+		raw := map[string]any{}
+		if err := c.ShouldBindBodyWith(&raw, binding.JSON); err != nil {
+			log.Error("Invalid request body (raw)", zap.Error(err))
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			return
+		}
 		var ratedPaper models.RatedPaper
 		if err := c.ShouldBindJSON(&ratedPaper); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 			return
 		}
 
-		// DOI validieren (leer nicht zulassen)
+		// DOI ggf. über PMID aus rawDB auflösen
 		ratedPaper.DOI = strings.TrimSpace(ratedPaper.DOI)
 		if ratedPaper.DOI == "" {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "doi is required"})
+			// pmid aus Body lesen (pmid oder pmid_pdf_id)
+			var pmid string
+			if v, ok := raw["pmid"].(string); ok {
+				pmid = strings.TrimSpace(v)
+			}
+			if pmid == "" {
+				if v, ok := raw["pmid_pdf_id"].(string); ok {
+					pmid = strings.TrimSpace(v)
+				}
+			}
+			if pmid != "" {
+				var paper models.Paper
+				if err := rawDB.Where("pmid = ?", pmid).First(&paper).Error; err == nil {
+					if doi := strings.TrimSpace(paper.DOI); doi != "" {
+						ratedPaper.DOI = doi
+					}
+				}
+			}
+		}
+		// Falls weiterhin leer, abbrechen
+		if ratedPaper.DOI == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "doi is required (or provide pmid to resolve)"})
 			return
 		}
 
@@ -548,7 +576,8 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 	rg.PATCH("/", func(c *gin.Context) {
 		// Payload mit allen optionalen Feldern
 		var payload struct {
-			DOI           string  `json:"doi" binding:"required"`
+			DOI           string  `json:"doi"`
+			PMID          string  `json:"pmid"`
 			ContentStatus *string `json:"content_status"`
 			ContentURL    *string `json:"content_url"`
 			Processed     *bool   `json:"processed"`
@@ -558,7 +587,7 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			DeepResearch  *string `json:"deep_research"`
 		}
 		if err := c.ShouldBindJSON(&payload); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing or invalid fields (doi required)"})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing or invalid fields"})
 			return
 		}
 
@@ -587,14 +616,37 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			updates["deep_research"] = *payload.DeepResearch
 		}
 
+		if payload.Outline != nil {
+			updates["outline"] = *payload.Outline
+		}
+		if payload.Citations != nil {
+			updates["citations"] = *payload.Citations
+		}
+		if payload.DeepResearch != nil {
+			updates["deep_research"] = *payload.DeepResearch
+		}
+
 		if len(updates) == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "No updatable fields provided"})
 			return
 		}
 
+		// Ziel-DOI festlegen: payload.DOI oder via PMID aus rawDB
+		targetDOI := strings.TrimSpace(payload.DOI)
+		if targetDOI == "" && strings.TrimSpace(payload.PMID) != "" {
+			var paper models.Paper
+			if err := rawDB.Where("pmid = ?", strings.TrimSpace(payload.PMID)).First(&paper).Error; err == nil {
+				targetDOI = strings.TrimSpace(paper.DOI)
+			}
+		}
+		if targetDOI == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Target DOI missing; provide doi or pmid"})
+			return
+		}
+
 		if err := ratedDB.
 			Model(&models.RatedPaper{}).
-			Where("doi = ?", payload.DOI).
+			Where("doi = ?", targetDOI).
 			Updates(updates).
 			Error; err != nil {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -609,6 +661,38 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 		c.JSON(http.StatusOK, gin.H{
 			"message": "updated fields",
 			"updates": updates,
+		})
+		// GET by PMID -> via rawDB DOI auflösen und RatedPaper liefern
+		rg.GET("/by-pmid/:pmid", func(c *gin.Context) {
+			pmid := strings.TrimSpace(c.Param("pmid"))
+			if pmid == "" {
+				c.JSON(http.StatusBadRequest, gin.H{"error": "invalid pmid"})
+				return
+			}
+			var paper models.Paper
+			if err := rawDB.Where("pmid = ?", pmid).First(&paper).Error; err != nil {
+				if errors.Is(err, gorm.ErrRecordNotFound) {
+					c.JSON(http.StatusNotFound, gin.H{"error": "paper not found in raw db"})
+					return
+				}
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "database error (raw)"})
+				return
+			}
+			doi := strings.TrimSpace(paper.DOI)
+			if doi == "" {
+				c.JSON(http.StatusNotFound, gin.H{"error": "paper has no DOI in raw db"})
+				return
+			}
+			var ratedPaper models.RatedPaper
+			if err := ratedDB.Where("doi = ?", doi).First(&ratedPaper).Error; err != nil {
+				if errors.Is(err, gorm.ErrRecordNotFound) {
+					c.JSON(http.StatusNotFound, gin.H{"error": "Rated paper not found"})
+					return
+				}
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
+				return
+			}
+			c.JSON(http.StatusOK, ratedPaper)
 		})
 	})
 	rg.GET("/:doi", func(c *gin.Context) {
@@ -654,18 +738,27 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 
 	rg.PATCH("/added-rag", func(c *gin.Context) {
 		var req struct {
-			DOI            string          `json:"doi" binding:"required"`
+			DOI            string          `json:"doi"`
+			PMID           string          `json:"pmid"`
 			AddedRag       *bool           `json:"added_rag"`
 			Processed      *bool           `json:"processed"`
 			LightRAGDocID  string          `json:"lightrag_doc_id"`
 			ReferencesJSON json.RawMessage `json:"references_json"`
 		}
 		if err := c.ShouldBindJSON(&req); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid body: doi required"})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid body"})
 			return
 		}
-		if req.DOI == "" || !strings.Contains(req.DOI, "/") {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid DOI format"})
+		// Ziel-DOI: direkter DOI oder via PMID aus rawDB
+		targetDOI := strings.TrimSpace(req.DOI)
+		if targetDOI == "" && strings.TrimSpace(req.PMID) != "" {
+			var paper models.Paper
+			if err := rawDB.Where("pmid = ?", strings.TrimSpace(req.PMID)).First(&paper).Error; err == nil {
+				targetDOI = strings.TrimSpace(paper.DOI)
+			}
+		}
+		if targetDOI == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid DOI or resolvable PMID required"})
 			return
 		}
 		updates := map[string]any{}
@@ -686,9 +779,9 @@ func setupRatedPaperRoutes(router *gin.Engine, ratedDB *gorm.DB, rawDB *gorm.DB,
 			return
 		}
 		if err := ratedDB.Model(&models.RatedPaper{}).
-			Where("doi = ?", req.DOI).
+			Where("doi = ?", targetDOI).
 			Updates(updates).Error; err != nil {
-			log.Error("Failed to update rated paper (added-rag)", zap.String("doi", req.DOI), zap.Error(err))
+			log.Error("Failed to update rated paper (added-rag)", zap.String("doi", targetDOI), zap.Error(err))
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
 			return
 		}
